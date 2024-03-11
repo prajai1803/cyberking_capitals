@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   void overAnimation() {
     setState(() {
-      isAnimationOvered = false;
+      isAnimationOvered = true;
     });
   }
 
