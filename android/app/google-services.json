@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "676344999730",
+    "project_id": "cyberking-capitals-adf23",
+    "storage_bucket": "cyberking-capitals-adf23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676344999730:android:9d5d611d77e85bef16712b",
+        "android_client_info": {
+          "package_name": "com.sankhyank.cyberkingcapitals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa6QIeIFIwmrqk3oJM0LrjYJQ9xN82t88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
