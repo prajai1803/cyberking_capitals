@@ -50,25 +50,23 @@ class AuthController extends GetxController {
           await _authRepositry.signInWithGoogle(auth);
 
       if (userCredential != null) {
-        if (userCredential.additionalUserInfo!.isNewUser) {
-          UserModel userModel = UserModel(
-            email: userCredential.user!.email,
-            displayName: userCredential.user!.displayName,
-            phoneNumber: userCredential.user!.phoneNumber,
-            photoUrl: userCredential.user!.photoURL,
-            uid: userCredential.user!.uid,
-            emailVerified: userCredential.user!.emailVerified,
-          );
+        UserModel userModel = UserModel(
+          email: userCredential.user!.email,
+          displayName: userCredential.user!.displayName,
+          phoneNumber: userCredential.user!.phoneNumber,
+          photoUrl: userCredential.user!.photoURL,
+          uid: userCredential.user!.uid,
+          emailVerified: userCredential.user!.emailVerified,
+        );
 
-          if (userCredential.user != null) {
-            final token = await userCredential.user!.getIdToken();
-            if (token == null) return;
-            SessionDB().setAuthStatus(true);
-            SessionDB().setToken(token);
-            StorageProvider().writeUserModel(userModel);
-            Get.offAndToNamed(AppRoute.appBase);
-          }
+        if (userCredential.user != null) {
+          final token = await userCredential.user!.getIdToken();
+          if (token == null) return;
+          SessionDB().setAuthStatus(true);
+          SessionDB().setToken(token);
+          StorageProvider().writeUserModel(userModel);
           Get.back();
+          Get.offAndToNamed(AppRoute.appBase);
         }
       }
     } on FirebaseAuthException catch (e) {

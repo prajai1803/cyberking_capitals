@@ -25,6 +25,8 @@ class CyberKingCapitals extends StatelessWidget {
           return GetMaterialApp(
             theme: ThemeData(
               useMaterial3: false,
+              appBarTheme:
+                  const AppBarTheme(color: Colors.transparent, elevation: 0),
               scaffoldBackgroundColor: Colors.white,
             ),
             title: 'CYBERKING CAPITALS',
