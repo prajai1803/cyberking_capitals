@@ -1,7 +1,12 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
+import 'package:cyberking_capitals/app/routes/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -74,7 +79,13 @@ class LogoutDialog extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          SessionDB().setAuthStatus(false);
+                          await GetStorage().erase();
+                          await FirebaseAuth.instance.signOut();
+
+                          Get.offAllNamed(AppRoute.loginScreen);
+                        },
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(132.w, 48.h),
                             shape: RoundedRectangleBorder(

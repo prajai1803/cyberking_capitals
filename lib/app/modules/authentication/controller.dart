@@ -44,6 +44,7 @@ class AuthController extends GetxController {
     CommonAlerts.showLoadingDialog();
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
       final GoogleSignInAccount? user = await googleSignIn.signIn();
       final GoogleSignInAuthentication auth = await user!.authentication;
       final UserCredential? userCredential =

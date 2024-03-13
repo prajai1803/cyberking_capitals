@@ -18,4 +18,9 @@ class AppImages {
   static const colleaguesDiscussing = 'images/onboarding/discussion.png';
   static const achievments = 'images/onboarding/Achivments.png';
   static const target = 'images/onboarding/Target.png';
+
+  // home
+  static const union = 'images/home/union.png';
+  static const progressIcon = 'images/home/ProgressIcon.png';
+  static const moduleIcon = 'images/home/Modules.png';
 }
