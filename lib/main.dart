@@ -1,4 +1,5 @@
 import 'package:cyberking_capitals/app/routes/pages.dart';
+import 'package:cyberking_capitals/app/utils/initial_binding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +24,7 @@ class CyberKingCapitals extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
+            initialBinding: AppInitailBinding(),
             theme: ThemeData(
               useMaterial3: false,
               appBarTheme:
