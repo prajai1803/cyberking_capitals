@@ -1,10 +1,12 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/video_player.dart';
-import 'package:cyberking_capitals/app/widgets/dotted_divider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'widgets/promo_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,161 +81,49 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 10.h),
             _buildCommingSoon(),
             SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const Divider(thickness: 1),
-            ),
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 16.h,
-                    backgroundColor: const Color(0xeFE09C32).withOpacity(.20),
-                    child: ImageIcon(
-                        const AssetImage(
-                          AppImages.progressIcon,
-                        ),
-                        size: 16.h,
-                        color: const Color(0xeFE09C32)),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Progress Bar",
-                              style: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              "Sell all",
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.secondary),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          "Track your learning  progress, goals,\nStreaks, Certificates and Quiz points earned.",
-                          style: TextStyle(
-                              fontSize: 12.sp,
-                              height: 1.4,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textBlack3),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const Divider(thickness: 1),
-            ),
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 16.h,
-                    backgroundColor: AppColors.secondary.withOpacity(.20),
-                    child: ImageIcon(
-                        const AssetImage(
-                          AppImages.moduleIcon,
-                        ),
-                        size: 16.h,
-                        color: AppColors.secondary),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Module",
-                              style: TextStyle(
-                                  fontSize: 14.sp, fontWeight: FontWeight.w700),
-                            ),
-                            Text(
-                              "Sell all",
-                              style: TextStyle(
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.secondary),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          "Find all your module-related videos.\nand Start your learning process with us.",
-                          style: TextStyle(
-                              fontSize: 12.sp,
-                              height: 1.4,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textBlack3),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            // Row(
-            //   children: [
-            //     Column(
-            //       children: [
-            //         Container(
-            //           padding: EdgeInsets.symmetric(
-            //               horizontal: 31.w, vertical: 10.h),
-            //           decoration: BoxDecoration(
-            //               color: Colors.amber,
-            //               borderRadius: BorderRadius.circular(15.r)),
-            //           child: Text(
-            //             "60 +",
-            //             style: TextStyle(
-            //                 fontSize: 24.sp,
-            //                 fontWeight: FontWeight.w700,
-            //                 color: AppColors.secondary),
-            //           ),
-            //         ),
-            //         SizedBox(
-            //           height: 10.h,
-            //         ),
-            //         Text(
-            //           "Session",
-            //           style: TextStyle(
-            //             fontSize: 12.sp,
-            //             fontWeight: FontWeight.w700,
-            //           ),
-            //         )
-            //       ],
-            //     )
-            //   ],
-            // ),
-            SizedBox(height: 10.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: const Divider(thickness: 1),
-            ),
+            _buildModules(),
           ],
         )),
       ),
+    );
+  }
+
+  Column _buildModules() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: const Divider(thickness: 1),
+        ),
+        SizedBox(height: 10.h),
+        CustomListTile(
+          title: "Progress Bar",
+          subTitle:
+              "Track your learning  progress, goals,\nStreaks, Certificates and Quiz points earned.",
+          colorCode: 0xeFE09C32,
+          imageIcon: AppImages.progressIcon,
+          onTap: () {},
+        ),
+        SizedBox(height: 10.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: const Divider(thickness: 1),
+        ),
+        SizedBox(height: 10.h),
+        CustomListTile(
+          title: "Module",
+          subTitle:
+              "Find all your module-related videos.\nand Start your learning process with us.",
+          colorCode: 0xeF4184F3,
+          imageIcon: AppImages.moduleIcon,
+          onTap: () {},
+        ),
+        SizedBox(height: 10.h),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: const Divider(thickness: 1),
+        ),
+      ],
     );
   }
 
@@ -243,85 +133,21 @@ class _HomeScreenState extends State<HomeScreen> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 3,
       itemBuilder: (context, index) => Container(
-        height: 290.h,
-        margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.w),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.15))
-            ],
-            borderRadius: BorderRadius.circular(15.r)),
-        child: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    height: 180.h,
-                    decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15.r),
-                            topRight: Radius.circular(15.r)))),
-                Padding(
-                  padding: EdgeInsets.only(top: 16.h, left: 12.w, right: 12.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Stock Market Live Streaming",
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(height: 8.h),
-                      Text(
-                        "Write a little info about your video here as a description.",
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            color: AppColors.textBlack3,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      SizedBox(height: 8.h),
-                      const DottedDivider(),
-                      SizedBox(height: 8.h),
-                      Text(
-                        "Start 10th Oct 2023, 12:00 PM",
-                        style: TextStyle(
-                            fontSize: 12.sp,
-                            color: AppColors.textBlack3,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                )
+          height: 290.h,
+          margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.w),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.15))
               ],
-            ),
-            Positioned(
-                top: 120.h,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    ImageIcon(
-                      const AssetImage(AppImages.union),
-                      color: Colors.white,
-                      size: 115.h,
-                    ),
-                    Positioned(
-                        top: 44.h,
-                        child: Text(
-                          "Comming Soon",
-                          style: TextStyle(
-                              fontSize: 10.sp,
-                              color: AppColors.secondary,
-                              fontWeight: FontWeight.w500),
-                        ))
-                  ],
-                ))
-          ],
-        ),
-      ),
+              borderRadius: BorderRadius.circular(15.r)),
+          child: const PromoWidget(
+            title: "Stock Market Live Streaming",
+            subtitle:
+                "Write a little info about your video here as a description.",
+            lowerText: "Start 10th Oct 2023, 12:00 PM",
+            label: "Comming soon",
+          )),
     );
   }
 
