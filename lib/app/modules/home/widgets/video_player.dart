@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 
 import '../controller.dart';
@@ -29,6 +30,8 @@ class IntroVideo extends StatelessWidget {
                     },
                     child: Container(
                       height: 189.h,
+                      width: double.infinity,
+                      margin: EdgeInsets.symmetric(horizontal: 10.w),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.r)),
                       child: ClipRRect(
@@ -40,7 +43,7 @@ class IntroVideo extends StatelessWidget {
                       ),
                     ),
                   ),
-                  _controller.introVPC.value.isCompleted
+                  !_controller.introVPC.value.isPlaying
                       ? Center(
                           child: InkWell(
                           onTap: () => _controller.introVPC.play(),
@@ -55,11 +58,25 @@ class IntroVideo extends StatelessWidget {
                                         blurRadius: 4,
                                         color: Colors.black.withOpacity(.25))
                                   ]),
-                              child: Icon(Icons.play_arrow)),
+                              child: Icon(
+                                Icons.play_arrow,
+                                size: 24.h,
+                              )),
                         ))
                       : Container()
                 ],
               )
-            : Container());
+            : Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.white,
+                child: Container(
+                  height: 189.h,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 10.w),
+                  decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(25.r)),
+                ),
+              ));
   }
 }

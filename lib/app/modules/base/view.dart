@@ -48,67 +48,22 @@ class _AppBaseScreenState extends State<AppBaseScreen>
       CommunityScreen(),
       CommunityScreen(),
       ProfileScreen(),
-
-      // GetBuilder<NetworkManagerController>(builder: (controller) {
-      //   if (controller.connectionType > 0) {
-      //     return const HomeScreen();
-      //   } else {
-      //     Get.delete<HomeController>();
-      //     return Container();
-      //   }
-      // }),
-      // GetBuilder<NetworkManagerController>(builder: (controller) {
-      //   if (controller.connectionType > 0) {
-      //     return const ProfileScreen();
-      //   } else {
-      //     Get.delete<ProfileController>();
-      //     return Container();
-      //   }
-      // }),
     ];
 
     return Scaffold(
       body: Obx(() => IndexedStack(
           index: _controller.currentIndex.value, children: screens)),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   selectedFontSize: 10.sp,
-      //   unselectedFontSize: 10.sp,
-      //   type: BottomNavigationBarType.shifting,
-      //   unselectedItemColor: Colors.black,
-      //   selectedItemColor: Colors.blue,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.abc, color: Colors.blue.withOpacity(.5)),
-      //         label: 'Home',
-      //         activeIcon: Icon(Icons.ac_unit_rounded)),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.abc, color: Colors.blue.withOpacity(.5)),
-      //         label: 'Home',
-      //         activeIcon: Icon(Icons.ac_unit_rounded)),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.abc, color: Colors.blue.withOpacity(.5)),
-      //         label: 'Home',
-      //         activeIcon: Icon(Icons.ac_unit_rounded)),
-      //   ],
       bottomNavigationBar: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            // const HomeFetchErrorWidget(),
-            g()
-          ],
+          children: [_buildTabBar()],
         ),
-
-        // currentIndex: _controller.currentIndex.value,
-        // onTap: (value) {
-        //   _controller.currentIndex.value = value;
-        // },
       ),
     );
   }
 
-  Widget g() {
+  Widget _buildTabBar() {
     return Container(
       height: 56.h,
       decoration: const BoxDecoration(
@@ -123,13 +78,13 @@ class _AppBaseScreenState extends State<AppBaseScreen>
         labelColor: AppColors.secondary,
         unselectedLabelStyle: TextStyle(
           fontFamily: "PJS",
-          fontSize: 12.sp,
+          fontSize: 12.h,
           fontWeight: FontWeight.w400,
           overflow: TextOverflow.visible,
         ),
         labelStyle: TextStyle(
           fontFamily: "PJS",
-          fontSize: 12.sp,
+          fontSize: 12.h,
           fontWeight: FontWeight.w700,
           overflow: TextOverflow.visible,
         ),

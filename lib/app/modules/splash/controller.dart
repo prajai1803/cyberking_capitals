@@ -22,11 +22,16 @@ class SplashController extends GetxController {
   }
 
   void _checkAuth() async {
+    final bool? isOnBoardingComplete = await sessionDB.getOnBoardingComplete();
     final bool? isAuth = await sessionDB.getAuthStatus();
     if (isAuth == null || isAuth == false) {
       Get.offAndToNamed(AppRoute.loginScreen);
     } else {
-      Get.offAllNamed(AppRoute.appBase);
+      if (isOnBoardingComplete ?? false) {
+        Get.offAllNamed(AppRoute.appBase);
+      } else {
+        Get.offAllNamed(AppRoute.onBoarding);
+      }
     }
   }
 

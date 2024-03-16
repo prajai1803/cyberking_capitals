@@ -1,3 +1,5 @@
+import 'package:cyberking_capitals/app/modules/home/controller.dart';
+import 'package:cyberking_capitals/app/modules/home/controller/module_video.dart';
 import 'package:get/get.dart';
 
 import 'controller.dart';
@@ -7,6 +9,7 @@ class AppBaseBindings implements Bindings {
   void dependencies() {
     Get.put(AppBaseController());
     // Get.lazyPut(() => ProfileController());
-    // Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => ModuleVideoController());
   }
 }

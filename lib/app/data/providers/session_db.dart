@@ -5,6 +5,7 @@ class SessionDB extends StorageService {
 
   static const token = '_token_';
   static const userAuthStatus = '_authStatus_';
+  static const isOnBoardingComplete = '_isOnBoaringComplete_';
 
   // write session data
   Future<void> setToken(String? tokenValue) async {
@@ -15,6 +16,10 @@ class SessionDB extends StorageService {
     _storageService.write(userAuthStatus, value);
   }
 
+  void setOnBoardingComplete(bool value) {
+    _storageService.write(isOnBoardingComplete, value);
+  }
+
   // read session data
   Future<String?> getToken() async {
     return _storageService.read(token);
@@ -22,5 +27,9 @@ class SessionDB extends StorageService {
 
   Future<bool?> getAuthStatus() async {
     return _storageService.read(userAuthStatus);
+  }
+
+  Future<bool?> getOnBoardingComplete() async {
+    return _storageService.read(isOnBoardingComplete);
   }
 }

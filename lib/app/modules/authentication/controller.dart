@@ -43,6 +43,8 @@ class AuthController extends GetxController {
   void loginWithGoogle() async {
     CommonAlerts.showLoadingDialog();
     try {
+      final bool? isOnboardingComplete =
+          await SessionDB().getOnBoardingComplete();
       final GoogleSignIn googleSignIn = GoogleSignIn();
       await googleSignIn.signOut();
       final GoogleSignInAccount? user = await googleSignIn.signIn();
@@ -67,7 +69,11 @@ class AuthController extends GetxController {
           SessionDB().setToken(token);
           StorageProvider().writeUserModel(userModel);
           Get.back();
-          Get.offAndToNamed(AppRoute.appBase);
+          if (isOnboardingComplete ?? false) {
+            Get.offAndToNamed(AppRoute.appBase);
+          } else {
+            Get.offAndToNamed(AppRoute.onBoarding);
+          }
         }
       }
     } on FirebaseAuthException catch (e) {

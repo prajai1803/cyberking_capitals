@@ -4,6 +4,9 @@ import 'package:cyberking_capitals/app/modules/authentication/views/forget_passw
 import 'package:cyberking_capitals/app/modules/authentication/views/sign_up.dart';
 import 'package:cyberking_capitals/app/modules/base/bindings.dart';
 import 'package:cyberking_capitals/app/modules/base/view.dart';
+import 'package:cyberking_capitals/app/modules/home/view/module_video.dart';
+import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
+import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
 import 'package:cyberking_capitals/app/modules/splash/binding.dart';
 import 'package:cyberking_capitals/app/modules/splash/view.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
@@ -39,11 +42,24 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(
+      title: 'OnBoarding',
+      name: AppRoute.onBoarding,
+      page: () => OnBoaringScreen(),
+      binding: OnBoardingBindings(),
+      transition: Transition.zoom,
+    ),
+    GetPage(
       title: 'App Base',
       name: AppRoute.appBase,
       page: () => const AppBaseScreen(),
       binding: AppBaseBindings(),
       transition: Transition.zoom,
+    ),
+    GetPage(
+      title: 'Module Video',
+      name: AppRoute.moduleVideo,
+      page: () => const ModuleVideoPlayer(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }

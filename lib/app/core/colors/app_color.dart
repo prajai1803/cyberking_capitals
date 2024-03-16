@@ -12,4 +12,10 @@ class AppColors {
   static const textBlack2 = Color(0xeF525252);
   static const textBlack3 = Color(0xeF586377);
   static const textField = Color(0xeF9B9BAF);
+
+  // chart colors
+  static const chartPurpal = Color(0xeFB6ADF4);
+  static const chartOrange = Color(0xeFE09C32);
+  static const chartPink = Color(0xeFF2C8CA);
+  static const chartGreen = Color(0xeFA5CC65);
 }
