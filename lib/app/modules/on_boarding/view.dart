@@ -1,6 +1,8 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/controller.dart';
+import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +11,7 @@ import 'package:get/get.dart';
 class OnBoaringScreen extends StatelessWidget {
   OnBoaringScreen({super.key});
 
-  final _controller = Get.put(OnBoardingController());
+  final _controller = Get.find<OnBoardingController>();
 
   final contentList = [
     Column(
@@ -173,7 +175,12 @@ class OnBoaringScreen extends StatelessWidget {
                   return AppElevatedButton(
                     text: _controller.currentPage == 2 ? "CONTINUE" : "NEXT",
                     onPressed: () {
-                      _controller.nextPage();
+                      if (_controller.currentPage == 2) {
+                        SessionDB().setOnBoardingComplete(true);
+                        Get.offAllNamed(AppRoute.appBase);
+                      } else {
+                        _controller.nextPage();
+                      }
                     },
                   );
                 },
