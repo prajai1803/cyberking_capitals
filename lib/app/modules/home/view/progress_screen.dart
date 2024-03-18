@@ -21,9 +21,7 @@ class ProgressBarScreen extends StatelessWidget {
         title: Text(
           "Progress Bar",
           style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600,
-              color: Colors.black),
+              fontSize: 16.h, fontWeight: FontWeight.w600, color: Colors.black),
         ),
       ),
       body: Padding(
@@ -37,14 +35,14 @@ class ProgressBarScreen extends StatelessWidget {
                 Text(
                   "Hi krutika",
                   style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
                 ),
                 Text(
                   "This is your progress report.",
                   style: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 12.h,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textBlack2),
                 ),
@@ -93,7 +91,7 @@ class ProgressBarScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(5.r)),
                                 ),
                                 Text("Session",
-                                    style: TextStyle(fontSize: 12.sp))
+                                    style: TextStyle(fontSize: 12.h))
                               ],
                             ),
                             Row(
@@ -107,8 +105,7 @@ class ProgressBarScreen extends StatelessWidget {
                                       color: AppColors.chartOrange,
                                       borderRadius: BorderRadius.circular(5.r)),
                                 ),
-                                Text("Module",
-                                    style: TextStyle(fontSize: 12.sp))
+                                Text("Module", style: TextStyle(fontSize: 12.h))
                               ],
                             ),
                             Row(
@@ -122,7 +119,7 @@ class ProgressBarScreen extends StatelessWidget {
                                       color: AppColors.chartGreen,
                                       borderRadius: BorderRadius.circular(5.r)),
                                 ),
-                                Text("Quiz", style: TextStyle(fontSize: 12.sp))
+                                Text("Quiz", style: TextStyle(fontSize: 12.h))
                               ],
                             ),
                             Row(
@@ -136,7 +133,7 @@ class ProgressBarScreen extends StatelessWidget {
                                       color: AppColors.chartPink,
                                       borderRadius: BorderRadius.circular(5.r)),
                                 ),
-                                Text("Live", style: TextStyle(fontSize: 12.sp))
+                                Text("Live", style: TextStyle(fontSize: 12.h))
                               ],
                             ),
                           ],

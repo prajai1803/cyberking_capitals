@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           "Account",
           style: TextStyle(
             color: AppColors.textBlack,
-            fontSize: 16.sp,
+            fontSize: 16.h,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -52,14 +52,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text(
                     "Krutika Singh",
                     style:
-                        TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+                        TextStyle(fontSize: 16.h, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     "KrutikaSingh180@ckc.com",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 10.sp,
+                        fontSize: 10.h,
                         color: AppColors.textBlack3),
                   )
                 ],

@@ -71,13 +71,13 @@ class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
                   Text(
                     video.title ?? "",
                     style:
-                        TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 18.h, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     video.description ?? "",
                     style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 12.h,
                         fontWeight: FontWeight.w700,
                         color: AppColors.textBlack2),
                   ),

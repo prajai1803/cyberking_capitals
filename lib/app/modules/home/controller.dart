@@ -48,7 +48,7 @@ class HomeController extends GetxController {
   void _initIntroVideo() async {
     introVPC = VideoPlayerController.networkUrl(
       Uri.parse(
-          'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+          'https://firebasestorage.googleapis.com/v0/b/csvtu-test.appspot.com/o/untitled.mp4?alt=media&token=b7247a40-f377-46a1-8375-2d6d39d6accf'),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
     await introVPC.initialize();

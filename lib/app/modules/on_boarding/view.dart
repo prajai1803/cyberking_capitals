@@ -40,7 +40,7 @@ class OnBoaringScreen extends StatelessWidget {
         Text(
           "Learn to\ntrade for anytime\nanywhere",
           style: TextStyle(
-            fontSize: 32.sp,
+            fontSize: 32.h,
             color: AppColors.secondary,
           ),
           textAlign: TextAlign.center,
@@ -73,7 +73,7 @@ class OnBoaringScreen extends StatelessWidget {
         Text(
           "Guided course\nto help you learn\neasily",
           style: TextStyle(
-            fontSize: 32.sp,
+            fontSize: 32.h,
             color: AppColors.secondary,
           ),
           textAlign: TextAlign.center,
@@ -107,7 +107,7 @@ class OnBoaringScreen extends StatelessWidget {
               child: Text(
                 "Set goals\nand track your all\nachievements",
                 style: TextStyle(
-                  fontSize: 32.sp,
+                  fontSize: 32.h,
                   color: AppColors.secondary,
                 ),
                 textAlign: TextAlign.center,

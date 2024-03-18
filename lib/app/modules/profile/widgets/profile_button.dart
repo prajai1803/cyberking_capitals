@@ -35,8 +35,7 @@ class ProfileButton extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+                  style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.w500),
                 ),
               ],
             ),

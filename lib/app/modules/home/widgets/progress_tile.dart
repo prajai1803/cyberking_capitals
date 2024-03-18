@@ -32,7 +32,7 @@ class ProgressTile extends StatelessWidget {
           child: Center(
             child: Text(
               value ?? "NA",
-              style: TextStyle(fontFamily: "Rakkas", fontSize: 24.sp),
+              style: TextStyle(fontFamily: "Rakkas", fontSize: 24.h),
             ),
           ),
         ),
@@ -40,7 +40,7 @@ class ProgressTile extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 10.h),
           child: Text(
             title ?? "",
-            style: TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w600),
           ),
         )
       ]),

@@ -46,25 +46,25 @@ class CustomListTile extends StatelessWidget {
                     Text(
                       title ?? "",
                       style: TextStyle(
-                          fontSize: 14.sp, fontWeight: FontWeight.w700),
+                          fontSize: 14.h, fontWeight: FontWeight.w700),
                     ),
-                    InkWell(
-                      onTap: onTap,
+                    TextButton(
+                      onPressed: onTap,
                       child: Text(
                         "Sell all",
                         style: TextStyle(
-                            fontSize: 10.sp,
+                            fontSize: 10.h,
                             fontWeight: FontWeight.w600,
                             color: AppColors.secondary),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   subTitle ?? "",
                   style: TextStyle(
-                      fontSize: 12.sp,
+                      fontSize: 12.h,
                       height: 1.4,
                       fontWeight: FontWeight.w500,
                       color: AppColors.textBlack3),

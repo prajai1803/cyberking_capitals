@@ -44,14 +44,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Hi Traders",
                     style: TextStyle(
-                        fontSize: 16.sp,
+                        fontSize: 16.h,
                         fontWeight: FontWeight.w700,
                         color: Colors.black),
                   ),
                   Text(
                     "Let’s start learning",
                     style:
-                        TextStyle(fontSize: 12.sp, color: AppColors.textBlack3),
+                        TextStyle(fontSize: 12.h, color: AppColors.textBlack3),
                   )
                 ],
               )
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text(
                                     "Features Video Updates",
                                     style: TextStyle(
-                                      fontSize: 18.sp,
+                                      fontSize: 18.h,
                                       fontWeight: FontWeight.w700,
                                       color: AppColors.iconRed,
                                     ),
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Text(
                                     "All Modules",
                                     style: TextStyle(
-                                        fontSize: 16.sp,
+                                        fontSize: 16.h,
                                         color: AppColors.iconRed,
                                         fontWeight: FontWeight.w700),
                                   ),
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? Text(
                                       "Data not found",
                                       style: TextStyle(
-                                          fontSize: 14.sp,
+                                          fontSize: 14.h,
                                           fontWeight: FontWeight.w500),
                                     )
                                   : ListView.builder(
@@ -228,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "60+",
                       style: TextStyle(
-                          fontSize: 24.w,
+                          fontSize: 24.h,
                           fontFamily: "Rakkas",
                           color: AppColors.secondary),
                     ),
@@ -237,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Session",
                     style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 12.h, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -252,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "120 Hr",
                       style: TextStyle(
-                          fontSize: 24.w,
+                          fontSize: 24.h,
                           fontFamily: "Rakkas",
                           color: AppColors.secondary),
                     ),
@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Duration",
                     style:
-                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 12.h, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -276,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "100%",
                       style: TextStyle(
-                          fontSize: 24.w,
+                          fontSize: 24.h,
                           fontFamily: "Rakkas",
                           color: AppColors.secondary),
                     ),
@@ -285,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     "Status",
                     style:
-                        TextStyle(fontSize: 12.w, fontWeight: FontWeight.w700),
+                        TextStyle(fontSize: 12.h, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),

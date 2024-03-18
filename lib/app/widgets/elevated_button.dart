@@ -21,7 +21,7 @@ class AppElevatedButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),

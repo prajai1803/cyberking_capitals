@@ -25,96 +25,101 @@ class ModuleTile extends StatelessWidget {
         SizedBox(height: 24.h),
         SizedBox(
           height: 120.h,
-          child: Stack(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title ?? "N/A",
+                      style: TextStyle(
+                        fontSize: 14.h,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    SizedBox(
+                      width: 173.w,
+                      child: Text(
+                        description ?? "NA",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12.h,
+                            color: AppColors.textBlack2),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Row(
                       children: [
-                        Text(
-                          title ?? "N/A",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        SizedBox(
-                          width: 173.w,
-                          child: Text(
-                            description ?? "NA",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12.sp,
-                                color: AppColors.textBlack2),
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
                         Row(
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.tv,
-                                    size: 18.h, color: AppColors.textBlack2),
-                                SizedBox(width: 6.w),
-                                Text(
-                                  "${(session ?? 0)} Sessions",
-                                  style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: AppColors.textBlack2),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 16.w),
-                            Row(
-                              children: [
-                                Icon(Icons.timelapse,
-                                    size: 18.h, color: AppColors.textBlack2),
-                                SizedBox(width: 6.w),
-                                Text(
-                                  duration ?? "N/A",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: AppColors.textBlack2,
-                                  ),
-                                ),
-                              ],
+                            Icon(Icons.tv,
+                                size: 18.h, color: AppColors.textBlack2),
+                            SizedBox(width: 6.w),
+                            Text(
+                              "${(session ?? 0)} Sessions",
+                              style: TextStyle(
+                                  fontSize: 12.h, color: AppColors.textBlack2),
                             ),
                           ],
-                        )
+                        ),
+                        SizedBox(width: 16.w),
+                        Row(
+                          children: [
+                            Icon(Icons.timelapse,
+                                size: 18.h, color: AppColors.textBlack2),
+                            SizedBox(width: 6.w),
+                            Text(
+                              duration ?? "N/A",
+                              style: TextStyle(
+                                fontSize: 12.h,
+                                color: AppColors.textBlack2,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
+                    )
+                  ],
+                ),
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        height: 110.h,
+                        width: 110.h,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                      SizedBox(height: 10.h),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 14.w),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          color: const Color(0xeFF1F5FF)),
+                      child: Text(
+                        "${(index ?? 0)}",
+                        style: TextStyle(
+                          fontSize: 12.h,
+                          fontFamily: "Rakkas",
+                        ),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 110.h,
-                    width: 110.h,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10.r)),
-                  ),
+                  )
                 ],
               ),
-              Positioned(
-                bottom: 0,
-                right: 30.w,
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.r),
-                      color: const Color(0xeFF1F5FF)),
-                  child: Text(
-                    "${(index ?? 0)}",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontFamily: "Rakkas",
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ),

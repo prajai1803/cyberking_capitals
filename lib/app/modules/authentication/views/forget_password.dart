@@ -34,7 +34,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               Text(
                 "Forgot Password",
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: 23.h,
                   color: AppColors.textBlack,
                 ),
               ),
@@ -52,7 +52,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               Text(
                 "Enter the email address\nassociated with your account.",
                 style: TextStyle(
-                  fontSize: 15.sp,
+                  fontSize: 15.h,
                   height: 1.5,
                   color: AppColors.textBlack,
                 ),
@@ -62,7 +62,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               Text(
                 "We will email you a link to reset\nyour password.",
                 style: TextStyle(
-                  fontSize: 11.sp,
+                  fontSize: 11.h,
                   height: 1.5,
                   color: AppColors.textBlack2,
                 ),

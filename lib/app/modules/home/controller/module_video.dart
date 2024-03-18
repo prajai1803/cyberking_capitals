@@ -24,18 +24,25 @@ class ModuleVideoController extends GetxController {
     update(["ModuleVideo"]);
   }
 
+  @override
+  void dispose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void onClose() {
+    videoPlayerController.dispose();
+    chewieController.dispose();
+    super.onClose();
+  }
+
   void play() async {
     await chewieController.play();
   }
 
   void puase() async {
     await chewieController.pause();
-  }
-
-  @override
-  void dispose() {
-    videoPlayerController.dispose();
-    chewieController.dispose();
-    super.dispose();
   }
 }

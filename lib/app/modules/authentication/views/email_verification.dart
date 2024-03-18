@@ -31,7 +31,7 @@ class EmailVerifyScreen extends StatelessWidget {
               Text(
                 "Verification",
                 style: TextStyle(
-                  fontSize: 23.sp,
+                  fontSize: 23.h,
                   color: AppColors.textBlack,
                 ),
               ),
@@ -49,7 +49,7 @@ class EmailVerifyScreen extends StatelessWidget {
               Text(
                 "Enter the verification code we\njust sent you on your email\n address.",
                 style: TextStyle(
-                  fontSize: 15.sp,
+                  fontSize: 15.h,
                   height: 1.5,
                   color: AppColors.textBlack,
                 ),
@@ -63,7 +63,7 @@ class EmailVerifyScreen extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     maxLength: 6,
                     style: TextStyle(
-                      fontSize: 24.sp,
+                      fontSize: 24.h,
                       color: AppColors.textBlack,
                     ),
                     textAlign: TextAlign.center,
@@ -79,7 +79,7 @@ class EmailVerifyScreen extends StatelessWidget {
               Text(
                 "Resend in 30s",
                 style: TextStyle(
-                  fontSize: 11.sp,
+                  fontSize: 11.h,
                   height: 1.5,
                   color: AppColors.textBlack2,
                 ),

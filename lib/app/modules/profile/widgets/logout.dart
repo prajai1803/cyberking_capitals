@@ -37,7 +37,7 @@ class LogoutDialog extends StatelessWidget {
                   child: Text(
                     "Log out?",
                     style: TextStyle(
-                      fontSize: 20.sp,
+                      fontSize: 20.h,
                       fontWeight: FontWeight.w600,
                     ),
                   )),
@@ -47,7 +47,7 @@ class LogoutDialog extends StatelessWidget {
                   child: Text(
                     "Are you sure want to Log out?",
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 14.h,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textBlack3),
                   )),
@@ -70,7 +70,7 @@ class LogoutDialog extends StatelessWidget {
                           return Text(
                             "Cancel",
                             style: TextStyle(
-                                fontSize: 16.sp,
+                                fontSize: 16.h,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.textBlack3),
                           );
@@ -92,7 +92,7 @@ class LogoutDialog extends StatelessWidget {
                         child: Text(
                           "Logout",
                           style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.w500),
+                              fontSize: 16.h, fontWeight: FontWeight.w500),
                         ))
                   ],
                 ),

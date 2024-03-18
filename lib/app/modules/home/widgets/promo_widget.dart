@@ -34,7 +34,7 @@ class PromoWidget extends StatelessWidget {
                   Text(
                     title ?? "",
                     style: TextStyle(
-                        fontSize: 18.sp,
+                        fontSize: 18.h,
                         color: Colors.black,
                         fontWeight: FontWeight.w700),
                   ),
@@ -42,7 +42,7 @@ class PromoWidget extends StatelessWidget {
                   Text(
                     subtitle ?? "",
                     style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 12.h,
                         color: AppColors.textBlack3,
                         fontWeight: FontWeight.w500),
                   ),
@@ -52,7 +52,7 @@ class PromoWidget extends StatelessWidget {
                   Text(
                     lowerText ?? "",
                     style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 12.h,
                         color: AppColors.textBlack3,
                         fontWeight: FontWeight.w500),
                   ),
@@ -76,7 +76,7 @@ class PromoWidget extends StatelessWidget {
                     child: Text(
                       label ?? "",
                       style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 10.h,
                           color: AppColors.secondary,
                           fontWeight: FontWeight.w500),
                     ))

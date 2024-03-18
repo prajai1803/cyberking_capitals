@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen>
         child: Text(
           "Forget Password",
           style: TextStyle(
-            fontSize: 13.sp,
+            fontSize: 13.h,
             fontWeight: FontWeight.w500,
             color: AppColors.secondary,
           ),
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen>
       children: [
         Text("Don't Have Account ?",
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.w400,
             )),
         InkWell(
@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen>
           },
           child: Text(" Sign up ",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 color: AppColors.secondary,
                 fontWeight: FontWeight.w500,
               )),
@@ -192,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen>
           child: Text(
             " Or ",
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.w400,
             ),
           ),

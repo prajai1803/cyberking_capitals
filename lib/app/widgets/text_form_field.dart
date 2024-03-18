@@ -49,7 +49,7 @@ class AppTextFormField extends StatelessWidget {
       obscureText: obscureText,
       cursorColor: AppColors.secondary,
       style: TextStyle(
-        fontSize: 14.sp,
+        fontSize: 14.h,
         fontWeight: FontWeight.w300,
       ),
       decoration: InputDecoration(
@@ -57,7 +57,7 @@ class AppTextFormField extends StatelessWidget {
         filled: true,
         fillColor: AppColors.textField.withOpacity(.02),
         hintStyle: TextStyle(
-          fontSize: 12.sp,
+          fontSize: 12.h,
           color: AppColors.textBlack,
           fontWeight: FontWeight.w300,
         ),

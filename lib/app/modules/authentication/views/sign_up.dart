@@ -52,12 +52,12 @@ class SignUpScreen extends StatelessWidget {
       children: [
         Text("Sign up ",
             style: TextStyle(
-              fontSize: 24.sp,
+              fontSize: 24.h,
               fontWeight: FontWeight.w400,
             )),
         Text("Create an account with us ",
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.w400,
             )),
       ],
@@ -70,14 +70,14 @@ class SignUpScreen extends StatelessWidget {
       children: [
         Text("Already have account ?",
             style: TextStyle(
-              fontSize: 12.sp,
+              fontSize: 12.h,
               fontWeight: FontWeight.w400,
             )),
         InkWell(
           onTap: () => Get.back(),
           child: Text(" login ",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 color: AppColors.secondary,
                 fontWeight: FontWeight.w500,
               )),
@@ -90,12 +90,12 @@ class SignUpScreen extends StatelessWidget {
     return Text.rich(
       TextSpan(
           text: "By signing up, you agree to our ",
-          style: TextStyle(fontSize: 12.sp),
+          style: TextStyle(fontSize: 12.h),
           children: [
             TextSpan(
               text: "Terms & Conditions",
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 color: AppColors.secondary,
                 fontWeight: FontWeight.w500,
               ),
@@ -106,7 +106,7 @@ class SignUpScreen extends StatelessWidget {
               text: 'Privacy Policy',
               recognizer: TapGestureRecognizer()..onTap = () => {},
               style: TextStyle(
-                fontSize: 14.sp,
+                fontSize: 14.h,
                 color: AppColors.secondary,
                 fontWeight: FontWeight.w500,
               ),
