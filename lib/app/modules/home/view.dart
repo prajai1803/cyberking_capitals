@@ -27,15 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        final token = await FirebaseAuth.instance.currentUser!.getIdToken();
-
-        final a = await GetConnect().get(
-            "http://192.168.29.217:8000/videos/feature-videos/",
-            headers: {"Authorization": "$token"});
-
-        // print(a.body);
-      }),
       appBar: AppBar(
         leadingWidth: double.infinity,
         leading: Padding(
