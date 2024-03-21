@@ -6,6 +6,7 @@ import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/video_player.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        final token = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+        final a = await GetConnect().get(
+            "http://192.168.29.217:8000/videos/feature-videos/",
+            headers: {"Authorization": "$token"});
+
+        // print(a.body);
+      }),
       appBar: AppBar(
         leadingWidth: double.infinity,
         leading: Padding(
@@ -121,16 +131,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) => InkWell(
                                         onTap: () {
-                                          Get.toNamed(AppRoute.moduleVideo,
-                                              arguments:
-                                                  _controller.videos[index]);
+                                          Get.toNamed(AppRoute.studyModule);
                                         },
                                         child: ModuleTile(
                                           description: _controller
                                               .videos[index].description,
                                           title:
                                               _controller.videos[index].title,
-                                          index: index,
+                                          index: index + 1,
                                           duration: _controller
                                               .videos[index].duration,
                                           session:
@@ -154,9 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       itemCount: _controller.showVideos.length,
                                       itemBuilder: (context, index) => InkWell(
                                         onTap: () {
-                                          Get.toNamed(AppRoute.moduleVideo,
-                                              arguments: _controller
-                                                  .showVideos[index]);
+                                          Get.toNamed(AppRoute.studyModule);
                                         },
                                         child: ModuleTile(
                                           description: _controller
@@ -204,13 +210,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: const Divider(thickness: 1),
         ),
         SizedBox(height: 10.h),
-        CustomListTile(
+        const CustomListTile(
           title: "Module",
           subTitle:
               "Find all your module-related videos.\nand Start your learning process with us.",
           colorCode: 0xeF4184F3,
           imageIcon: AppImages.moduleIcon,
-          onTap: () {},
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),

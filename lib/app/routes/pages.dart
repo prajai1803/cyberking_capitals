@@ -9,6 +9,9 @@ import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
 import 'package:cyberking_capitals/app/modules/splash/binding.dart';
 import 'package:cyberking_capitals/app/modules/splash/view.dart';
+import 'package:cyberking_capitals/app/modules/study_module/binding.dart';
+import 'package:cyberking_capitals/app/modules/study_module/view.dart';
+import 'package:cyberking_capitals/app/modules/study_module/view/all_session.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +62,21 @@ class AppPages {
       title: 'Module Video',
       name: AppRoute.moduleVideo,
       page: () => const ModuleVideoPlayer(),
-      transition: Transition.rightToLeft,
+      transition: Transition.cupertinoDialog,
     ),
+    GetPage(
+      title: "Study Module",
+      name: AppRoute.studyModule,
+      page: () => const StudyModule(),
+      binding: StudyModuleBindings(),
+      transition: Transition.cupertinoDialog,
+    ),
+    GetPage(
+      title: "All Session",
+      name: AppRoute.allSession,
+      page: () => const AllSession(),
+      binding: StudyModuleBindings(),
+      transition: Transition.cupertinoDialog,
+    )
   ];
 }

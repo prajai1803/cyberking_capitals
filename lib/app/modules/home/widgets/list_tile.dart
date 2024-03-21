@@ -25,15 +25,18 @@ class CustomListTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 16.h,
-            backgroundColor: Color(colorCode ?? 0xeFE09C32).withOpacity(.20),
-            child: ImageIcon(
-                AssetImage(
-                  imageIcon ?? AppImages.progressIcon,
-                ),
-                size: 16.h,
-                color: Color(colorCode ?? 0xeFE09C32)),
+          Padding(
+            padding: EdgeInsets.only(top: 8.h),
+            child: CircleAvatar(
+              radius: 16.h,
+              backgroundColor: Color(colorCode ?? 0xeFE09C32).withOpacity(.20),
+              child: ImageIcon(
+                  AssetImage(
+                    imageIcon ?? AppImages.progressIcon,
+                  ),
+                  size: 16.h,
+                  color: Color(colorCode ?? 0xeFE09C32)),
+            ),
           ),
           SizedBox(width: 16.w),
           Expanded(
@@ -48,16 +51,27 @@ class CustomListTile extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 14.h, fontWeight: FontWeight.w700),
                     ),
-                    TextButton(
-                      onPressed: onTap,
-                      child: Text(
-                        "Sell all",
-                        style: TextStyle(
-                            fontSize: 10.h,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.secondary),
-                      ),
-                    )
+                    onTap != null
+                        ? TextButton(
+                            onPressed: onTap,
+                            child: Text(
+                              "Sell all",
+                              style: TextStyle(
+                                  fontSize: 10.h,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.secondary),
+                            ),
+                          )
+                        : TextButton(
+                            onPressed: null,
+                            child: Text(
+                              "",
+                              style: TextStyle(
+                                  fontSize: 10.h,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.secondary),
+                            ),
+                          )
                   ],
                 ),
                 SizedBox(height: 4.h),

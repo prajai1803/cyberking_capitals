@@ -46,3 +46,6 @@ flutter:
     - family: Rakkas
       fonts:
         - asset: assets/fonts/Rakkas-Regular.ttf
+    - family: Playball
+      fonts:
+        - asset: assets/fonts/Playball-Regular.ttf
