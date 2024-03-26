@@ -1,4 +1,5 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,114 +9,135 @@ class CertificateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text("Certificate"),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(height: 32.h),
-          _buildSideTag(),
-          SizedBox(height: 48.h),
-          _buildCongratulation(),
-          SizedBox(height: 32.h),
-          _buildTechnicalAnalysis(),
-          SizedBox(height: 48.h),
-          _buildScoreAndDate(),
-          SizedBox(height: 60.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 9.h,
-                    horizontal: 9.w,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.r),
-                      border: Border.all(color: AppColors.secondary)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.download,
-                        size: 16.r,
-                        color: AppColors.secondary,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        "Order Now",
-                        style: TextStyle(
-                            fontSize: 12.h,
-                            color: AppColors.secondary,
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              right: 0,
+              child: Image.asset(
+                AppImages.ribon,
+                height: 160.h,
               ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 9.h,
-                    horizontal: 9.w,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.r),
-                      border: Border.all(color: AppColors.secondary)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.download,
-                        size: 16.r,
-                        color: AppColors.secondary,
-                      ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        "Download",
-                        style: TextStyle(
-                            fontSize: 12.h,
-                            color: AppColors.secondary,
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
-                  ),
-                ),
+            ),
+            Positioned(
+              top: 120.h,
+              right: 5.w,
+              child: Image.asset(
+                AppImages.redLogo,
+                height: 70.h,
               ),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 9.h,
-                    horizontal: 9.w,
-                  ),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.r),
-                      border: Border.all(color: AppColors.secondary)),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.share_outlined,
-                        size: 16.r,
-                        color: AppColors.secondary,
+            ),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(height: 115.h),
+              _buildSideTag(),
+              SizedBox(height: 48.h),
+              _buildCongratulation(),
+              SizedBox(height: 32.h),
+              _buildTechnicalAnalysis(),
+              SizedBox(height: 48.h),
+              _buildScoreAndDate(),
+              SizedBox(height: 60.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 9.h,
+                        horizontal: 9.w,
                       ),
-                      SizedBox(width: 4.w),
-                      Text(
-                        "share",
-                        style: TextStyle(
-                            fontSize: 12.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                          border: Border.all(color: AppColors.secondary)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.download,
+                            size: 16.r,
                             color: AppColors.secondary,
-                            fontWeight: FontWeight.w600),
-                      )
-                    ],
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            "Order Now",
+                            style: TextStyle(
+                                fontSize: 12.h,
+                                color: AppColors.secondary,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 9.h,
+                        horizontal: 9.w,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                          border: Border.all(color: AppColors.secondary)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.download,
+                            size: 16.r,
+                            color: AppColors.secondary,
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            "Download",
+                            style: TextStyle(
+                                fontSize: 12.h,
+                                color: AppColors.secondary,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 9.h,
+                        horizontal: 9.w,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.r),
+                          border: Border.all(color: AppColors.secondary)),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.share_outlined,
+                            size: 16.r,
+                            color: AppColors.secondary,
+                          ),
+                          SizedBox(width: 4.w),
+                          Text(
+                            "share",
+                            style: TextStyle(
+                                fontSize: 12.h,
+                                color: AppColors.secondary,
+                                fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               )
-            ],
-          )
-        ]),
+            ]),
+          ],
+        ),
       ),
     );
   }

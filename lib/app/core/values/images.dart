@@ -23,4 +23,9 @@ class AppImages {
   static const union = 'images/home/union.png';
   static const progressIcon = 'images/home/ProgressIcon.png';
   static const moduleIcon = 'images/home/Modules.png';
+
+  // quiz
+  static const tropy = 'images/quiz/tropy.png';
+  static const ribon = 'images/quiz/ribon.png';
+  static const redLogo = 'images/quiz/red_logo.png';
 }

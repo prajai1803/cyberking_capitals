@@ -7,6 +7,9 @@ import 'package:cyberking_capitals/app/modules/base/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view/module_video.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
+import 'package:cyberking_capitals/app/modules/quiz/bindings.dart';
+import 'package:cyberking_capitals/app/modules/quiz/view.dart';
+import 'package:cyberking_capitals/app/modules/quiz/view/quiz_result.dart';
 import 'package:cyberking_capitals/app/modules/splash/binding.dart';
 import 'package:cyberking_capitals/app/modules/splash/view.dart';
 import 'package:cyberking_capitals/app/modules/study_module/binding.dart';
@@ -77,6 +80,20 @@ class AppPages {
       page: () => const AllSession(),
       binding: StudyModuleBindings(),
       transition: Transition.cupertinoDialog,
+    ),
+    GetPage(
+      title: "Quiz",
+      name: AppRoute.quiz,
+      page: () => const QuizScreen(),
+      binding: QuizBindings(),
+      transition: Transition.cupertinoDialog,
+    ),
+    GetPage(
+      title: "Quiz",
+      name: AppRoute.quizResult,
+      page: () => QuizResultScreen(),
+      binding: QuizBindings(),
+      transition: Transition.downToUp,
     )
   ];
 }

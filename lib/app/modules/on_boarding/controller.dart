@@ -23,9 +23,8 @@ class OnBoardingController extends GetxController {
 
   void nextPage() async {
     await pageController.nextPage(
-        duration: const Duration(seconds: 1), curve: Curves.linear);
+        duration: const Duration(milliseconds: 500), curve: Curves.linear);
     currentPage = pageController.page!.toInt();
-    // print(cure)
     update();
   }
 }

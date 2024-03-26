@@ -5,10 +5,10 @@ class ApiService extends GetxService {
     timeout: const Duration(seconds: 30),
   );
 
-  final String baseUrl = 'https://api.example.com'; // prod
-  // final String baseUrl = 'https://api.example.com'; // local
+  final String baseUrl = 'https://appx-dev.onrender.com'; // prod
+  // final String baseUrl = 'http://192.168.29.217:8000'; // local
 
-  Future<Response<dynamic>> get(
+  Future<Response> get(
       {required String url,
       Map<String, String>? header,
       String? contentType,
@@ -17,7 +17,7 @@ class ApiService extends GetxService {
         headers: header, contentType: contentType, query: query);
   }
 
-  Future<Response<dynamic>> post(
+  Future<Response> post(
       {required String url,
       Map<String, dynamic>? body,
       Map<String, String>? header,
@@ -32,7 +32,7 @@ class ApiService extends GetxService {
     );
   }
 
-  Future<Response<dynamic>> put(
+  Future<Response> put(
       {required String url,
       Map<String, dynamic>? body,
       Map<String, String>? header,
@@ -47,7 +47,7 @@ class ApiService extends GetxService {
     );
   }
 
-  Future<Response<dynamic>> patch(
+  Future<Response> patch(
       {required String url,
       Map<String, dynamic>? body,
       Map<String, String>? header,
@@ -62,7 +62,7 @@ class ApiService extends GetxService {
     );
   }
 
-  Future<Response<dynamic>> delete(
+  Future<Response> delete(
       {required String url,
       Map<String, String>? header,
       String? contentType,

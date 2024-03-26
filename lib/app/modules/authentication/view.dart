@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 800));
+        vsync: this, duration: const Duration(milliseconds: 700));
 
     textPositionY =
         Tween<double>(begin: screenHeight * .60, end: screenHeight * .280)
@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen>
     animationController.addListener(() {
       setState(() {});
     });
-    Future.delayed(const Duration(milliseconds: 1000))
+    Future.delayed(const Duration(milliseconds: 500))
         .then((value) => startAnimation());
     super.initState();
   }

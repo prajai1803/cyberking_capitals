@@ -1,3 +1,4 @@
 class ApiRoutes {
-  static const getModules = "accounts/l";
+  static const featureVideoList = 'feature-video-list';
+  static const getModules = 'api/Modules/get-modules';
 }

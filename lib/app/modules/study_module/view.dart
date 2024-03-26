@@ -21,7 +21,8 @@ class _StudyModuleState extends State<StudyModule> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Module Name")),
+      appBar: AppBar(
+          title: Text(_controller.studyModuleModel.moduleName ?? "Module")),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _buildHeader(),
         SizedBox(height: 32.h),
@@ -232,7 +233,9 @@ class _StudyModuleState extends State<StudyModule> {
                                       ),
                                       SizedBox(height: 24.h),
                                       GlowButton(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Get.toNamed(AppRoute.quiz);
+                                        },
                                         text: "Attempt Quiz",
                                       )
                                     ],
@@ -325,7 +328,8 @@ class _StudyModuleState extends State<StudyModule> {
                                     children: [
                                       GlowButton(
                                         onTap: () {
-                                          Get.to(() => CertificateScreen());
+                                          Get.to(
+                                              () => const CertificateScreen());
                                         },
                                         text: "Download",
                                         color: Colors.grey,
@@ -366,7 +370,7 @@ class _StudyModuleState extends State<StudyModule> {
               ),
               SizedBox(width: 12.w),
               Text(
-                "01",
+                (_controller.studyModuleModel.moduleId ?? 0).toString(),
                 style: TextStyle(
                   fontSize: 16.h,
                   fontFamily: "Rakkas",
@@ -378,7 +382,7 @@ class _StudyModuleState extends State<StudyModule> {
           ),
           SizedBox(height: 12.h),
           Text(
-            "Stock Market Basic",
+            _controller.studyModuleModel.moduleName ?? "N/A",
             style: TextStyle(
               fontSize: 18.h,
               fontWeight: FontWeight.w700,
@@ -388,7 +392,7 @@ class _StudyModuleState extends State<StudyModule> {
           Padding(
             padding: EdgeInsets.only(right: 35.w),
             child: Text(
-              "This meta-description generator uses a machine learning (GPT-3 from Open AI) to generate short description ideas for your articles.",
+              _controller.studyModuleModel.moduleDesc ?? "N/a",
               style: TextStyle(
                 fontSize: 12.h,
                 color: AppColors.textBlack2,

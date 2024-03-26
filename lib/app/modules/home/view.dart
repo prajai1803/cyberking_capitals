@@ -1,12 +1,13 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
+import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/video_player.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,154 +28,219 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leadingWidth: double.infinity,
-        leading: Padding(
-          padding: EdgeInsets.only(left: 16.w),
-          child: Row(
-            children: [
-              CircleCachedImage(
-                imageUrl: "",
-                radius: 16.r,
-              ),
-              SizedBox(width: 12.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Hi Traders",
-                    style: TextStyle(
-                        fontSize: 16.h,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black),
-                  ),
-                  Text(
-                    "Let’s start learning",
-                    style:
-                        TextStyle(fontSize: 12.h, color: AppColors.textBlack3),
-                  )
-                ],
-              )
-            ],
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          // _controller.getFeatureVideo();
+          _controller.getAllModule();
+        }),
+        appBar: AppBar(
+          leadingWidth: double.infinity,
+          leading: Padding(
+            padding: EdgeInsets.only(left: 16.w),
+            child: Row(
+              children: [
+                CircleCachedImage(
+                  imageUrl: "",
+                  radius: 16.r,
+                ),
+                SizedBox(width: 12.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Hi Traders",
+                      style: TextStyle(
+                          fontSize: 16.h,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black),
+                    ),
+                    Text(
+                      "Let’s start learning",
+                      style: TextStyle(
+                          fontSize: 12.h, color: AppColors.textBlack3),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Center(
-            child: Column(
-          children: [
-            SizedBox(height: 16.h),
-            _buildSearchField(),
-            SizedBox(height: 20.h),
-            GetBuilder(
-                init: _controller,
-                id: "HomeSearch",
-                builder: (_) {
-                  return SizedBox(
-                      child: (_controller.searchTextController.text.isEmpty)
-                          ? Column(
-                              children: [
-                                IntroVideo(),
-                                SizedBox(height: 24.h),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 20.w),
-                                  child: const Divider(thickness: 1),
-                                ),
-                                SizedBox(height: 24.h),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 16.w),
-                                  child: Text(
-                                    "Features Video Updates",
-                                    style: TextStyle(
-                                      fontSize: 18.h,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.iconRed,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(height: 10.h),
-                                _buildCommingSoon(),
-                                SizedBox(height: 10.h),
-                                _buildModules(),
-                                SizedBox(height: 24.h),
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: EdgeInsets.only(left: 16.w),
-                                  child: Text(
-                                    "All Modules",
-                                    style: TextStyle(
-                                        fontSize: 16.h,
-                                        color: AppColors.iconRed,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 24.w),
-                                    child: ListView.builder(
-                                      itemCount: _controller.videos.length,
-                                      shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) => InkWell(
-                                        onTap: () {
-                                          Get.toNamed(AppRoute.studyModule);
-                                        },
-                                        child: ModuleTile(
-                                          description: _controller
-                                              .videos[index].description,
-                                          title:
-                                              _controller.videos[index].title,
-                                          index: index + 1,
-                                          duration: _controller
-                                              .videos[index].duration,
-                                          session:
-                                              _controller.videos[index].session,
-                                        ),
-                                      ),
-                                    )),
-                              ],
-                            )
-                          : Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10.w),
-                              child: _controller.showVideos.isEmpty
-                                  ? Text(
-                                      "Data not found",
-                                      style: TextStyle(
-                                          fontSize: 14.h,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  : ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: _controller.showVideos.length,
-                                      itemBuilder: (context, index) => InkWell(
-                                        onTap: () {
-                                          Get.toNamed(AppRoute.studyModule);
-                                        },
-                                        child: ModuleTile(
-                                          description: _controller
-                                              .showVideos[index].description,
-                                          title: _controller
-                                              .showVideos[index].title,
-                                          index: index,
-                                          duration: _controller
-                                              .showVideos[index].duration,
-                                          session: _controller
-                                              .showVideos[index].session,
-                                        ),
-                                      ),
-                                    ),
-                            ));
-                }),
-            SizedBox(height: 24.h),
-          ],
-        )),
-      ),
-    );
+        body: GetBuilder(
+          init: _controller,
+          id: "Loading Screen",
+          builder: (controller) => SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Center(
+                child: _controller.screenState == ScreenState.loading
+                    ? const ShimmerLoadingPage()
+                    : _controller.screenState == ScreenState.error
+                        ? Container(
+                            child: const Text("Error"),
+                          )
+                        : Column(
+                            children: [
+                              SizedBox(height: 16.h),
+                              _buildSearchField(),
+                              SizedBox(height: 20.h),
+                              GetBuilder(
+                                  init: _controller,
+                                  id: "HomeSearch",
+                                  builder: (_) {
+                                    return SizedBox(
+                                        child: (_controller.searchTextController
+                                                .text.isEmpty)
+                                            ? Column(
+                                                children: [
+                                                  IntroVideo(),
+                                                  SizedBox(height: 24.h),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20.w),
+                                                    child: const Divider(
+                                                        thickness: 1),
+                                                  ),
+                                                  SizedBox(height: 24.h),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    padding: EdgeInsets.only(
+                                                        left: 16.w),
+                                                    child: Text(
+                                                      "Features Video Updates",
+                                                      style: TextStyle(
+                                                        fontSize: 18.h,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        color:
+                                                            AppColors.iconRed,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 10.h),
+                                                  _buildCommingSoon(),
+                                                  SizedBox(height: 10.h),
+                                                  _buildModules(),
+                                                  SizedBox(height: 24.h),
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    padding: EdgeInsets.only(
+                                                        left: 16.w),
+                                                    child: Text(
+                                                      "All Modules",
+                                                      style: TextStyle(
+                                                          fontSize: 16.h,
+                                                          color:
+                                                              AppColors.iconRed,
+                                                          fontWeight:
+                                                              FontWeight.w700),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 24.w),
+                                                      child: ListView.builder(
+                                                        itemCount: _controller
+                                                            .studyModuleList
+                                                            .length,
+                                                        shrinkWrap: true,
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        itemBuilder:
+                                                            (context, index) =>
+                                                                InkWell(
+                                                          onTap: () {
+                                                            Get.toNamed(
+                                                                AppRoute
+                                                                    .studyModule,
+                                                                arguments:
+                                                                    _controller
+                                                                            .studyModuleList[
+                                                                        index]);
+                                                          },
+                                                          child: ModuleTile(
+                                                            description: _controller
+                                                                .studyModuleList[
+                                                                    index]
+                                                                .moduleDesc,
+                                                            title: _controller
+                                                                .studyModuleList[
+                                                                    index]
+                                                                .moduleName,
+                                                            index: index + 1,
+                                                            duration:
+                                                                "5hr 20min",
+                                                            session: _controller
+                                                                .studyModuleList[
+                                                                    index]
+                                                                .noOfSessions,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ],
+                                              )
+                                            : Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.w),
+                                                child: _controller
+                                                        .showStudyModuleList
+                                                        .isEmpty
+                                                    ? Text(
+                                                        "Data not found",
+                                                        style: TextStyle(
+                                                            fontSize: 14.h,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      )
+                                                    : ListView.builder(
+                                                        shrinkWrap: true,
+                                                        itemCount: _controller
+                                                            .showStudyModuleList
+                                                            .length,
+                                                        itemBuilder:
+                                                            (context, index) =>
+                                                                InkWell(
+                                                          onTap: () {
+                                                            Get.toNamed(
+                                                                AppRoute
+                                                                    .studyModule,
+                                                                arguments:
+                                                                    _controller
+                                                                            .showStudyModuleList[
+                                                                        index]);
+                                                          },
+                                                          child: ModuleTile(
+                                                            description: _controller
+                                                                .showStudyModuleList[
+                                                                    index]
+                                                                .moduleDesc,
+                                                            title: _controller
+                                                                .showStudyModuleList[
+                                                                    index]
+                                                                .moduleName,
+                                                            index: index,
+                                                            duration: _controller
+                                                                .showStudyModuleList[
+                                                                    index]
+                                                                .batchOpenDate
+                                                                .toString(),
+                                                            session: _controller
+                                                                .showStudyModuleList[
+                                                                    index]
+                                                                .noOfSessions,
+                                                          ),
+                                                        ),
+                                                      ),
+                                              ));
+                                  }),
+                              SizedBox(height: 24.h),
+                            ],
+                          )),
+          ),
+        ));
   }
 
   Column _buildModules() {

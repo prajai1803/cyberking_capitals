@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/widgets/dotted_divider.dart';
@@ -23,6 +24,12 @@ class PromoWidget extends StatelessWidget {
                 height: 180.h,
                 decoration: BoxDecoration(
                     color: Colors.grey,
+                    image: const DecorationImage(
+                      image: CachedNetworkImageProvider(
+                        "https://static-cse.canva.com/blob/1396717/1600w-wK95f3XNRaM.jpg",
+                      ),
+                      fit: BoxFit.fill,
+                    ),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15.r),
                         topRight: Radius.circular(15.r)))),

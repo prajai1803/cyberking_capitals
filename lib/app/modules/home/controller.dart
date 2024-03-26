@@ -1,48 +1,49 @@
-import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/core/values/enums.dart';
+import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/study_module_model.dart';
+import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/modules/home/repository.dart';
+import 'package:cyberking_capitals/app/utils/custom_exception.dart';
+import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class HomeController extends GetxController {
+  final HomeRepository _homeRepository =
+      HomeRepository(apiProvider: ApiProvider());
   late final VideoPlayerController introVPC;
+  List<FeatureVideoModel> featureVideoList = [];
+  List<StudyModuleModel> studyModuleList = [];
   final TextEditingController searchTextController = TextEditingController();
+  List<StudyModuleModel> showStudyModuleList = [];
 
-  List<VideoModel> videos = [
-    VideoModel(
-      videoId: "fd",
-      title: "Technical Analysis Module",
-      description:
-          "This meta-description generator uses a machine learning to generate short description ideas for your articles.",
-      duration: "7 hr 30 min",
-      session: 8,
-      videoUrl: "fsfdsfsd",
-    ),
-    VideoModel(
-      videoId: "fd",
-      title: "Java",
-      description:
-          "This meta-description generator uses a machine learning to generate short description ideas for your articles.",
-      duration: "2 hr 12 min",
-      session: 2,
-      videoUrl: "fsfdsfsd",
-    ),
-    VideoModel(
-      videoId: "fd",
-      title: "Cyber",
-      description:
-          "This meta-description generator uses a machine learning to generate short description ideas for your articles.",
-      duration: "5 hr 30 min",
-      session: 8,
-      videoUrl: "fsfdsfsd",
-    )
-  ];
-
-  List<VideoModel> showVideos = [];
+  ScreenState screenState = ScreenState.loading;
 
   @override
   void onInit() {
     _initIntroVideo();
+    fetchInitialData();
     super.onInit();
+  }
+
+  void fetchInitialData() async {
+    try {
+      screenState = ScreenState.loading;
+      update();
+      await getAllModule();
+      // await getFeatureVideo();
+      screenState = ScreenState.loaded;
+      update(["Loading Screen"]);
+    } on ApiStatusException catch (e) {
+      CommonAlerts.showErrorSnack(message: e.message);
+      screenState = ScreenState.error;
+      update(["Loading Screen"]);
+    } catch (e) {
+      CommonAlerts.showErrorSnack(message: e.toString());
+      screenState = ScreenState.error;
+      update(["Loading Screen"]);
+    }
   }
 
   void _initIntroVideo() async {
@@ -63,13 +64,51 @@ class HomeController extends GetxController {
     super.dispose();
   }
 
+  Future<void> getFeatureVideo() async {
+    try {
+      final Response? res = await _homeRepository.getFeatureVideoList();
+      List<FeatureVideoModel> tempList = [];
+      if (res != null) {
+        if (res.statusCode == 200) {
+          final decode = res.body as List;
+          for (var element in decode) {
+            tempList.add(FeatureVideoModel.fromJson(element));
+          }
+          featureVideoList = tempList;
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> getAllModule() async {
+    try {
+      final Response? res = await _homeRepository.getModuleByRankList(2);
+      print("res === ${res!.body}");
+      List<StudyModuleModel> tempList = [];
+
+      if (res != null) {
+        if (res.statusCode == 200) {
+          final decode = res.body["DATA"] as List;
+          for (var element in decode) {
+            tempList.add(StudyModuleModel.fromJson(element));
+          }
+          studyModuleList = tempList;
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   void searchModule(String? value) {
     searchTextController.text.trim();
     if (value != null) {
-      showVideos = videos;
-      showVideos = videos
+      showStudyModuleList = studyModuleList;
+      showStudyModuleList = showStudyModuleList
           .where((element) =>
-              element.title!.toLowerCase().contains(value.toLowerCase()))
+              element.moduleName!.toLowerCase().contains(value.toLowerCase()))
           .toList();
     }
     update(["HomeSearch"]);
