@@ -85,7 +85,7 @@ class HomeController extends GetxController {
   Future<void> getAllModule() async {
     try {
       final Response? res = await _homeRepository.getModuleByRankList(2);
-      print("res === ${res!.body}");
+
       List<StudyModuleModel> tempList = [];
 
       if (res != null) {
