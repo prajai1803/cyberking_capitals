@@ -1,7 +1,10 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
-import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/routes/routes.dart';
+import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'widgets/logout.dart';
 import 'widgets/profile_button.dart';
 
@@ -31,56 +34,75 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
         children: [
           SizedBox(height: 32.h),
-          Container(
-            height: 96.h,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 10.w),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(15.r)),
-            child: Row(children: [
-              Padding(
-                padding: EdgeInsets.all(16.r),
-                child: CircleAvatar(
-                  radius: 32.r,
-                  child: Image.asset(AppImages.achievments),
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoute.editProfile);
+            },
+            child: Container(
+              height: 96.h,
+              width: double.infinity,
+              margin: EdgeInsets.symmetric(horizontal: 10.w),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.r)),
+              child: Row(children: [
+                Padding(
+                    padding: EdgeInsets.all(16.r),
+                    child: const CircleCachedImage(
+                      imageUrl: "dsd",
+                      radius: 32,
+                    )),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Krutika Singh",
+                      style: TextStyle(
+                          fontSize: 16.h, fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      "KrutikaSingh180@ckc.com",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 10.h,
+                          color: AppColors.textBlack3),
+                    )
+                  ],
                 ),
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Krutika Singh",
-                    style:
-                        TextStyle(fontSize: 16.h, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 8.h),
-                  Text(
-                    "KrutikaSingh180@ckc.com",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10.h,
-                        color: AppColors.textBlack3),
-                  )
-                ],
-              ),
-            ]),
+              ]),
+            ),
           ),
           SizedBox(height: 16.h),
           ProfileButton(
-            onTap: () {},
-            title: "MemberShip",
+            onTap: () {
+              Get.toNamed(AppRoute.membership,
+                  arguments: VideoModel(
+                      description:
+                          "This meta-description generator uses machine learning",
+                      title: "Technical Analysis Module",
+                      duration: "20 min",
+                      session: 2,
+                      videoId: "VideoId",
+                      videoUrl: "ulr"));
+            },
+            title: "Membership",
             iconData: Icons.wallet_membership_outlined,
           ),
           SizedBox(height: 16.h),
           ProfileButton(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoute.myAchievement);
+            },
             title: "Certificate",
             iconData: Icons.celebration,
           ),
           SizedBox(height: 16.h),
           ProfileButton(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoute.refer);
+            },
             title: "Invite Friends",
             iconData: Icons.group,
           ),

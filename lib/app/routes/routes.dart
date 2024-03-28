@@ -16,4 +16,12 @@ class AppRoute {
   // quiz
   static const quiz = '/quiz';
   static const quizResult = '/quizResult';
+
+  // profile
+  static const editProfile = '/editProfile';
+  static const myAchievement = '/myAchievement';
+  static const membership = '/membership';
+
+  // refer
+  static const refer = '/refer';
 }

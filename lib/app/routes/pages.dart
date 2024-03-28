@@ -7,9 +7,15 @@ import 'package:cyberking_capitals/app/modules/base/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view/module_video.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
+import 'package:cyberking_capitals/app/modules/profile/bindings.dart';
+import 'package:cyberking_capitals/app/modules/profile/view/edit_profile.dart';
+import 'package:cyberking_capitals/app/modules/profile/view/membership.dart';
+import 'package:cyberking_capitals/app/modules/profile/view/my_achievement.dart';
 import 'package:cyberking_capitals/app/modules/quiz/bindings.dart';
 import 'package:cyberking_capitals/app/modules/quiz/view.dart';
 import 'package:cyberking_capitals/app/modules/quiz/view/quiz_result.dart';
+import 'package:cyberking_capitals/app/modules/refer/bindings.dart';
+import 'package:cyberking_capitals/app/modules/refer/view.dart';
 import 'package:cyberking_capitals/app/modules/splash/binding.dart';
 import 'package:cyberking_capitals/app/modules/splash/view.dart';
 import 'package:cyberking_capitals/app/modules/study_module/binding.dart';
@@ -89,11 +95,38 @@ class AppPages {
       transition: Transition.cupertinoDialog,
     ),
     GetPage(
-      title: "Quiz",
+      title: "Quiz Result",
       name: AppRoute.quizResult,
       page: () => QuizResultScreen(),
       binding: QuizBindings(),
       transition: Transition.downToUp,
-    )
+    ),
+    GetPage(
+      title: "Profile Edit",
+      name: AppRoute.editProfile,
+      page: () => EditProfileScreen(),
+      binding: ProfileBinding(),
+      transition: Transition.cupertinoDialog,
+    ),
+    GetPage(
+      title: "My Achievement",
+      name: AppRoute.myAchievement,
+      page: () => const MyAchievementScreen(),
+      binding: ProfileBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: 'Membership',
+      name: AppRoute.membership,
+      page: () => const MembershipScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: "Refer",
+      name: AppRoute.refer,
+      page: () => ReferScreen(),
+      binding: ReferBinding(),
+      transition: Transition.rightToLeft,
+    ),
   ];
 }

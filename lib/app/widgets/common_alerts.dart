@@ -35,4 +35,20 @@ class CommonAlerts {
       barBlur: 10,
     ));
   }
+
+  static showSuccessSnack({String? message}) {
+    return Get.showSnackbar(GetSnackBar(
+      message: message ?? "Something went wrong",
+      isDismissible: true,
+      duration: const Duration(seconds: 1),
+      dismissDirection: DismissDirection.horizontal,
+      leftBarIndicatorColor: Colors.green,
+      shouldIconPulse: true,
+      snackPosition: SnackPosition.values[0],
+      snackStyle: SnackStyle.FLOATING,
+      animationDuration: const Duration(seconds: 1),
+      margin: const EdgeInsets.only(top: 20),
+      barBlur: 10,
+    ));
+  }
 }
