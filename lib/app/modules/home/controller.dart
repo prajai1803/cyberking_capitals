@@ -22,7 +22,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    _initIntroVideo();
     fetchInitialData();
     super.onInit();
   }
@@ -30,13 +29,13 @@ class HomeController extends GetxController {
   void fetchInitialData() async {
     try {
       screenState = ScreenState.loading;
-      update();
+      update(["Loading Screen"]);
+      _initIntroVideo();
       await getAllModule();
-      // await getFeatureVideo();
+
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
-    } on ApiStatusException catch (e) {
-      CommonAlerts.showErrorSnack(message: e.message);
+    } on ApiStatusException catch (_) {
       screenState = ScreenState.error;
       update(["Loading Screen"]);
     } catch (e) {
