@@ -18,4 +18,8 @@ class AppColors {
   static const chartOrange = Color(0xeFE09C32);
   static const chartPink = Color(0xeFF2C8CA);
   static const chartGreen = Color(0xeFA5CC65);
+
+  // refer
+  static const referBG1 = Color(0xeF1F0091);
+  static const referBG2 = Color(0xeF8A06FA);
 }

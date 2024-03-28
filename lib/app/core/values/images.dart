@@ -28,4 +28,13 @@ class AppImages {
   static const tropy = 'images/quiz/tropy.png';
   static const ribon = 'images/quiz/ribon.png';
   static const redLogo = 'images/quiz/red_logo.png';
+
+  // profile
+  static const star = 'images/profile/Star.png';
+  static const camera = 'images/profile/Camera.png';
+  static const medal = 'images/profile/medal.png';
+
+  // refer
+  static const bigGift = 'images/refer/refer_gift.png';
+  static const rupee = 'images/refer/rupee.png';
 }
