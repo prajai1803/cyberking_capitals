@@ -12,49 +12,60 @@ class QuizResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.close, size: 24.h),
-          onPressed: () {
-            Get.back();
-          },
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        Get.back();
+        Get.back();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.close, size: 24.h),
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
+          ),
+          title: const Text("Quiz Result"),
+          centerTitle: true,
         ),
-        title: const Text("Quiz Result"),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 48.h, left: 24.w, right: 24.w),
-              child: Image.asset(AppImages.tropy),
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              "Congratulations",
-              style: TextStyle(fontFamily: "Playball", fontSize: 32.h),
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              "YOUR SCORE",
-              style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w400),
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              "${_controller.correctAnserCount}/${_controller.dataList.length}",
-              style: TextStyle(
-                  fontSize: 32.h,
-                  color: AppColors.secondary,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Rakkas"),
-            ),
-            Text(
-              "You did a great job, Learn more by taking\nanother quiz.",
-              style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w500),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        body: Center(
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 48.h, left: 24.w, right: 24.w),
+                child: Image.asset(AppImages.tropy),
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                "Congratulations",
+                style: TextStyle(fontFamily: "Playball", fontSize: 32.h),
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                "YOUR SCORE",
+                style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w400),
+              ),
+              SizedBox(height: 12.h),
+              Text(
+                "${_controller.correctAnserCount}/${_controller.dataList.length}",
+                style: TextStyle(
+                    fontSize: 32.h,
+                    color: AppColors.secondary,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Rakkas"),
+              ),
+              Text(
+                "You did a great job, Learn more by taking\nanother quiz.",
+                style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w500),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );

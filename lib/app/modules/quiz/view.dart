@@ -1,6 +1,7 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/modules/quiz/controller.dart';
 import 'package:cyberking_capitals/app/modules/study_module/widgets/glow_button.dart';
+import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -90,31 +91,48 @@ class _QuizState extends State<QuizScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // previous button
+                        // InkWell(
+                        //   onTap: () {
+                        //     _controller.previousPage();
+                        //   },
+                        //   child: Container(
+                        //     padding: EdgeInsets.all(6.r),
+                        //     decoration: BoxDecoration(
+                        //       color: _controller.getCurrentPage() == 0
+                        //           ? Colors.grey[400]
+                        //           : Colors.green[100],
+                        //       shape: BoxShape.circle,
+                        //     ),
+                        //     child: Icon(
+                        //       Icons.arrow_back_ios_new_outlined,
+                        //       size: 11.h,
+                        //     ),
+                        //   ),
+                        // ),
                         InkWell(
                           onTap: () {
                             _controller.previousPage();
                           },
                           child: Container(
                             padding: EdgeInsets.all(6.r),
-                            decoration: BoxDecoration(
-                              color: _controller.getCurrentPage() == 0
-                                  ? Colors.grey[400]
-                                  : Colors.green[100],
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              Icons.arrow_back_ios_new_outlined,
-                              size: 11.h,
-                            ),
                           ),
                         ),
+
                         _controller.getCurrentPage() ==
                                 _controller.dataList.length - 1
                             ? GlowButton(
                                 text: "Submit",
                                 color: AppColors.secondary,
                                 onTap: () {
-                                  _controller.submit();
+                                  if (_controller.selectedAnswerList[
+                                          _controller.getCurrentPage()] ==
+                                      null) {
+                                    CommonAlerts.showErrorSnack(
+                                        message: "Please select any options");
+                                  } else {
+                                    _controller.submit();
+                                  }
                                 },
                               )
                             : Text(
@@ -129,7 +147,14 @@ class _QuizState extends State<QuizScreen> {
                             ? Container()
                             : InkWell(
                                 onTap: () {
-                                  _controller.nextPage();
+                                  if (_controller.selectedAnswerList[
+                                          _controller.getCurrentPage()] ==
+                                      null) {
+                                    CommonAlerts.showErrorSnack(
+                                        message: "Please select any options");
+                                  } else {
+                                    _controller.nextPage();
+                                  }
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(6.r),

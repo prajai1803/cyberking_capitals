@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class QuizController extends GetxController {
   int curentPage = 0;
   late final PageController pageController;
-  late List<int> selectedAnswerList;
+  late List<int?> selectedAnswerList;
 
   int correctAnserCount = 0;
 
@@ -39,7 +39,7 @@ class QuizController extends GetxController {
     isLoading = true;
     update();
     pageController = PageController(initialPage: 0);
-    selectedAnswerList = List.generate(dataList.length, (index) => 0);
+    selectedAnswerList = List.generate(dataList.length, (index) => null);
     isLoading = false;
     update();
     super.onInit();
@@ -75,7 +75,6 @@ class QuizController extends GetxController {
     final correctAnswerList = dataList.map((e) => e['answer']).toList();
     int matchCount = 0;
 
-    // Iterate through both lists simultaneously
     for (int i = 0; i < correctAnswerList.length; i++) {
       if (correctAnswerList[i] == selectedAnswerList[i]) {
         matchCount++;
