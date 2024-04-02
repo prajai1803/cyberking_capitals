@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/widgets/comming_soon.dart';
 import 'package:flutter/material.dart';
 
 class BookMarkScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("BookMark")),
+      body: CommingSoon(),
     );
   }
 }

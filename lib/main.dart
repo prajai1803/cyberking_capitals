@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/data/services/remote_config/remote_config.dart';
 import 'package:cyberking_capitals/app/routes/pages.dart';
 import 'package:cyberking_capitals/app/utils/initial_binding.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  await FirebaseRemoteConfiguarion.init();
   runApp(const CyberKingCapitals());
 }
 
@@ -27,12 +29,12 @@ class CyberKingCapitals extends StatelessWidget {
             initialBinding: AppInitailBinding(),
             theme: ThemeData(
               useMaterial3: false,
-              appBarTheme: const AppBarTheme(
+              appBarTheme: AppBarTheme(
                   color: Colors.transparent,
                   elevation: 0,
-                  iconTheme: IconThemeData(color: Colors.black),
+                  iconTheme: const IconThemeData(color: Colors.black),
                   titleTextStyle: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.h,
                       fontWeight: FontWeight.w600,
                       color: Colors.black)),
               scaffoldBackgroundColor: Colors.white,

@@ -23,6 +23,7 @@ class AppImages {
   static const union = 'images/home/union.png';
   static const progressIcon = 'images/home/ProgressIcon.png';
   static const moduleIcon = 'images/home/Modules.png';
+  static const commingSoon = 'images/home/Coming_soon.png';
 
   // quiz
   static const tropy = 'images/quiz/tropy.png';

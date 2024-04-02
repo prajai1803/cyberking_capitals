@@ -1,8 +1,11 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/icons.dart';
+import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
 import 'package:cyberking_capitals/app/modules/community/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
 import 'package:cyberking_capitals/app/modules/profile/view.dart';
+import 'package:cyberking_capitals/app/utils/network_manager.dart';
+import 'package:cyberking_capitals/app/widgets/no_internet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -43,11 +46,19 @@ class _AppBaseScreenState extends State<AppBaseScreen>
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> screens = const [
-      HomeScreen(),
-      CommunityScreen(),
-      CommunityScreen(),
-      ProfileScreen(),
+    List<Widget> screens = [
+      GetBuilder<NetworkManagerController>(
+          init: NetworkManagerController(),
+          builder: (controller) {
+            if (controller.connectionType > 0) {
+              return const HomeScreen();
+            } else {
+              return const NoInternetScreen();
+            }
+          }),
+      const CommunityScreen(),
+      const BookMarkScreen(),
+      const ProfileScreen(),
     ];
 
     return Scaffold(
