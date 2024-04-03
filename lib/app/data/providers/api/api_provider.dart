@@ -38,6 +38,21 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> getProfile(String email) async {
+    try {
+      final res = await _apiService
+          .get(url: ApiRoutes.getProfile, header: {"email": email});
+      if (res.statusCode == 200) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   void _checkException(Response<dynamic> res) {
     if (res.statusCode == 404) {
       throw ApiStatusException(message: "Url Not Found");

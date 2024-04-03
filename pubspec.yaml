@@ -34,6 +34,7 @@ dependencies:
   package_info_plus: ^5.0.1
   connectivity_plus: ^5.0.2
   firebase_remote_config: ^4.3.17
+  lazy_load_indexed_stack: ^1.1.0
 
 dev_dependencies:
   flutter_test:

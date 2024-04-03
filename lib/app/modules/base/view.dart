@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 
 import 'controller.dart';
 import 'widgets/rounded_tab_indicator.dart';
@@ -62,7 +63,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
     ];
 
     return Scaffold(
-      body: Obx(() => IndexedStack(
+      body: Obx(() => LazyLoadIndexedStack(
           index: _controller.currentIndex.value, children: screens)),
       bottomNavigationBar: SizedBox(
         width: double.infinity,

@@ -5,8 +5,8 @@ class ApiService extends GetxService {
     timeout: const Duration(seconds: 15),
   );
 
-  final String baseUrl = 'https://appx-dev.onrender.com'; // prod
-  // final String baseUrl = 'http://192.168.29.217:8000'; // local
+  // final String baseUrl = 'https://appx-dev.onrender.com'; // prod
+  final String baseUrl = 'http://192.168.29.217:8000'; // local
 
   Future<Response> get(
       {required String url,

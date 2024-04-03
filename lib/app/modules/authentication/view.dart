@@ -72,6 +72,9 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        _controller.test();
+      }),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Form(

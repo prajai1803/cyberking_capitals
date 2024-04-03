@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/firebase_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
@@ -29,7 +30,8 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    _authRepositry = AuthRepositry(firebaseProvider: FirebaseProvider());
+    _authRepositry = AuthRepositry(
+        firebaseProvider: FirebaseProvider(), apiProvider: ApiProvider());
     super.onInit();
   }
 
@@ -55,11 +57,15 @@ class AuthController extends GetxController {
       if (userCredential != null) {
         UserModel userModel = UserModel(
           email: userCredential.user!.email,
-          displayName: userCredential.user!.displayName,
-          phoneNumber: userCredential.user!.phoneNumber,
-          photoUrl: userCredential.user!.photoURL,
-          uid: userCredential.user!.uid,
+          fullName: userCredential.user!.displayName ?? "",
+          contactNumber: userCredential.user!.phoneNumber ?? "",
+          whatsappNumber: userCredential.user!.photoURL ?? "",
+          userId: userCredential.user!.uid,
           emailVerified: userCredential.user!.emailVerified,
+          userType: "ST",
+          contactNumberVerified: false,
+          whatsappNumberVerified: false,
+          location: "",
         );
 
         if (userCredential.user != null) {
@@ -120,11 +126,15 @@ class AuthController extends GetxController {
         if (userCredential != null) {
           UserModel userModel = UserModel(
             email: userCredential.user!.email,
-            displayName: userCredential.user!.displayName ?? "",
-            phoneNumber: userCredential.user!.phoneNumber ?? "",
-            photoUrl: userCredential.user!.photoURL ?? "",
-            uid: userCredential.user!.uid,
+            fullName: userCredential.user!.displayName ?? "",
+            contactNumber: userCredential.user!.phoneNumber ?? "",
+            whatsappNumber: userCredential.user!.photoURL ?? "",
+            userId: userCredential.user!.uid,
             emailVerified: userCredential.user!.emailVerified,
+            userType: "ST",
+            contactNumberVerified: false,
+            whatsappNumberVerified: false,
+            location: "",
           );
           if (userCredential.user != null) {
             final token = await userCredential.user!.getIdToken();
@@ -141,6 +151,18 @@ class AuthController extends GetxController {
         CommonAlerts.showErrorSnack();
       }
     }
+  }
+
+  void test() async {
+    // final Response? res = await _authRepositry.getProfile("test4@gmail.com");
+    // if (res != null) {
+    //   if (res.body['data'] != null) {
+    //     UserModel userModel = UserModel.fromJson(res.body["data"]);
+
+    //   } else {
+    //     CommonAlerts.showErrorSnack(message: res.body["msg"]);
+    //   }
+    // } else {}
   }
 
   void updatePasswordVisiblity() {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,8 @@ class EditProfileController extends GetxController {
 
   final ImagePicker _imagePicker = ImagePicker();
 
+  UserModel userModel = Get.arguments as UserModel;
+
   @override
   void onInit() {
     _initTextEditingControler();
@@ -41,6 +44,10 @@ class EditProfileController extends GetxController {
     emailController = TextEditingController();
     dobController = TextEditingController();
     locationController = TextEditingController();
+
+    nameController.text = userModel.fullName ?? "";
+    emailController.text = userModel.email ?? "";
+    // contactController.text usermo
   }
 
   void _disposeTextEditingController() {
@@ -114,5 +121,9 @@ class EditProfileController extends GetxController {
     } else {
       CommonAlerts.showErrorSnack(message: "Date is not selected");
     }
+  }
+
+  void updateProfile() {
+    if (profileFormKey.currentState!.validate()) {}
   }
 }

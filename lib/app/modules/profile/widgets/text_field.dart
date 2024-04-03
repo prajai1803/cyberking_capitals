@@ -45,6 +45,14 @@ class ProfileTextFormField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.grey),
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
         labelText: labeltext,
         counterStyle: Theme.of(context).textTheme.bodyLarge,
         helperStyle: Theme.of(context).textTheme.bodyLarge,

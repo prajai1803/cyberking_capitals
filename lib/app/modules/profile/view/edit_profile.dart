@@ -161,8 +161,15 @@ class EditProfileScreen extends StatelessWidget {
                 children: [
                   Container(height: 80.h),
                   ProfileTextFormField(
-                      labeltext: "Name",
-                      controller: _controller.nameController),
+                    labeltext: "Name",
+                    controller: _controller.nameController,
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "can't be null";
+                      }
+                      return null;
+                    },
+                  ),
                   SizedBox(height: 24.h),
                   ProfileTextFormField(
                       labeltext: "Contact Number",
@@ -219,7 +226,7 @@ class EditProfileScreen extends StatelessWidget {
                   const Spacer(),
                   AppElevatedButton(
                     text: "UPDATE PROFILE",
-                    onPressed: () {},
+                    onPressed: () => _controller.updateProfile(),
                   ),
                   SizedBox(height: 24.h),
                 ],

@@ -1,5 +1,6 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/modules/profile/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _controller = Get.put(ProfileController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        _controller.getProfile();
+      }),
       backgroundColor: const Color(0xeFF5F6FB),
       appBar: AppBar(
         title: Text(
@@ -36,7 +42,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 32.h),
           InkWell(
             onTap: () {
-              Get.toNamed(AppRoute.editProfile);
+              Get.toNamed(AppRoute.editProfile,
+                  arguments: _controller.userModel);
             },
             child: Container(
               height: 96.h,
@@ -52,24 +59,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       imageUrl: "dsd",
                       radius: 32,
                     )),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Krutika Singh",
-                      style: TextStyle(
-                          fontSize: 16.h, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      "KrutikaSingh180@ckc.com",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 10.h,
-                          color: AppColors.textBlack3),
-                    )
-                  ],
+                GetBuilder(
+                  init: _controller,
+                  id: "Profile",
+                  initState: (_) {},
+                  builder: (_) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _controller.userModel.fullName ?? "",
+                          style: TextStyle(
+                              fontSize: 16.h, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          _controller.userModel.email ?? "",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 10.h,
+                              color: AppColors.textBlack3),
+                        )
+                      ],
+                    );
+                  },
                 ),
               ]),
             ),
