@@ -1,6 +1,7 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/modules/attendence/view/scanner.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
@@ -34,30 +35,43 @@ class _HomeScreenState extends State<HomeScreen> {
           leading: Padding(
             padding: EdgeInsets.only(left: 16.w),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleCachedImage(
-                  imageUrl: "",
-                  radius: 16.r,
-                ),
-                SizedBox(width: 12.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
                   children: [
-                    Text(
-                      "Hi Traders",
-                      style: TextStyle(
-                          fontSize: 16.h,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
+                    CircleCachedImage(
+                      imageUrl: "",
+                      radius: 16.r,
                     ),
-                    Text(
-                      "Let’s start learning",
-                      style: TextStyle(
-                          fontSize: 12.h, color: AppColors.textBlack3),
-                    )
+                    SizedBox(width: 12.w),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Hi Traders",
+                          style: TextStyle(
+                              fontSize: 16.h,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "Let’s start learning",
+                          style: TextStyle(
+                              fontSize: 12.h, color: AppColors.textBlack3),
+                        )
+                      ],
+                    ),
                   ],
-                )
+                ),
+                IconButton(
+                    onPressed: () {
+                      Get.to(() => QRScanner());
+                    },
+                    icon: Icon(
+                      Icons.qr_code_scanner,
+                      size: 24.h,
+                    ))
               ],
             ),
           ),
