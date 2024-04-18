@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
+import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class SplashController extends GetxController {
   double logoOpacity = 0;
@@ -23,14 +26,19 @@ class SplashController extends GetxController {
 
   void _checkAuth() async {
     final bool? isOnBoardingComplete = await sessionDB.getOnBoardingComplete();
-    final bool? isAuth = await sessionDB.getAuthStatus();
-    if (isAuth == null || isAuth == false) {
+    final String? isAuth = await sessionDB.getRefreshToken();
+    UserModel userModel = await StorageProvider().readUserModel();
+    if (isAuth == null || isAuth == false || JwtDecoder.isExpired(isAuth)) {
       Get.offAndToNamed(AppRoute.loginScreen);
     } else {
-      if (isOnBoardingComplete ?? false) {
-        Get.offAllNamed(AppRoute.appBase);
+      if (userModel.emailVerified == 1) {
+        if (isOnBoardingComplete ?? false) {
+          Get.offAllNamed(AppRoute.appBase);
+        } else {
+          Get.offAllNamed(AppRoute.onBoarding);
+        }
       } else {
-        Get.offAllNamed(AppRoute.onBoarding);
+        Get.offAllNamed(AppRoute.emailVerify, arguments: userModel.email);
       }
     }
   }

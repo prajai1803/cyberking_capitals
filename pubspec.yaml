@@ -2,7 +2,7 @@ name: cyberking_capitals
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -35,6 +35,8 @@ dependencies:
   connectivity_plus: ^5.0.2
   firebase_remote_config: ^4.3.17
   qr_code_scanner: ^1.0.1
+  speech_to_text: ^6.6.0
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

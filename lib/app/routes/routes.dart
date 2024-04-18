@@ -5,6 +5,8 @@ class AppRoute {
   static const signUp = '/signUp';
   static const forgetPassword = '/forgetPassword';
   static const onBoarding = '/onBoarding';
+  static const emailVerify = '/emailVerify';
+  static const forgetPasswordVerify = '/forgetPasswordVerify';
 
   static const appBase = '/appBase';
 
@@ -18,6 +20,7 @@ class AppRoute {
   static const quizResult = '/quizResult';
 
   // profile
+  static const profile = '/profile';
   static const editProfile = '/editProfile';
   static const myAchievement = '/myAchievement';
   static const membership = '/membership';

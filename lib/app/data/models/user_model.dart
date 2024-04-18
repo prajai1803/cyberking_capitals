@@ -9,66 +9,86 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  final String? uid;
-  final String? displayName;
+  final int? id;
+  final DateTime? createdAt;
+  final String? name;
   final String? email;
-  final String? gender;
-  final String? phoneNumber;
-  final String? photoUrl;
+  final int? emailVerified;
+  final String? mobileNumber;
+  final String? whatsappNumber;
+  final String? profilePhoto;
   final String? dateOfBirth;
-  final bool? emailVerified;
+  final String? location;
+  final String? password;
 
   UserModel({
-    this.uid,
-    this.displayName,
+    this.id,
+    this.createdAt,
+    this.name,
     this.email,
-    this.gender,
-    this.phoneNumber,
-    this.photoUrl,
-    this.dateOfBirth,
     this.emailVerified,
+    this.mobileNumber,
+    this.whatsappNumber,
+    this.dateOfBirth,
+    this.location,
+    this.profilePhoto,
+    this.password,
   });
 
   UserModel copyWith({
-    String? uid,
-    String? displayName,
+    int? id,
+    DateTime? createdAt,
+    String? name,
     String? email,
-    String? gender,
-    String? phoneNumber,
-    String? photoUrl,
+    int? emailVerified,
+    String? mobileNumber,
+    String? whatsappNumber,
     String? dateOfBirth,
-    bool? emailVerified,
+    String? location,
+    String? profilePhoto,
+    String? password,
   }) =>
       UserModel(
-        uid: uid ?? this.uid,
-        displayName: displayName ?? this.displayName,
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        name: name ?? this.name,
         email: email ?? this.email,
-        gender: gender ?? this.gender,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        photoUrl: photoUrl ?? this.photoUrl,
-        dateOfBirth: dateOfBirth ?? this.dateOfBirth,
         emailVerified: emailVerified ?? this.emailVerified,
+        mobileNumber: mobileNumber ?? this.mobileNumber,
+        whatsappNumber: whatsappNumber ?? this.whatsappNumber,
+        profilePhoto: profilePhoto ?? this.profilePhoto,
+        dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+        location: location ?? this.location,
+        password: password ?? this.password,
       );
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        uid: json["uid"],
-        displayName: json["displayName"],
+        id: json["id"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        name: json["name"],
         email: json["email"],
-        gender: json["gender"],
-        phoneNumber: json["phoneNumber"],
-        photoUrl: json["photoUrl"],
-        dateOfBirth: json["dateOfBirth"],
-        emailVerified: json["emailVerified"],
+        emailVerified: json["email_verification"],
+        mobileNumber: json["mobile_number"],
+        whatsappNumber: json["whatsapp_number"],
+        profilePhoto: json["profile_photo"],
+        dateOfBirth: json["date_of_birth"],
+        location: json["location"],
+        password: json["password"],
       );
 
   Map<String, dynamic> toJson() => {
-        "uid": uid,
-        "displayName": displayName,
+        "id": id,
+        "created_at": createdAt?.toIso8601String(),
+        "name": name,
         "email": email,
-        "gender": gender,
-        "phoneNumber": phoneNumber,
-        "photoUrl": photoUrl,
-        "dateOfBirth": dateOfBirth,
-        "emailVerified": emailVerified,
+        "email_verification": emailVerified,
+        "mobile_number": mobileNumber,
+        "whatsapp_number": whatsappNumber,
+        "profile_photo": profilePhoto,
+        "date_of_birth": dateOfBirth,
+        "location": location,
+        "password": password,
       };
 }

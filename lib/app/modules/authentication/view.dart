@@ -94,9 +94,9 @@ class _LoginScreenState extends State<LoginScreen>
                     SizedBox(height: 32.h),
                     _buildLoginButton(),
                     SizedBox(height: 16.h),
-                    _buildDevider(),
-                    SizedBox(height: 16.h),
-                    _buildLoginWithGoogle(),
+                    // _buildDevider(),
+                    // SizedBox(height: 16.h),
+                    // _buildLoginWithGoogle(),
                     SizedBox(height: 12.h),
                     _buildAccount(),
                   ],
@@ -210,9 +210,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   Widget _buildLoginWithGoogle() {
     return InkWell(
-      onTap: () {
-        _controller.loginWithGoogle();
-      },
+      onTap: () {},
       child: Container(
         height: 48.h,
         width: double.infinity,
@@ -239,10 +237,20 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildLoginButton() {
-    return AppElevatedButton(
-      text: "LOGIN",
-      onPressed: () {
-        _controller.login();
+    return GetBuilder(
+      init: _controller,
+      initState: (_) {},
+      id: "Login Button",
+      builder: (_) {
+        return AppElevatedButton(
+          text: "LOGIN",
+          isLoading: _controller.isLoading,
+          onPressed: () {
+            if (!_controller.isLoading) {
+              _controller.login();
+            }
+          },
+        );
       },
     );
   }
@@ -275,8 +283,14 @@ class _LoginScreenState extends State<LoginScreen>
     return AppTextFormField(
       controller: _controller.emailTextEditingController,
       hint: 'Email/Mobile Number',
-      validator: (email) {
-        if (!AppValidator.emailValidtor(email!)) {
+      validator: (value) {
+        if (value!.startsWith(RegExp(r'^\d'))) {
+          if (value.length != 10) {
+            return "Number is not valid";
+          }
+          return null;
+        }
+        if (!AppValidator.emailValidtor(value)) {
           return "Invalid Email";
         }
         return null;

@@ -2,8 +2,8 @@ import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
 import 'package:cyberking_capitals/app/modules/community/view.dart';
+import 'package:cyberking_capitals/app/modules/history/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
-import 'package:cyberking_capitals/app/modules/profile/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
 import 'package:cyberking_capitals/app/widgets/no_internet.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
       GetBuilder<NetworkManagerController>(
           init: NetworkManagerController(),
           builder: (controller) {
-            if (controller.connectionType > 0) {
+            if (controller.connectionType != 0) {
               return const HomeScreen();
             } else {
               return const NoInternetScreen();
@@ -58,7 +58,8 @@ class _AppBaseScreenState extends State<AppBaseScreen>
           }),
       const CommunityScreen(),
       const BookMarkScreen(),
-      const ProfileScreen(),
+      // const ProfileScreen(),
+      const HistoryScreen()
     ];
 
     return Scaffold(
@@ -120,9 +121,9 @@ class _AppBaseScreenState extends State<AppBaseScreen>
             text: "Bookmark",
           ),
           Tab(
-            icon: ImageIcon(const AssetImage(AppIcons.profile), size: 24.h),
+            icon: Icon(Icons.history_toggle_off_outlined, size: 24.h),
             iconMargin: const EdgeInsets.symmetric(vertical: 6),
-            text: "Profile",
+            text: "History",
           ),
         ],
       ),

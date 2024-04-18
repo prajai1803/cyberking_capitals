@@ -33,11 +33,21 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(height: 12.h),
               _buildTnC(),
               SizedBox(height: 32.h),
-              AppElevatedButton(
-                  text: "CONTINUE",
-                  onPressed: () {
-                    _controller.signUp();
-                  }),
+              GetBuilder(
+                init: _controller,
+                initState: (_) {},
+                id: "Sign Up",
+                builder: (_) {
+                  return AppElevatedButton(
+                      text: "CONTINUE",
+                      isLoading: _controller.isLoading,
+                      onPressed: () {
+                        if (!_controller.isLoading) {
+                          _controller.signUp();
+                        }
+                      });
+                },
+              ),
               SizedBox(height: 16.h),
               _buildLogin(),
             ]),
@@ -155,6 +165,7 @@ class SignUpScreen extends StatelessWidget {
                 if (value == null || value.isEmpty) {
                   return "Please enter password";
                 }
+
                 return null;
               },
             );
@@ -173,6 +184,9 @@ class SignUpScreen extends StatelessWidget {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "Please enter password";
+                }
+                if (value != _controller.passwordTextEditingController.text) {
+                  return "Password does not match";
                 }
                 return null;
               },

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,10 +22,13 @@ class EditProfileController extends GetxController {
 
   final ImagePicker _imagePicker = ImagePicker();
 
+  final UserModel? currentUser = Get.arguments as UserModel?;
+
   @override
   void onInit() {
     _initTextEditingControler();
     _checkWhatsappCheckBox();
+
     super.onInit();
   }
 
@@ -34,6 +38,17 @@ class EditProfileController extends GetxController {
     super.dispose();
   }
 
+  void _intilizerControllerData() {
+    if (currentUser != null) {
+      nameController.text = currentUser?.name ?? "";
+      contactController.text = currentUser?.mobileNumber ?? "";
+      whatappController.text = currentUser?.mobileNumber ?? "";
+      emailController.text = currentUser?.email ?? "";
+      dobController.text = currentUser?.profilePhoto ?? "";
+      locationController.text = currentUser?.profilePhoto ?? "";
+    }
+  }
+
   void _initTextEditingControler() {
     nameController = TextEditingController();
     contactController = TextEditingController();
@@ -41,6 +56,8 @@ class EditProfileController extends GetxController {
     emailController = TextEditingController();
     dobController = TextEditingController();
     locationController = TextEditingController();
+
+    _intilizerControllerData();
   }
 
   void _disposeTextEditingController() {

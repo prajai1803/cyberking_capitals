@@ -1,12 +1,160 @@
 import 'package:cyberking_capitals/app/data/providers/api/api_routes.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/data/services/api/api_service.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ApiProvider {
   final ApiService _apiService = ApiService();
+  final SessionDB _sessionDB = SessionDB();
+
+  // authenciation
+  Future<Response?> login(String? email, String password, String? phone) async {
+    try {
+      final res = await _apiService.post(
+          url: ApiRoutes.login,
+          body: {"email": email, "password": password, "mobile_number": phone});
+      if (res.statusCode == 200) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> signUp(
+      String? email, String password, String? phone, String name) async {
+    try {
+      final res = await _apiService.post(url: ApiRoutes.signUp, body: {
+        "email": email,
+        "password": password,
+        "mobile": phone,
+        "role": "student",
+        "name": name
+      });
+      if (res.statusCode == 201) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> generateOtp(String email) async {
+    try {
+      final res = await _apiService
+          .post(url: ApiRoutes.generateOtp, body: {"email": email});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> forgetPasswordGenerateOtp(String email) async {
+    try {
+      final res = await _apiService.post(
+          url: ApiRoutes.forgetPasswordGenerateOTP, body: {"email": email});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> forgetPasswordVerifyOtp(
+      String email, String otp, String? newPassword) async {
+    try {
+      final res = await _apiService.post(
+          url: ApiRoutes.forgetPasswordVerifyOTP,
+          body: {"email": email, "otp": otp, "newPassword": newPassword});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> verifyOtp(String email, String otp) async {
+    try {
+      final res = await _apiService
+          .post(url: ApiRoutes.verifyOtp, body: {"email": email, "otp": otp});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  // profile
+  Future<Response?> getProfile() async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.get(
+          url: ApiRoutes.getProfile, header: {"Authorization": accessToken});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
 
   Future<Response> getModules() async {
+    return _apiService.get(url: ApiRoutes.getModules);
+  }
+
+  Future<Response> getToken() async {
     return _apiService.get(url: ApiRoutes.getModules);
   }
 
@@ -38,13 +186,25 @@ class ApiProvider {
     return null;
   }
 
-  void _checkException(Response<dynamic> res) {
-    if (res.statusCode == 404) {
-      throw ApiStatusException(message: "Url Not Found");
-    } else if (res.statusCode == 401) {
+  Future getAccessToken() async {
+    final String? token = await _sessionDB.getAccessToken();
+    if (token == null || JwtDecoder.isExpired(token)) {
       throw ApiStatusException(message: "Not Authorized");
+    } else {
+      return token;
+    }
+  }
+
+  void _checkException(Response<dynamic> res) {
+    String? msg = res.body['message'];
+    if (res.statusCode == 404) {
+      throw ApiStatusException(message: msg ?? "Url Not Found");
+    } else if (res.statusCode == 401) {
+      throw ApiStatusException(message: msg ?? "Not Authorized");
     } else if (res.statusCode == 500) {
-      throw ApiStatusException(message: "Server Error");
+      throw ApiStatusException(message: msg ?? "Server Error");
+    } else if (res.statusCode == 400) {
+      throw ApiStatusException(message: msg ?? "bad request");
     } else {
       throw ApiStatusException();
     }

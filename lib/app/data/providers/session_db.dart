@@ -3,13 +3,18 @@ import 'package:cyberking_capitals/app/data/services/storage/service.dart';
 class SessionDB extends StorageService {
   final StorageService _storageService = StorageService();
 
-  static const token = '_token_';
+  static const accessToken = 'accessToken';
+  static const refreshToken = 'refreshToken';
   static const userAuthStatus = '_authStatus_';
   static const isOnBoardingComplete = '_isOnBoaringComplete_';
 
   // write session data
-  Future<void> setToken(String? tokenValue) async {
-    _storageService.write(token, tokenValue);
+  Future<void> setAccessToken(String? tokenValue) async {
+    _storageService.write(accessToken, tokenValue);
+  }
+
+  Future<void> setRefreshToken(String? tokenValue) async {
+    _storageService.write(refreshToken, tokenValue);
   }
 
   void setAuthStatus(bool value) {
@@ -21,8 +26,12 @@ class SessionDB extends StorageService {
   }
 
   // read session data
-  Future<String?> getToken() async {
-    return _storageService.read(token);
+  Future<String?> getAccessToken() async {
+    return _storageService.read(accessToken);
+  }
+
+  Future<String?> getRefreshToken() async {
+    return _storageService.read(refreshToken);
   }
 
   Future<bool?> getAuthStatus() async {

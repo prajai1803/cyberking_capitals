@@ -7,7 +7,9 @@ import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:video_player/video_player.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class HomeController extends GetxController {
   final HomeRepository _homeRepository =
@@ -19,6 +21,9 @@ class HomeController extends GetxController {
   List<StudyModuleModel> showStudyModuleList = [];
 
   ScreenState screenState = ScreenState.loading;
+  final SpeechToText _speechToText = SpeechToText();
+
+  bool isVoiceRecording = false;
 
   @override
   void onInit() {
@@ -89,7 +94,8 @@ class HomeController extends GetxController {
 
       if (res != null) {
         if (res.statusCode == 200) {
-          final decode = res.body["DATA"] as List;
+          final decode = res.body["data"] as List;
+
           for (var element in decode) {
             tempList.add(StudyModuleModel.fromJson(element));
           }
@@ -98,6 +104,40 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  void speechRec() async {
+    // _speechToText = SpeechToText();
+    final isEnabled = await _speechToText.initialize(
+      onError: (errorNotification) {
+        isVoiceRecording = false;
+        update(["Mic"]);
+      },
+    );
+
+    if (isEnabled) {
+      isVoiceRecording = true;
+      update(["Mic"]);
+      try {
+        await _speechToText.listen(onResult: _onSpeechResult);
+      } catch (e) {
+        isVoiceRecording = false;
+        update(["Mic"]);
+      }
+    }
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) async {
+    try {
+      searchTextController.text = result.recognizedWords;
+      await Future.delayed(const Duration(seconds: 1));
+      isVoiceRecording = false;
+      update(["Mic"]);
+      searchModule(searchTextController.text);
+    } catch (e) {
+      isVoiceRecording = false;
+      update(["Mic"]);
     }
   }
 

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CircleCachedImage extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final double radius;
   const CircleCachedImage(
       {super.key, required this.imageUrl, required this.radius});
@@ -12,7 +12,7 @@ class CircleCachedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl:
+      imageUrl: imageUrl ??
           'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/220px-Image_created_with_a_mobile_phone.png',
       imageBuilder: (context, imageProvider) => Container(
         width: (radius * 2).r,

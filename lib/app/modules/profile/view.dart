@@ -1,5 +1,7 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/core/values/strings.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/modules/profile/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +18,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final _controller = Get.find<ProfileController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xeFF5F6FB),
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Icons.close,
+            color: Colors.black,
+            size: 24.h,
+          ),
+        ),
         title: Text(
           "Account",
           style: TextStyle(
@@ -36,42 +48,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 32.h),
           InkWell(
             onTap: () {
-              Get.toNamed(AppRoute.editProfile);
+              Get.toNamed(AppRoute.editProfile,
+                  arguments: _controller.currentUser);
             },
-            child: Container(
-              height: 96.h,
-              width: double.infinity,
-              margin: EdgeInsets.symmetric(horizontal: 10.w),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15.r)),
-              child: Row(children: [
-                Padding(
-                    padding: EdgeInsets.all(16.r),
-                    child: const CircleCachedImage(
-                      imageUrl: "dsd",
-                      radius: 32,
-                    )),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Krutika Singh",
-                      style: TextStyle(
-                          fontSize: 16.h, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      "KrutikaSingh180@ckc.com",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 10.h,
-                          color: AppColors.textBlack3),
-                    )
-                  ],
-                ),
-              ]),
+            child: GetBuilder(
+              init: _controller,
+              initState: (_) {},
+              id: "Profile Details",
+              builder: (_) {
+                return _controller.currentUser != null
+                    ? Container(
+                        height: 96.h,
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 10.w),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.r)),
+                        child: Row(children: [
+                          Padding(
+                              padding: EdgeInsets.all(16.r),
+                              child: _controller.currentUser!.profilePhoto !=
+                                      null
+                                  ? CircleCachedImage(
+                                      imageUrl:
+                                          _controller.currentUser!.profilePhoto,
+                                      radius: 32,
+                                    )
+                                  : const CircleCachedImage(
+                                      imageUrl: LongString.avatar,
+                                      radius: 32,
+                                    )),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _controller.currentUser?.name ?? "",
+                                style: TextStyle(
+                                    fontSize: 16.h,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                _controller.currentUser?.email ?? "",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 10.h,
+                                    color: AppColors.textBlack3),
+                              )
+                            ],
+                          ),
+                        ]),
+                      )
+                    : Container();
+              },
             ),
           ),
           SizedBox(height: 16.h),

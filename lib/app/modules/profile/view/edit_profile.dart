@@ -62,7 +62,7 @@ class EditProfileScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 62.r,
                   child: CircleCachedImage(
-                    imageUrl: "",
+                    imageUrl: null,
                     radius: 50.r,
                   ),
                 )
@@ -162,6 +162,7 @@ class EditProfileScreen extends StatelessWidget {
                   Container(height: 80.h),
                   ProfileTextFormField(
                       labeltext: "Name",
+                      readOnly: true,
                       controller: _controller.nameController),
                   SizedBox(height: 24.h),
                   ProfileTextFormField(
@@ -202,11 +203,12 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(height: 12.h),
                   ProfileTextFormField(
                       labeltext: "Email",
+                      readOnly: true,
                       controller: _controller.emailController),
                   SizedBox(height: 24.h),
                   ProfileTextFormField(
                       labeltext: "DOB",
-                      readOnly: true,
+                      readOnly: false,
                       onTap: () {
                         _controller.selectDate(context);
                       },

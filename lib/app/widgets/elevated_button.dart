@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppElevatedButton extends StatelessWidget {
   final String text;
+  final bool? isLoading;
   final void Function()? onPressed;
-  const AppElevatedButton({super.key, required this.text, this.onPressed});
+  const AppElevatedButton(
+      {super.key, required this.text, this.onPressed, this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +20,18 @@ class AppElevatedButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5))),
           onPressed: onPressed,
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 12.h,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          )),
+          child: isLoading!
+              ? const CircularProgressIndicator(
+                  color: Colors.white,
+                )
+              : Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 12.h,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                )),
     );
   }
 }

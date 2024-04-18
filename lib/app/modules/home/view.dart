@@ -37,36 +37,42 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    CircleCachedImage(
-                      imageUrl: "",
-                      radius: 16.r,
-                    ),
-                    SizedBox(width: 12.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Hi Traders",
-                          style: TextStyle(
-                              fontSize: 16.h,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black),
-                        ),
-                        Text(
-                          "Let’s start learning",
-                          style: TextStyle(
-                              fontSize: 12.h, color: AppColors.textBlack3),
-                        )
-                      ],
-                    ),
-                  ],
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(AppRoute.profile);
+                  },
+                  child: Row(
+                    children: [
+                      CircleCachedImage(
+                        imageUrl: "",
+                        radius: 16.r,
+                      ),
+                      SizedBox(width: 12.w),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Hi Traders",
+                            style: TextStyle(
+                                fontSize: 16.h,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black),
+                          ),
+                          Text(
+                            "Let’s start learning",
+                            style: TextStyle(
+                                fontSize: 12.h, color: AppColors.textBlack3),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                     onPressed: () {
                       Get.to(() => QRScanner());
+                      // _controller.speechRec();
                     },
                     icon: Icon(
                       Icons.qr_code_scanner,
@@ -425,11 +431,11 @@ class _HomeScreenState extends State<HomeScreen> {
               contentPadding: EdgeInsets.only(top: 5.h),
               suffixIcon: Padding(
                 padding: EdgeInsets.only(right: 12.w),
-                child: const Row(
+                child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: VerticalDivider(
                           width: 1,
@@ -437,7 +443,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.black45,
                         ),
                       ),
-                      Icon(Icons.mic)
+                      GetBuilder(
+                        init: _controller,
+                        id: "Mic",
+                        initState: (_) {},
+                        builder: (_) {
+                          return InkWell(
+                              onTap: () => _controller.speechRec(),
+                              child: _controller.isVoiceRecording
+                                  ? const Icon(Icons.mic)
+                                  : const Icon(Icons.mic_off));
+                        },
+                      )
                     ]),
               ),
               suffixIconColor: AppColors.iconRed,

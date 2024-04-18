@@ -10,7 +10,7 @@ class MyAchievementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xeFF5F6FB),
+      backgroundColor: const Color(0xeFF5F6FB),
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

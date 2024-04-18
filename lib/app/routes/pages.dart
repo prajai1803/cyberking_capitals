@@ -1,6 +1,8 @@
 import 'package:cyberking_capitals/app/modules/authentication/bindings.dart';
 import 'package:cyberking_capitals/app/modules/authentication/view.dart';
+import 'package:cyberking_capitals/app/modules/authentication/views/email_verification.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/forget_password.dart';
+import 'package:cyberking_capitals/app/modules/authentication/views/password_verification.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/sign_up.dart';
 import 'package:cyberking_capitals/app/modules/base/bindings.dart';
 import 'package:cyberking_capitals/app/modules/base/view.dart';
@@ -8,6 +10,7 @@ import 'package:cyberking_capitals/app/modules/home/view/module_video.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
 import 'package:cyberking_capitals/app/modules/profile/bindings.dart';
+import 'package:cyberking_capitals/app/modules/profile/view.dart';
 import 'package:cyberking_capitals/app/modules/profile/view/edit_profile.dart';
 import 'package:cyberking_capitals/app/modules/profile/view/membership.dart';
 import 'package:cyberking_capitals/app/modules/profile/view/my_achievement.dart';
@@ -43,6 +46,20 @@ class AppPages {
       title: 'Sign up',
       name: AppRoute.signUp,
       page: () => SignUpScreen(),
+      binding: AuthBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: 'Email Verification',
+      name: AppRoute.emailVerify,
+      page: () => const EmailVerifyScreen(),
+      binding: AuthBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: 'Password Verification',
+      name: AppRoute.forgetPasswordVerify,
+      page: () => const PasswordVerifyScreen(),
       binding: AuthBinding(),
       transition: Transition.rightToLeft,
     ),
@@ -99,6 +116,13 @@ class AppPages {
       name: AppRoute.quizResult,
       page: () => QuizResultScreen(),
       binding: QuizBindings(),
+      transition: Transition.downToUp,
+    ),
+    GetPage(
+      title: "Profile",
+      name: AppRoute.profile,
+      page: () => const ProfileScreen(),
+      binding: ProfileBinding(),
       transition: Transition.downToUp,
     ),
     GetPage(

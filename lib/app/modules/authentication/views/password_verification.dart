@@ -2,23 +2,23 @@ import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/modules/authentication/controller.dart';
 import 'package:cyberking_capitals/app/widgets/elevated_button.dart';
+import 'package:cyberking_capitals/app/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class EmailVerifyScreen extends StatefulWidget {
-  const EmailVerifyScreen({super.key});
+class PasswordVerifyScreen extends StatefulWidget {
+  const PasswordVerifyScreen({super.key});
 
   @override
-  State<EmailVerifyScreen> createState() => _EmailVerifyScreenState();
+  State<PasswordVerifyScreen> createState() => _EmailVerifyScreenState();
 }
 
-class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
+class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
   final _controller = Get.find<AuthController>();
 
   @override
   void initState() {
-    _checkSentEmail();
     _controller.startEmailVerificationTimer();
     super.initState();
   }
@@ -28,12 +28,6 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
     _controller.otpTextEditingController.clear();
     _controller.resetTimer();
     super.dispose();
-  }
-
-  _checkSentEmail() async {
-    String? email = Get.arguments as String;
-    _controller.emailTextEditingController.text = email;
-    _controller.emailVerifyWithOTP();
   }
 
   @override
@@ -94,7 +88,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                         EdgeInsets.symmetric(vertical: 24.h, horizontal: 105.w),
                     child: TextFormField(
                       controller: _controller.otpTextEditingController,
-                      // keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty || value == "") {
                           return "OTP can't be empty";
@@ -109,19 +103,30 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                       textAlign: TextAlign.center,
                     )),
                 Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 24.h, horizontal: 24.w),
+                    child: AppTextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value == "") {
+                          return "value can't be empty";
+                        }
+                        return null;
+                      },
+                      controller: _controller.newPasswordTextEditingController,
+                      hint: "Enter New password",
+                    )),
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: GetBuilder(
                     init: _controller,
                     initState: (_) {},
-                    id: "Email Verification Button",
+                    id: "Verify Forget Password",
                     builder: (_) {
                       return AppElevatedButton(
-                        text: "Verify OTP",
                         isLoading: _controller.isLoading,
+                        text: "Verify & Change Password",
                         onPressed: () {
-                          if (!_controller.isLoading) {
-                            _controller.emailVerifyWithOTP();
-                          }
+                          _controller.forgetPasswordVerify();
                         },
                       );
                     },
@@ -131,7 +136,6 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                 GetBuilder(
                   init: _controller,
                   initState: (_) {},
-                  id: "Resend Otp",
                   builder: (_) {
                     return _controller.timerCount != 0
                         ? Text(
@@ -147,7 +151,7 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                             onPressed: () {
                               _controller.resetTimer();
                               _controller.startEmailVerificationTimer();
-                              _controller.sendEmailToVerify();
+                              _controller.sendEmailForForgetPassword();
                             },
                             child: Text(
                               "Resend OTP",

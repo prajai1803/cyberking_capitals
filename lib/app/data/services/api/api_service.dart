@@ -2,11 +2,12 @@ import 'package:get/get.dart';
 
 class ApiService extends GetxService {
   final GetConnect _getConnect = GetConnect(
-    timeout: const Duration(seconds: 15),
+    timeout: const Duration(seconds: 10),
   );
 
-  final String baseUrl = 'https://appx-dev.onrender.com'; // prod
-  // final String baseUrl = 'http://192.168.29.217:8000'; // local
+  // final String baseUrl = 'https://appx-dev.onrender.com'; // prod
+  // final String baseUrl = 'http://192.168.29.217:3001'; // local
+  final String baseUrl = 'https://demox-student-app.onrender.com';
 
   Future<Response> get(
       {required String url,
