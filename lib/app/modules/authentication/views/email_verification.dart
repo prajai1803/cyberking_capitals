@@ -99,6 +99,9 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                         if (value == null || value.isEmpty || value == "") {
                           return "OTP can't be empty";
                         }
+                        if (value.length != 6) {
+                          return "OTP should be 6 digit";
+                        }
                         return null;
                       },
                       maxLength: 6,

@@ -110,6 +110,9 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                         if (value == null || value.isEmpty || value == "") {
                           return "value can't be empty";
                         }
+                        if (value.length != 6) {
+                          return "OTP should be 6 digit";
+                        }
                         return null;
                       },
                       controller: _controller.newPasswordTextEditingController,

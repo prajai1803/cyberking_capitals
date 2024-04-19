@@ -147,33 +147,36 @@ class AuthController extends GetxController {
   }
 
   Future<bool> emailVerifyWithOTP() async {
-    try {
-      isLoading = true;
-      update(["Email Verification Button"]);
-      final status = await _authRepositry.verifyOTP(
-          emailTextEditingController.text.trim(),
-          otpTextEditingController.text.trim());
-      isLoading = true;
-      update(["Email Verification Button"]);
-      if (status) {
+    if (verificationFormKey.currentState!.validate()) {
+      try {
+        isLoading = true;
+        update(["Email Verification Button"]);
+        final status = await _authRepositry.verifyOTP(
+            emailTextEditingController.text.trim(),
+            otpTextEditingController.text.trim());
+        isLoading = false;
+        update(["Email Verification Button"]);
         if (status) {
-          final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
-          if (onBoardingStatus != null) {
-            if (onBoardingStatus == true) {
-              Get.offAllNamed(AppRoute.appBase);
+          if (status) {
+            final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
+            if (onBoardingStatus != null) {
+              if (onBoardingStatus == true) {
+                Get.offAllNamed(AppRoute.appBase);
+              } else {
+                Get.offAllNamed(AppRoute.onBoarding);
+              }
             } else {
               Get.offAllNamed(AppRoute.onBoarding);
             }
-          } else {
-            Get.offAllNamed(AppRoute.onBoarding);
+            isLoading = false;
+            update(["Email Verification Button"]);
+            CommonAlerts.showSuccessSnack(message: "OTP has been verified");
+            return true;
           }
-
-          CommonAlerts.showSuccessSnack(message: "OTP has been verified");
-          return true;
         }
+      } catch (e) {
+        return false;
       }
-    } catch (e) {
-      return false;
     }
     return false;
   }
