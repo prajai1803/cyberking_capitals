@@ -17,11 +17,11 @@ class SessionDB extends StorageService {
     _storageService.write(refreshToken, tokenValue);
   }
 
-  void setAuthStatus(bool value) {
+  Future<void> setAuthStatus(bool value) async {
     _storageService.write(userAuthStatus, value);
   }
 
-  void setOnBoardingComplete(bool value) {
+  Future<void> setOnBoardingComplete(bool value) async {
     _storageService.write(isOnBoardingComplete, value);
   }
 

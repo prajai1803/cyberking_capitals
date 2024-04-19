@@ -280,7 +280,11 @@ class AuthController extends GetxController {
         sendEmailToVerify();
         Get.toNamed(AppRoute.emailVerify);
       } else {
-        Get.toNamed(AppRoute.onBoarding);
+        final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
+        if (onBoardingStatus ?? false) {
+          Get.offAllNamed(AppRoute.appBase);
+        }
+        Get.offAllNamed(AppRoute.onBoarding);
       }
       isLoading = false;
       update(["Login Button"]);

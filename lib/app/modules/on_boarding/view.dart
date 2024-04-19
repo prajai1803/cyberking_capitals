@@ -1,6 +1,5 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
-import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/widgets/elevated_button.dart';
@@ -176,7 +175,6 @@ class OnBoaringScreen extends StatelessWidget {
                     text: _controller.currentPage == 2 ? "CONTINUE" : "NEXT",
                     onPressed: () {
                       if (_controller.currentPage == 2) {
-                        SessionDB().setOnBoardingComplete(true);
                         Get.offAllNamed(AppRoute.appBase);
                       } else {
                         _controller.nextPage();
