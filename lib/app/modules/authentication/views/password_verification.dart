@@ -74,15 +74,14 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                 ),
                 SizedBox(height: 16.h),
                 Text(
-                  "Enter the verification code we\njust sent you on your email\n address.",
+                  "Enter the verification code we\njust sent you on your email\n address.\n&\nEnter new password",
                   style: TextStyle(
                     fontSize: 15.h,
-                    height: 1.5,
+                    height: 1.2,
                     color: AppColors.textBlack,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20.h),
                 Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: 24.h, horizontal: 105.w),
@@ -92,6 +91,9 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty || value == "") {
                           return "OTP can't be empty";
+                        }
+                        if (value.length != 6) {
+                          return "OTP should be 6 digit";
                         }
                         return null;
                       },
@@ -110,9 +112,7 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                         if (value == null || value.isEmpty || value == "") {
                           return "value can't be empty";
                         }
-                        if (value.length != 6) {
-                          return "OTP should be 6 digit";
-                        }
+
                         return null;
                       },
                       controller: _controller.newPasswordTextEditingController,
@@ -129,7 +129,9 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                         isLoading: _controller.isLoading,
                         text: "Verify & Change Password",
                         onPressed: () {
-                          _controller.forgetPasswordVerify();
+                          if (!_controller.isLoading) {
+                            _controller.forgetPasswordVerify();
+                          }
                         },
                       );
                     },
@@ -139,6 +141,7 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                 GetBuilder(
                   init: _controller,
                   initState: (_) {},
+                  id: "Resend Otp",
                   builder: (_) {
                     return _controller.timerCount != 0
                         ? Text(

@@ -112,9 +112,9 @@ class AuthController extends GetxController {
 
   Future<bool> forgetPasswordVerify() async {
     try {
-      isLoading = true;
-      update(["Verify Forget Password"]);
       if (verificationFormKey.currentState!.validate()) {
+        isLoading = true;
+        update(["Verify Forget Password"]);
         final status = await _authRepositry.forgetPasswordVerifyOTP(
           emailTextEditingController.text.trim(),
           otpTextEditingController.text,
