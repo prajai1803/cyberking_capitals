@@ -86,7 +86,7 @@ class AuthRepositry {
         } else if (resBody["message"] == "Email already verified.") {
           return true;
         } else {
-          return false;
+          throw ApiStatusException(message: resBody["message"]);
         }
       }
     } catch (e) {

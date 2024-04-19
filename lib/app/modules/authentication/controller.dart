@@ -174,10 +174,15 @@ class AuthController extends GetxController {
             return true;
           }
         }
-      } catch (e) {
+      } on ApiStatusException catch (e) {
+        isLoading = false;
+        update(["Email Verification Button"]);
+        CommonAlerts.showErrorSnack(message: e.message);
         return false;
       }
     }
+    isLoading = false;
+    update(["Email Verification Button"]);
     return false;
   }
 
