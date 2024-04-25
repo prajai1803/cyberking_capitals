@@ -126,10 +126,10 @@ class _EmailVerifyScreenState extends State<PasswordVerifyScreen> {
                     id: "Verify Forget Password",
                     builder: (_) {
                       return AppElevatedButton(
-                        isLoading: _controller.isLoading,
+                        isLoading: _controller.isFogetPasswordLoading,
                         text: "Verify & Change Password",
                         onPressed: () {
-                          if (!_controller.isLoading) {
+                          if (!_controller.isFogetPasswordLoading) {
                             _controller.forgetPasswordVerify();
                           }
                         },

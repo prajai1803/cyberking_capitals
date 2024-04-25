@@ -37,6 +37,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   speech_to_text: ^6.6.0
   jwt_decoder: ^2.0.1
+  version_migration: ^2.0.3
 
 dev_dependencies:
   flutter_test:

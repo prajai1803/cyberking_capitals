@@ -40,9 +40,9 @@ class SignUpScreen extends StatelessWidget {
                 builder: (_) {
                   return AppElevatedButton(
                       text: "CONTINUE",
-                      isLoading: _controller.isLoading,
+                      isLoading: _controller.isSignUpLoading,
                       onPressed: () {
-                        if (!_controller.isLoading) {
+                        if (!_controller.isSignUpLoading) {
                           _controller.signUp();
                         }
                       });

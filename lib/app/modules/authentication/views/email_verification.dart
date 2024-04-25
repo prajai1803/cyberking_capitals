@@ -120,9 +120,9 @@ class _EmailVerifyScreenState extends State<EmailVerifyScreen> {
                     builder: (_) {
                       return AppElevatedButton(
                         text: "Verify OTP",
-                        isLoading: _controller.isLoading,
+                        isLoading: _controller.isEmailVerificationLoading,
                         onPressed: () {
-                          if (!_controller.isLoading) {
+                          if (!_controller.isEmailVerificationLoading) {
                             _controller.emailVerifyWithOTP();
                           }
                         },

@@ -112,7 +112,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     builder: (_) {
                       return AppElevatedButton(
                         text: "CONTINUE",
-                        isLoading: _controller.isLoading,
+                        isLoading: _controller.isSignUpLoading,
                         onPressed: () {
                           if (_controller.fogetPasswordFormKey.currentState!
                               .validate()) {

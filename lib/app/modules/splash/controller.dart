@@ -38,7 +38,8 @@ class SplashController extends GetxController {
           Get.offAllNamed(AppRoute.onBoarding);
         }
       } else {
-        Get.offAllNamed(AppRoute.emailVerify, arguments: userModel.email);
+        Get.offAndToNamed(AppRoute.loginScreen);
+        // Get.toNamed(AppRoute.emailVerify, arguments: userModel.email);
       }
     }
   }

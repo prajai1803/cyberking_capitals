@@ -35,6 +35,9 @@ class AuthController extends GetxController {
   int timerCount = 30;
 
   bool isLoading = false;
+  bool isSignUpLoading = false;
+  bool isFogetPasswordLoading = false;
+  bool isEmailVerificationLoading = false;
   bool isTimerLoading = false;
 
   @override
@@ -113,7 +116,7 @@ class AuthController extends GetxController {
   Future<bool> forgetPasswordVerify() async {
     try {
       if (verificationFormKey.currentState!.validate()) {
-        isLoading = true;
+        isFogetPasswordLoading = true;
         update(["Verify Forget Password"]);
         final status = await _authRepositry.forgetPasswordVerifyOTP(
           emailTextEditingController.text.trim(),
@@ -129,18 +132,23 @@ class AuthController extends GetxController {
             otpTextEditingController.clear();
             CommonAlerts.showSuccessSnack(
                 message: "Password has been changed, try to login");
-            isLoading = false;
+            isFogetPasswordLoading = false;
             update(["Verify Forget Password"]);
             return true;
           }
         }
-        isLoading = false;
+        isFogetPasswordLoading = false;
         update(["Verify Forget Password"]);
       }
     } on ApiStatusException catch (e) {
-      isLoading = false;
+      isFogetPasswordLoading = false;
       update(["Verify Forget Password"]);
       CommonAlerts.showErrorSnack(message: e.message);
+      return false;
+    } catch (e) {
+      isFogetPasswordLoading = false;
+      update(["Verify Forget Password"]);
+      CommonAlerts.showErrorSnack();
       return false;
     }
     return false;
@@ -149,12 +157,12 @@ class AuthController extends GetxController {
   Future<bool> emailVerifyWithOTP() async {
     if (verificationFormKey.currentState!.validate()) {
       try {
-        isLoading = true;
+        isEmailVerificationLoading = true;
         update(["Email Verification Button"]);
         final status = await _authRepositry.verifyOTP(
             emailTextEditingController.text.trim(),
             otpTextEditingController.text.trim());
-        isLoading = false;
+        isEmailVerificationLoading = false;
         update(["Email Verification Button"]);
         if (status) {
           if (status) {
@@ -168,20 +176,25 @@ class AuthController extends GetxController {
             } else {
               Get.offAllNamed(AppRoute.onBoarding);
             }
-            isLoading = false;
+            isEmailVerificationLoading = false;
             update(["Email Verification Button"]);
             CommonAlerts.showSuccessSnack(message: "OTP has been verified");
             return true;
           }
         }
       } on ApiStatusException catch (e) {
-        isLoading = false;
+        isEmailVerificationLoading = false;
         update(["Email Verification Button"]);
         CommonAlerts.showErrorSnack(message: e.message);
         return false;
+      } catch (e) {
+        isEmailVerificationLoading = false;
+        update(["Email Verification Button"]);
+        CommonAlerts.showErrorSnack();
+        return false;
       }
     }
-    isLoading = false;
+    isEmailVerificationLoading = false;
     update(["Email Verification Button"]);
     return false;
   }
@@ -189,17 +202,17 @@ class AuthController extends GetxController {
   void signUp() async {
     if (signUpFormKey.currentState!.validate()) {
       try {
-        isLoading = true;
+        isSignUpLoading = true;
         update(["Sign Up"]);
         if (emailTextEditingController.text.startsWith(RegExp(r'^\d'))) {
           await _signUpWithPhoneNumber();
         } else {
           await _signUpWithEmail();
         }
-        isLoading = false;
+        isSignUpLoading = false;
         update(["Sign Up"]);
       } on ApiStatusException catch (e) {
-        isLoading = false;
+        isSignUpLoading = false;
         update(["Sign Up"]);
         CommonAlerts.showErrorSnack(message: e.message);
       }
@@ -231,13 +244,48 @@ class AuthController extends GetxController {
         passwordTextEditingController.text.trim(),
         nameTextEditingController.text);
     if (userCreated) {
-      update();
-      login();
-      isLoading = false;
+      isLoading = true;
+      update(["Sign Up"]);
+      await _loginAfterSignUp();
     } else {
       // login();
       // login();
       update();
+    }
+  }
+
+  Future<void> _loginAfterSignUp() async {
+    isLoading = true;
+    update(["Login Button"]);
+    try {
+      if (emailTextEditingController.text.startsWith(RegExp(r'^\d'))) {
+        final res = await _authRepositry.loginWithEmailorPhoneNumber(
+          null,
+          emailTextEditingController.text,
+          passwordTextEditingController.text,
+        );
+
+        if (res != null) {
+          _saveTokens(res);
+          await _fetchProfile();
+        }
+      } else {
+        final res = await _authRepositry.loginWithEmailorPhoneNumber(
+          emailTextEditingController.text,
+          null,
+          passwordTextEditingController.text,
+        );
+        if (res != null) {
+          _saveTokens(res);
+          await _fetchProfile();
+        }
+      }
+      isLoading = false;
+      update(["Sign Up"]);
+    } on ApiStatusException catch (e) {
+      CommonAlerts.showErrorSnack(message: e.message);
+      isLoading = false;
+      update(["Sign Up"]);
     }
   }
 
