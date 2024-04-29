@@ -356,7 +356,7 @@ class AuthController extends GetxController {
       _sessionDB.setAccessToken(res["access_token"]);
     }
     if (res["refresh_token"] != null || res["refresh_token"] != "") {
-      _sessionDB.setRefreshToken(res["access_token"]);
+      _sessionDB.setRefreshToken(res["refresh_token"]);
     }
   }
 

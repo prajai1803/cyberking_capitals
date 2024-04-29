@@ -28,7 +28,7 @@ class SplashController extends GetxController {
     final bool? isOnBoardingComplete = await sessionDB.getOnBoardingComplete();
     final String? isAuth = await sessionDB.getRefreshToken();
     UserModel userModel = await StorageProvider().readUserModel();
-    if (isAuth == null || isAuth == false || JwtDecoder.isExpired(isAuth)) {
+    if (isAuth == null || JwtDecoder.isExpired(isAuth)) {
       Get.offAndToNamed(AppRoute.loginScreen);
     } else {
       if (userModel.emailVerified == 1) {

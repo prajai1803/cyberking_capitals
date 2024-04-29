@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           id: "Loading Screen",
           builder: (controller) => RefreshIndicator(
             onRefresh: () async {
-              _controller.fetchInitialData();
+              _controller.refreshInitialData();
             },
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -116,34 +116,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   .isEmpty)
                                               ? Column(
                                                   children: [
-                                                    IntroVideo(),
-                                                    SizedBox(height: 24.h),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 20.w),
-                                                      child: const Divider(
-                                                          thickness: 1),
-                                                    ),
-                                                    SizedBox(height: 24.h),
-                                                    Container(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      padding: EdgeInsets.only(
-                                                          left: 16.w),
-                                                      child: Text(
-                                                        "Features Video Updates",
-                                                        style: TextStyle(
-                                                          fontSize: 18.h,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color:
-                                                              AppColors.iconRed,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10.h),
-                                                    _buildCommingSoon(),
+                                                    _controller.introVideoModel ==
+                                                            null
+                                                        ? const SizedBox()
+                                                        : Column(
+                                                            children: [
+                                                              IntroVideo(),
+                                                              SizedBox(
+                                                                  height: 24.h),
+                                                            ],
+                                                          ),
+                                                    // Feature video updates (dont remove)
+
+                                                    // Padding(
+                                                    //   padding:
+                                                    //       EdgeInsets.symmetric(
+                                                    //           horizontal: 20.w),
+                                                    //   child: const Divider(
+                                                    //       thickness: 1),
+                                                    // ),
+                                                    // SizedBox(height: 24.h),
+                                                    // Container(
+                                                    //   alignment:
+                                                    //       Alignment.centerLeft,
+                                                    //   padding: EdgeInsets.only(
+                                                    //       left: 16.w),
+                                                    //   child: Text(
+                                                    //     "Features Video Updates",
+                                                    //     style: TextStyle(
+                                                    //       fontSize: 18.h,
+                                                    //       fontWeight:
+                                                    //           FontWeight.w700,
+                                                    //       color:
+                                                    //           AppColors.iconRed,
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
+                                                    // SizedBox(height: 10.h),
+                                                    // _buildCommingSoon(),
                                                     SizedBox(height: 10.h),
                                                     _buildModules(),
                                                     SizedBox(height: 24.h),

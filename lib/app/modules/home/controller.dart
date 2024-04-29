@@ -1,5 +1,6 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/study_module_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/modules/home/repository.dart';
@@ -14,9 +15,10 @@ import 'package:speech_to_text/speech_to_text.dart';
 class HomeController extends GetxController {
   final HomeRepository _homeRepository =
       HomeRepository(apiProvider: ApiProvider());
-  late final VideoPlayerController introVPC;
+  late VideoPlayerController introVPC;
   List<FeatureVideoModel> featureVideoList = [];
   List<StudyModuleModel> studyModuleList = [];
+  IntroVideoModel? introVideoModel;
   final TextEditingController searchTextController = TextEditingController();
   List<StudyModuleModel> showStudyModuleList = [];
 
@@ -35,8 +37,30 @@ class HomeController extends GetxController {
     try {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-      _initIntroVideo();
       await getAllModule();
+      await getIntroVideo();
+      _initIntroVideo();
+
+      screenState = ScreenState.loaded;
+      update(["Loading Screen"]);
+    } on ApiStatusException catch (_) {
+      screenState = ScreenState.error;
+      update(["Loading Screen"]);
+    } catch (e) {
+      CommonAlerts.showErrorSnack(message: e.toString());
+      screenState = ScreenState.error;
+      update(["Loading Screen"]);
+    }
+  }
+
+  void refreshInitialData() async {
+    try {
+      introVPC.dispose();
+      screenState = ScreenState.loading;
+      update(["Loading Screen"]);
+      await getAllModule();
+      await getIntroVideo();
+      _initIntroVideo();
 
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
@@ -52,11 +76,11 @@ class HomeController extends GetxController {
 
   void _initIntroVideo() async {
     introVPC = VideoPlayerController.networkUrl(
-      Uri.parse(
-          'https://firebasestorage.googleapis.com/v0/b/csvtu-test.appspot.com/o/untitled.mp4?alt=media&token=b7247a40-f377-46a1-8375-2d6d39d6accf'),
+      Uri.parse(introVideoModel?.link ?? ''),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
     await introVPC.initialize();
+    await introVPC.play();
     introVPC.addListener(_introVideoListner);
     update(['introVideo']);
   }
@@ -102,6 +126,14 @@ class HomeController extends GetxController {
           studyModuleList = tempList;
         }
       }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> getIntroVideo() async {
+    try {
+      introVideoModel = await _homeRepository.getIntroVideo();
     } catch (e) {
       rethrow;
     }

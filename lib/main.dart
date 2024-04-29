@@ -39,7 +39,7 @@ class CyberKingCapitals extends StatelessWidget {
                       color: Colors.black)),
               scaffoldBackgroundColor: Colors.white,
             ),
-            title: 'CYBERKING CAPITALS',
+            title: 'Student App',
             initialRoute: '/',
             getPages: AppPages.pages,
           );

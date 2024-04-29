@@ -24,6 +24,8 @@ class AppImages {
   static const progressIcon = 'images/home/ProgressIcon.png';
   static const moduleIcon = 'images/home/Modules.png';
   static const commingSoon = 'images/home/Coming_soon.png';
+  static const rocket = 'images/home/juicy-rocket.gif';
+  static const greenBG = 'images/home/green_bg.jpg';
 
   // quiz
   static const tropy = 'images/quiz/tropy.png';

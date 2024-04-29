@@ -186,6 +186,25 @@ class ApiProvider {
     return null;
   }
 
+  // intro video
+  Future<Response<dynamic>?> getIntroVideo() async {
+    try {
+      final res =
+          await _apiService.get(url: "${ApiRoutes.getIntroVideo}/1/?tag=intro");
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   Future getAccessToken() async {
     final String? token = await _sessionDB.getAccessToken();
     if (token == null || JwtDecoder.isExpired(token)) {

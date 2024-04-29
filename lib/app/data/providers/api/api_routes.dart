@@ -14,6 +14,8 @@ class ApiRoutes {
   // profile
   static const getProfile = 'api/profile/student-profile';
 
+  static const getIntroVideo = 'api/videos/get-video';
+
   static const featureVideoList = 'feature-video-list';
   static const getModules = 'api/Modules/get-modules';
 }

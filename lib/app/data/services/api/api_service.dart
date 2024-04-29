@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class ApiService extends GetxService {
   final GetConnect _getConnect = GetConnect(
-    timeout: const Duration(seconds: 5),
+    timeout: const Duration(seconds: 15),
   );
 
   // final String baseUrl = 'https://appx-dev.onrender.com'; // prod

@@ -1,7 +1,8 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/icons.dart';
+import 'package:cyberking_capitals/app/modules/attendence/view.dart';
 import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
-import 'package:cyberking_capitals/app/modules/community/view.dart';
+// import 'package:cyberking_capitals/app/modules/community/view.dart';
 import 'package:cyberking_capitals/app/modules/history/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
@@ -28,7 +29,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
 
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _tabController.addListener(_tabListener);
     super.initState();
   }
@@ -56,10 +57,15 @@ class _AppBaseScreenState extends State<AppBaseScreen>
               return const NoInternetScreen();
             }
           }),
-      const CommunityScreen(),
+      // const CommunityScreen(),
       const BookMarkScreen(),
+      const AttendanceScreen(),
+      const BookMarkScreen(),
+      // const BookMarkScreen(),
+
+      // const BookMarkScreen(),
       // const ProfileScreen(),
-      const HistoryScreen()
+      const HistoryScreen(),
     ];
 
     return Scaffold(
@@ -113,6 +119,11 @@ class _AppBaseScreenState extends State<AppBaseScreen>
             text: "Community",
           ),
           Tab(
+            icon: ImageIcon(const AssetImage(AppIcons.attendance), size: 24.h),
+            iconMargin: const EdgeInsets.symmetric(vertical: 6),
+            text: "Attendance",
+          ),
+          Tab(
             icon: Icon(
               Icons.bookmark_outline,
               size: 24.h,
@@ -121,7 +132,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
             text: "Bookmark",
           ),
           Tab(
-            icon: Icon(Icons.history_toggle_off_outlined, size: 24.h),
+            icon: ImageIcon(const AssetImage(AppIcons.histroy), size: 24.h),
             iconMargin: const EdgeInsets.symmetric(vertical: 6),
             text: "History",
           ),
