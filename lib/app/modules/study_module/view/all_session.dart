@@ -1,4 +1,5 @@
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/modules/study_module/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,9 @@ import 'package:get/get.dart';
 import '../widgets/session_tile.dart';
 
 class AllSession extends StatelessWidget {
-  const AllSession({super.key});
+  AllSession({super.key});
+
+  final _controller = Get.find<StudyModuleController>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class AllSession extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: ListView.builder(
           physics: const BouncingScrollPhysics(),
-          itemCount: 10,
+          itemCount: _controller.sessionList.length,
           itemBuilder: (context, index) => SessionTile(
             title: "Technical Analysis Module",
             description:

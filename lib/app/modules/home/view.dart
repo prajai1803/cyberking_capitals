@@ -3,7 +3,9 @@ import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/modules/attendence/view/scanner.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
+import 'package:cyberking_capitals/app/modules/home/view/intro_video.dart';
 import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
+import 'package:cyberking_capitals/app/modules/home/widgets/intro_video_card.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/video_player.dart';
@@ -72,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                     onPressed: () {
                       Get.to(() => QRScanner());
-                      // _controller.speechRec();
                     },
                     icon: Icon(
                       Icons.qr_code_scanner,
@@ -119,13 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     _controller.introVideoModel ==
                                                             null
                                                         ? const SizedBox()
-                                                        : Column(
-                                                            children: [
-                                                              IntroVideo(),
-                                                              SizedBox(
-                                                                  height: 24.h),
-                                                            ],
-                                                          ),
+                                                        : _buildIntroVideo(),
                                                     // Feature video updates (dont remove)
 
                                                     // Padding(
@@ -213,6 +208,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   .studyModuleList[
                                                                       index]
                                                                   .noOfSessions,
+                                                              thumbnail: _controller
+                                                                  .studyModuleList[
+                                                                      index]
+                                                                  .thumbnail,
                                                             ),
                                                           ),
                                                         )),
@@ -262,12 +261,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               duration: _controller
                                                                   .showStudyModuleList[
                                                                       index]
-                                                                  .batchOpenDate
+                                                                  .completionTimeHrs
                                                                   .toString(),
                                                               session: _controller
                                                                   .showStudyModuleList[
                                                                       index]
                                                                   .noOfSessions,
+                                                              thumbnail: _controller
+                                                                  .showStudyModuleList[
+                                                                      index]
+                                                                  .thumbnail,
                                                             ),
                                                           ),
                                                         ),
@@ -279,6 +282,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ));
+  }
+
+  Column _buildIntroVideo() {
+    return Column(
+      children: [
+        // IntroVideo(),
+        IntroVideoCard(
+          thumbnail: _controller.introVideoModel?.thumbnail,
+          onTap: () {
+            Get.to(() => const IntroVideoPlayer(),
+                arguments: _controller.introVideoModel);
+          },
+        ),
+        SizedBox(height: 24.h),
+      ],
+    );
   }
 
   Column _buildModules() {

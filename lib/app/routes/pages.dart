@@ -100,7 +100,7 @@ class AppPages {
     GetPage(
       title: "All Session",
       name: AppRoute.allSession,
-      page: () => const AllSession(),
+      page: () => AllSession(),
       binding: StudyModuleBindings(),
       transition: Transition.cupertinoDialog,
     ),

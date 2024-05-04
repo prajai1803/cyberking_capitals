@@ -18,4 +18,6 @@ class ApiRoutes {
 
   static const featureVideoList = 'feature-video-list';
   static const getModules = 'api/Modules/get-modules';
+  static const getAllModules = 'api/Modules/get-all';
+  static const getSessionByModueId = 'api/sessions/get-sessions';
 }

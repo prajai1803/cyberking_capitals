@@ -10,6 +10,7 @@ class ModuleTile extends StatelessWidget {
   final String? description;
   final int? session;
   final String? duration;
+  final String? thumbnail;
   final int? index;
   const ModuleTile({
     super.key,
@@ -18,6 +19,7 @@ class ModuleTile extends StatelessWidget {
     this.session,
     this.duration,
     this.index,
+    this.thumbnail,
   });
 
   @override
@@ -96,10 +98,11 @@ class ModuleTile extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
                         child: CachedNetworkImage(
-                          imageUrl:
+                          imageUrl: thumbnail ??
                               "https://cdn-scripbox-wordpress.scripbox.com/wp-content/uploads/2022/08/mutual-fund-cut-off-time-image-1024x1024.jpg",
                           height: 110.h,
                           width: 110.h,
+                          fit: BoxFit.fill,
                           colorBlendMode: BlendMode.srcOver,
                           placeholder: (context, url) => Shimmer.fromColors(
                             baseColor: Colors.grey[300]!,

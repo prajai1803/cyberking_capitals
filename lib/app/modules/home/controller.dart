@@ -1,7 +1,7 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
-import 'package:cyberking_capitals/app/data/models/study_module_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/modules/home/repository.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
@@ -17,10 +17,10 @@ class HomeController extends GetxController {
       HomeRepository(apiProvider: ApiProvider());
   late VideoPlayerController introVPC;
   List<FeatureVideoModel> featureVideoList = [];
-  List<StudyModuleModel> studyModuleList = [];
+  List<ModuleModel> studyModuleList = [];
   IntroVideoModel? introVideoModel;
   final TextEditingController searchTextController = TextEditingController();
-  List<StudyModuleModel> showStudyModuleList = [];
+  List<ModuleModel> showStudyModuleList = [];
 
   ScreenState screenState = ScreenState.loading;
   final SpeechToText _speechToText = SpeechToText();
@@ -75,6 +75,7 @@ class HomeController extends GetxController {
   }
 
   void _initIntroVideo() async {
+    print('introVideoModel');
     introVPC = VideoPlayerController.networkUrl(
       Uri.parse(introVideoModel?.link ?? ''),
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
@@ -112,20 +113,9 @@ class HomeController extends GetxController {
 
   Future<void> getAllModule() async {
     try {
-      final Response? res = await _homeRepository.getModuleByRankList(2);
+      final res = await _homeRepository.getAllModule();
 
-      List<StudyModuleModel> tempList = [];
-
-      if (res != null) {
-        if (res.statusCode == 200) {
-          final decode = res.body["data"] as List;
-
-          for (var element in decode) {
-            tempList.add(StudyModuleModel.fromJson(element));
-          }
-          studyModuleList = tempList;
-        }
-      }
+      studyModuleList = res;
     } catch (e) {
       rethrow;
     }

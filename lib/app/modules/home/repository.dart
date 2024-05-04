@@ -1,4 +1,6 @@
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_model.dart';
+import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,40 @@ class HomeRepository {
 
   Future<Response?> getModuleByRankList(int batch) async {
     return apiProvider.getModuleByRankList(batch);
+  }
+
+  Future<List<ModuleModel>> getAllModule() async {
+    try {
+      final res = await apiProvider.getAllModule();
+      List<ModuleModel> moduleList = [];
+      if (res != null) {
+        if (res.statusCode == 200) {
+          List list = res.body["data"];
+          moduleList = list.map((e) => ModuleModel.fromJson(e)).toList();
+          return moduleList;
+        }
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<List<SessionModel>> getSessionByModuleId(int id) async {
+    try {
+      final res = await apiProvider.getSessionByModuleId(id);
+      List<SessionModel> sessionList = [];
+      if (res != null) {
+        if (res.statusCode == 200) {
+          List list = res.body["data"];
+          sessionList = list.map((e) => SessionModel.fromJson(e)).toList();
+          return sessionList;
+        }
+      }
+      return [];
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<IntroVideoModel?> getIntroVideo() async {

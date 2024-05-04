@@ -186,6 +186,39 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> getSessionByModuleId(int moduleId) async {
+    try {
+      final res = await _apiService.get(
+          url: "${ApiRoutes.getSessionByModueId}/$moduleId");
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getAllModule() async {
+    try {
+      final res = await _apiService.get(url: ApiRoutes.getAllModules);
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   // intro video
   Future<Response<dynamic>?> getIntroVideo() async {
     try {
