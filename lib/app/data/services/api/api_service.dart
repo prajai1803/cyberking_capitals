@@ -6,8 +6,9 @@ class ApiService extends GetxService {
   );
 
   // final String baseUrl = 'https://appx-dev.onrender.com'; // prod
-  final String baseUrl = 'http://192.168.29.217:3001'; // local
+  // final String baseUrl = 'http://192.168.29.217:3001'; // local
   // final String baseUrl = 'https://demox-student-app.onrender.com';
+  final String baseUrl = "https://demo-studentapi.sankhyank.com";
 
   Future<Response> get(
       {required String url,

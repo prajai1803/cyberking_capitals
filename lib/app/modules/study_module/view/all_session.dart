@@ -1,6 +1,7 @@
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:cyberking_capitals/app/modules/study_module/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
+import 'package:cyberking_capitals/app/utils/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,20 +25,21 @@ class AllSession extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemCount: _controller.sessionList.length,
           itemBuilder: (context, index) => SessionTile(
-            title: "Technical Analysis Module",
-            description:
-                "This meta-description generator uses machine learning.",
-            duration: "20 min",
+            title: _controller.sessionList[index].sessionName,
+            description: _controller.sessionList[index].sessionDesc,
+            duration:
+                (_controller.sessionList[index].videoDuration ?? 0).toHHMM(),
+            thumbnail: _controller.sessionList[index].thumbnail,
             onTap: () {
               Get.toNamed(AppRoute.moduleVideo,
                   arguments: VideoModel(
-                      description:
-                          "This meta-description generator uses machine learning",
-                      title: "Technical Analysis Module",
-                      duration: "20 min",
+                      description: _controller.sessionList[index].sessionDesc,
+                      title: _controller.sessionList[index].sessionName,
+                      duration:
+                          "${_controller.sessionList[index].videoDuration} min",
                       session: 2,
                       videoId: "VideoId",
-                      videoUrl: "ulr"));
+                      videoUrl: _controller.sessionList[index].videoLink));
             },
             index: index + 1,
           ),

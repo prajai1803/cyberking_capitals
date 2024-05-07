@@ -1,13 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/utils/extension.dart';
 import 'package:cyberking_capitals/app/widgets/dotted_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SessionTile extends StatelessWidget {
   final String? title;
   final String? description;
   final int? session;
   final String? duration;
+  final String? thumbnail;
   final int? index;
   final void Function()? onTap;
   const SessionTile(
@@ -17,7 +21,8 @@ class SessionTile extends StatelessWidget {
       this.session,
       this.duration,
       this.index,
-      this.onTap});
+      this.onTap,
+      this.thumbnail});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +52,7 @@ class SessionTile extends StatelessWidget {
                       SizedBox(
                         width: 173.w,
                         child: Text(
-                          description ?? "NA",
+                          "${(description ?? "N/A").reduceTo(120)}...",
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 12.h,
@@ -77,12 +82,33 @@ class SessionTile extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          height: 110.h,
-                          width: 110.h,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(10.r)),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: CachedNetworkImage(
+                            imageUrl: thumbnail ??
+                                "https://cdn-scripbox-wordpress.scripbox.com/wp-content/uploads/2022/08/mutual-fund-cut-off-time-image-1024x1024.jpg",
+                            height: 110.h,
+                            width: 110.h,
+                            fit: BoxFit.fill,
+                            colorBlendMode: BlendMode.srcOver,
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.white,
+                              child: Container(
+                                height: 110.h,
+                                width: 110.h,
+                                color: Colors.white,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Container(
+                                height: 110.h,
+                                width: 110.h,
+                                color: Colors.grey[300],
+                                child: Icon(
+                                  Icons.error_outline,
+                                  size: 34.h,
+                                )),
+                          ),
                         ),
                         SizedBox(height: 10.h),
                       ],

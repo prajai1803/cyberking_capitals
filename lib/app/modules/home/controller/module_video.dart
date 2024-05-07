@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -7,6 +8,8 @@ class ModuleVideoController extends GetxController {
   late final VideoPlayerController videoPlayerController;
   late final ChewieController chewieController;
 
+  final VideoModel video = Get.arguments as VideoModel;
+
   @override
   void onInit() {
     _initVideo();
@@ -14,8 +17,8 @@ class ModuleVideoController extends GetxController {
   }
 
   void _initVideo() async {
-    videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-        "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4"));
+    videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(video.videoUrl!));
     await videoPlayerController.initialize();
     chewieController = ChewieController(
         videoPlayerController: videoPlayerController,
