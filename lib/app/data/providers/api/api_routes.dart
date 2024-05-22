@@ -14,6 +14,7 @@ class ApiRoutes {
 
   // profile
   static const getProfile = 'api/profile/student-profile';
+  static const updateStudentProfile = 'api/profile/update/student-profile';
   static const getIntroVideo = 'api/videos/get-video';
 
   // home api

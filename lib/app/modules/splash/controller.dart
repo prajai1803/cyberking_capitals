@@ -31,7 +31,7 @@ class SplashController extends GetxController {
     if (isAuth == null || JwtDecoder.isExpired(isAuth)) {
       Get.offAndToNamed(AppRoute.loginScreen);
     } else {
-      if (userModel.emailVerified == 1) {
+      if (userModel.emailVerified == 1 || userModel.phoneNumberVerified == 1) {
         if (isOnBoardingComplete ?? false) {
           Get.offAllNamed(AppRoute.appBase);
         } else {

@@ -14,6 +14,7 @@ class UserModel {
   final String? name;
   final String? email;
   final int? emailVerified;
+  final int? phoneNumberVerified;
   final String? mobileNumber;
   final String? whatsappNumber;
   final String? profilePhoto;
@@ -27,6 +28,7 @@ class UserModel {
     this.name,
     this.email,
     this.emailVerified,
+    this.phoneNumberVerified,
     this.mobileNumber,
     this.whatsappNumber,
     this.dateOfBirth,
@@ -41,6 +43,7 @@ class UserModel {
     String? name,
     String? email,
     int? emailVerified,
+    int? phoneNumberVerified,
     String? mobileNumber,
     String? whatsappNumber,
     String? dateOfBirth,
@@ -54,6 +57,7 @@ class UserModel {
         name: name ?? this.name,
         email: email ?? this.email,
         emailVerified: emailVerified ?? this.emailVerified,
+        phoneNumberVerified: phoneNumberVerified ?? this.phoneNumberVerified,
         mobileNumber: mobileNumber ?? this.mobileNumber,
         whatsappNumber: whatsappNumber ?? this.whatsappNumber,
         profilePhoto: profilePhoto ?? this.profilePhoto,
@@ -70,6 +74,7 @@ class UserModel {
         name: json["name"],
         email: json["email"],
         emailVerified: json["email_verification"],
+        phoneNumberVerified: json["phone_number_verified"],
         mobileNumber: json["mobile_number"],
         whatsappNumber: json["whatsapp_number"],
         profilePhoto: json["profile_photo"],
@@ -84,6 +89,7 @@ class UserModel {
         "name": name,
         "email": email,
         "email_verification": emailVerified,
+        "phone_number_verified": phoneNumberVerified,
         "mobile_number": mobileNumber,
         "whatsapp_number": whatsappNumber,
         "profile_photo": profilePhoto,

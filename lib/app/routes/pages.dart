@@ -1,6 +1,7 @@
 import 'package:cyberking_capitals/app/modules/authentication/bindings.dart';
 import 'package:cyberking_capitals/app/modules/authentication/view.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/email_verification.dart';
+import 'package:cyberking_capitals/app/modules/authentication/views/firebase_phone_verification.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/forget_password.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/password_verification.dart';
 import 'package:cyberking_capitals/app/modules/authentication/views/sign_up.dart';
@@ -53,6 +54,13 @@ class AppPages {
       title: 'Email Verification',
       name: AppRoute.emailVerify,
       page: () => const EmailVerifyScreen(),
+      binding: AuthBinding(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: 'Phone Number Verification',
+      name: AppRoute.phoneVerify,
+      page: () => const FirebaseVerifyScreen(),
       binding: AuthBinding(),
       transition: Transition.rightToLeft,
     ),

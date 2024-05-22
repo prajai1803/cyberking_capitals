@@ -6,6 +6,7 @@ class AppRoute {
   static const forgetPassword = '/forgetPassword';
   static const onBoarding = '/onBoarding';
   static const emailVerify = '/emailVerify';
+  static const phoneVerify = '/phoneVerify';
   static const forgetPasswordVerify = '/forgetPasswordVerify';
 
   static const appBase = '/appBase';

@@ -201,6 +201,29 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> updateProfile() async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.post(
+          url: ApiRoutes.updateStudentProfile,
+          header: {"Authorization": accessToken},
+          body: {"phone_number_verified": "1"});
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   Future<Response> getModules() async {
     return _apiService.get(url: ApiRoutes.getModules);
   }

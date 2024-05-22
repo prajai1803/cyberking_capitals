@@ -8,6 +8,7 @@ import 'package:cyberking_capitals/app/modules/authentication/repository.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +40,8 @@ class AuthController extends GetxController {
   bool isFogetPasswordLoading = false;
   bool isEmailVerificationLoading = false;
   bool isTimerLoading = false;
+
+  String? firebaseVerificationId;
 
   @override
   void onInit() {
@@ -152,6 +155,17 @@ class AuthController extends GetxController {
       return false;
     }
     return false;
+  }
+
+  Future<void> updateProfile() async {
+    try {
+      final status = await _authRepositry.updateProfile();
+      if (status) {
+        Get.offAllNamed(AppRoute.onBoarding);
+      }
+    } catch (e) {
+      CommonAlerts.showErrorSnack(message: e.toString());
+    }
   }
 
   Future<bool> emailVerifyWithOTP() async {
@@ -328,22 +342,70 @@ class AuthController extends GetxController {
     if (user != null) {
       StorageProvider().writeUserModel(user);
       isLoading = false;
-      if (user.emailVerified == 0) {
-        sendEmailToVerify();
-        Get.toNamed(AppRoute.emailVerify);
-      } else {
-        final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
-        if (onBoardingStatus ?? false) {
-          Get.offAllNamed(AppRoute.appBase);
+      if (emailTextEditingController.text.isEmail) {
+        if (user.emailVerified == 0) {
+          sendEmailToVerify();
+          Get.toNamed(AppRoute.emailVerify);
+        } else {
+          final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
+          if (onBoardingStatus ?? false) {
+            Get.offAllNamed(AppRoute.appBase);
+          }
+          Get.offAllNamed(AppRoute.onBoarding);
         }
-        Get.offAllNamed(AppRoute.onBoarding);
+      } else {
+        if (user.phoneNumberVerified == 0) {
+          verifyPhoneAuth();
+          Get.toNamed(AppRoute.phoneVerify);
+        } else {
+          final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
+          if (onBoardingStatus ?? false) {
+            Get.offAllNamed(AppRoute.appBase);
+          }
+          Get.offAllNamed(AppRoute.onBoarding);
+        }
       }
+
       isLoading = false;
       update(["Login Button"]);
     } else {
       isLoading = false;
       update(["Login Button"]);
       CommonAlerts.showErrorSnack();
+    }
+  }
+
+  void verifyPhoneAuth() {
+    FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+91${emailTextEditingController.text}",
+      verificationCompleted: (phoneAuthCredential) {},
+      verificationFailed: (error) {},
+      codeSent: (verificationId, forceResendingToken) {
+        firebaseVerificationId = verificationId;
+        printInfo(info: firebaseVerificationId!);
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+    );
+  }
+
+  void verifyPhoneNumberOTP() async {
+    try {
+      isEmailVerificationLoading = true;
+      update(["Email Verification Button"]);
+      PhoneAuthCredential phoneAuthCred = PhoneAuthProvider.credential(
+          verificationId: firebaseVerificationId!,
+          smsCode: otpTextEditingController.text);
+
+      final cred =
+          await FirebaseAuth.instance.signInWithCredential(phoneAuthCred);
+
+      updateProfile();
+      isEmailVerificationLoading = false;
+      update(["Email Verification Button"]);
+    } catch (e) {
+      isEmailVerificationLoading = false;
+      update(["Email Verification Button"]);
+      CommonAlerts.showErrorSnack(message: e.toString());
     }
   }
 

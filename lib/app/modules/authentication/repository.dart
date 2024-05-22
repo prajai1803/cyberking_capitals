@@ -95,6 +95,24 @@ class AuthRepositry {
     return false;
   }
 
+  Future<bool> updateProfile() async {
+    try {
+      final res = await apiProvider.updateProfile();
+      if (res != null) {
+        final resBody = res.body;
+
+        if (resBody["success"] == true) {
+          return true;
+        } else {
+          throw ApiStatusException(message: resBody["message"]);
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return false;
+  }
+
   Future<bool> forgetPasswordGenerateOTP(
     String email,
   ) async {
