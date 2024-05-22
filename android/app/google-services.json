@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "676344999730",
-    "project_id": "cyberking-capitals-adf23",
-    "storage_bucket": "cyberking-capitals-adf23.appspot.com"
+    "project_number": "930960930668",
+    "project_id": "fir-student-app-67f4f",
+    "storage_bucket": "fir-student-app-67f4f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:676344999730:android:9d5d611d77e85bef16712b",
+        "mobilesdk_app_id": "1:930960930668:android:572c75044a06e409ef6549",
         "android_client_info": {
-          "package_name": "com.sankhyank.cyberkingcapitals"
+          "package_name": "com.sankhyank.demostudentapp"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCa6QIeIFIwmrqk3oJM0LrjYJQ9xN82t88"
+          "current_key": "AIzaSyAv1dyU-A6rPZ2K614fT_uxRvcck6-IQIw"
         }
       ],
       "services": {

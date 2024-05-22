@@ -1,4 +1,4 @@
-import 'package:cyberking_capitals/app/data/models/module_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/modules/study_module/repository.dart';
@@ -13,13 +13,13 @@ class StudyModuleController extends GetxController {
   bool quizOpend = false;
   bool certificateOpend = false;
 
-  late ModuleModel studyModuleModel;
+  late Module studyModuleModel;
 
   List<SessionModel> sessionList = List.empty(growable: true);
 
   @override
   void onInit() {
-    studyModuleModel = Get.arguments as ModuleModel;
+    studyModuleModel = Get.arguments as Module;
     getSesion();
     super.onInit();
   }

@@ -1,8 +1,9 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
-import 'package:cyberking_capitals/app/data/models/module_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/modules/home/repository.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
@@ -17,13 +18,17 @@ class HomeController extends GetxController {
       HomeRepository(apiProvider: ApiProvider());
   late VideoPlayerController introVPC;
   List<FeatureVideoModel> featureVideoList = [];
-  List<ModuleModel> studyModuleList = [];
+  // List<ModuleModel> studyModuleList = [];
+  List<Module> moduleList = [];
+  List<Session> sessionList = [];
   IntroVideoModel? introVideoModel;
   final TextEditingController searchTextController = TextEditingController();
-  List<ModuleModel> showStudyModuleList = [];
+  List<dynamic> showModulesAndSession = [];
 
   ScreenState screenState = ScreenState.loading;
   final SpeechToText _speechToText = SpeechToText();
+
+  List<ModuleSessionModel> moduleSessionList = [];
 
   bool isVoiceRecording = false;
 
@@ -37,9 +42,10 @@ class HomeController extends GetxController {
     try {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-      await getAllModule();
+      // await getAllModule();
+      await getHomeQueries();
       await getIntroVideo();
-      _initIntroVideo();
+      // _initIntroVideo();
 
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
@@ -58,7 +64,7 @@ class HomeController extends GetxController {
       introVPC.dispose();
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-      await getAllModule();
+      // await getAllModule();
       await getIntroVideo();
       _initIntroVideo();
 
@@ -81,7 +87,7 @@ class HomeController extends GetxController {
       videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
     );
     await introVPC.initialize();
-    await introVPC.play();
+    // await introVPC.play();
     introVPC.addListener(_introVideoListner);
     update(['introVideo']);
   }
@@ -111,11 +117,21 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getAllModule() async {
+  Future<void> getHomeQueries() async {
     try {
-      final res = await _homeRepository.getAllModule();
-
-      studyModuleList = res;
+      final user = await StorageProvider().readUserModel();
+      moduleSessionList = await _homeRepository.getHomeQueries(user.id);
+      List<Module> modulesTemp = [];
+      List<Session> sessionTemp = [];
+      var index = 0;
+      for (var element in moduleSessionList) {
+        modulesTemp.assignAll(element.modules!);
+        for (var session in modulesTemp[index].sessions!) {
+          sessionTemp.add(session);
+        }
+      }
+      sessionList.assignAll(sessionTemp);
+      moduleList.assignAll(modulesTemp);
     } catch (e) {
       rethrow;
     }
@@ -156,7 +172,7 @@ class HomeController extends GetxController {
       await Future.delayed(const Duration(seconds: 1));
       isVoiceRecording = false;
       update(["Mic"]);
-      searchModule(searchTextController.text);
+      // searchModule(searchTextController.text);
     } catch (e) {
       isVoiceRecording = false;
       update(["Mic"]);
@@ -166,12 +182,21 @@ class HomeController extends GetxController {
   void searchModule(String? value) {
     searchTextController.text.trim();
     if (value != null) {
-      showStudyModuleList = studyModuleList;
-      showStudyModuleList = showStudyModuleList
-          .where((element) =>
-              element.moduleName!.toLowerCase().contains(value.toLowerCase()))
-          .toList();
+      showModulesAndSession = [...moduleList, ...sessionList];
+
+      showModulesAndSession = showModulesAndSession.where((element) {
+        if (element.runtimeType == Session) {
+          return element.sessionName!
+              .toLowerCase()
+              .contains(value.toLowerCase());
+        } else {
+          return element.moduleName!
+              .toLowerCase()
+              .contains(value.toLowerCase());
+        }
+      }).toList();
     }
+
     update(["HomeSearch"]);
   }
 

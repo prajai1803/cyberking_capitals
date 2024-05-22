@@ -128,6 +128,57 @@ class ApiProvider {
     return null;
   }
 
+  // attendance
+  Future<Response?> submitAttendance(int? batchId) async {
+    final token = await getAccessToken();
+    try {
+      final res =
+          await _apiService.post(url: ApiRoutes.submitAttendance, body: {
+        "batchId": batchId,
+        "status": "present",
+      }, header: {
+        "Authorization": token
+      });
+      if (res.statusCode == 201) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getAttendanceStudentHistory(
+      int? studentId, String startDate, String endDate) async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.get(
+        url: "${ApiRoutes.getAttendanceHistory}/$studentId",
+        header: {"Authorization": accessToken},
+        // data formate 2024-05-01
+        query: {"start_date": startDate, "end_date": endDate},
+      );
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   // profile
   Future<Response?> getProfile() async {
     try {
@@ -205,7 +256,28 @@ class ApiProvider {
 
   Future<Response?> getAllModule() async {
     try {
-      final res = await _apiService.get(url: ApiRoutes.getAllModules);
+      final res = await _apiService.get(
+        url: "ApiRoutes.getAllModules",
+      );
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getHomeQueries(int? studentId) async {
+    try {
+      final accessToken = await getAccessToken();
+      final res = await _apiService.get(
+          url: "${ApiRoutes.homeQuery}/$studentId",
+          header: {"Authorization": accessToken});
       if (res.statusCode == 200) {
         return res;
       } else if (res.statusCode == 400) {
@@ -238,10 +310,34 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response<dynamic>?> getRefreshToken() async {
+    try {
+      final refreshToken = await SessionDB().getRefreshToken();
+      final res = await _apiService.post(
+          url: ApiRoutes.getRefreshToken, body: {"rfToken": refreshToken});
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {}
+    return null;
+  }
+
   Future getAccessToken() async {
     final String? token = await _sessionDB.getAccessToken();
     if (token == null || JwtDecoder.isExpired(token)) {
-      throw ApiStatusException(message: "Not Authorized");
+      final res = await getRefreshToken();
+      if (res != null) {
+        final accessToken = res.body["data"]["access_token"];
+        final refreshToken = res.body["data"]["refresh_token"];
+        await SessionDB().setAccessToken(accessToken);
+        await SessionDB().setRefreshToken(refreshToken);
+        return accessToken;
+      }
     } else {
       return token;
     }

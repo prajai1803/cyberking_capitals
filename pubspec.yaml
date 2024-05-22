@@ -34,10 +34,13 @@ dependencies:
   package_info_plus: ^5.0.1
   connectivity_plus: ^5.0.2
   firebase_remote_config: ^4.3.17
-  qr_code_scanner: ^1.0.1
+  # qr_code_scanner: ^1.0.1
   speech_to_text: ^6.6.0
   jwt_decoder: ^2.0.1
   version_migration: ^2.0.3
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^4.0.1
+  
 
 dev_dependencies:
   flutter_test:

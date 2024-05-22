@@ -2,7 +2,9 @@ import 'package:cyberking_capitals/app/modules/attendence/controller/scanner.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+
+import '../widgets/overlay.dart';
 
 class QRScanner extends StatelessWidget {
   QRScanner({super.key});
@@ -18,15 +20,12 @@ class QRScanner extends StatelessWidget {
           SizedBox(
             height: double.infinity,
             width: double.infinity,
-            child: QRView(
-              key: _controller.qrKey,
-              onQRViewCreated: _onQRViewCreated,
-              overlay: QrScannerOverlayShape(
-                overlayColor: Colors.black.withOpacity(.6),
-                borderColor: Colors.white,
-                borderRadius: 12,
-                borderWidth: 10,
+            child: MobileScanner(
+              controller: _controller.mobileScannerController,
+              overlay: QRScannerOverlay(
+                overlayColour: Colors.black.withOpacity(.2),
               ),
+              onDetect: _onDetect,
             ),
           ),
           Positioned(
@@ -58,12 +57,22 @@ class QRScanner extends StatelessWidget {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    _controller.qrController = controller;
-    controller.scannedDataStream.listen((scanData) async {
-      await _controller.qrController!.stopCamera();
-      // CommonAlerts.showErrorSnack(message: scanData.code);
-      Get.back();
-    });
+  // void _onQRViewCreated(QRViewController controller) async {
+  //   // await controller.resumeCamera();
+  //   _controller.qrController = controller;
+  //   controller.scannedDataStream.listen((scanData) async {
+  //     print("object");
+  //     _controller.submitAttendance(scanData.code);
+  //     // CommonAlerts.showErrorSnack(message: scanData.code);
+  //     Get.back();
+  //   });
+  // }
+
+  void _onDetect(BarcodeCapture barcode) async {
+    _controller.mobileScannerController.stop();
+    String? rawData = barcode.barcodes[0].rawValue;
+
+    _controller.submitAttendance(rawData);
+    Get.back();
   }
 }

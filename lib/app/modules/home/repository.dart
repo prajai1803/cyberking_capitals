@@ -1,7 +1,9 @@
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:get/get.dart';
 
 class HomeRepository {
@@ -30,6 +32,39 @@ class HomeRepository {
       return [];
     } catch (e) {
       return [];
+    }
+  }
+
+  Future<List<ModuleSessionModel>> getHomeQueries(int? studentId) async {
+    try {
+      final res = await apiProvider.getHomeQueries(studentId);
+      List<ModuleSessionModel> moduleList = [];
+      if (res != null) {
+        if (res.statusCode == 200) {
+          List list = res.body["data"];
+          moduleList = list.map((e) => ModuleSessionModel.fromJson(e)).toList();
+          return moduleList;
+        }
+      }
+      return [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  Future<bool> submitAttendance(int? batchId) async {
+    try {
+      final res = await apiProvider.submitAttendance(batchId);
+      if (res != null) {
+        if (res.statusCode == 200) {
+          return true;
+        } else {
+          throw ApiStatusException(message: res.body["message"]);
+        }
+      }
+      return false;
+    } catch (e) {
+      rethrow;
     }
   }
 

@@ -231,8 +231,6 @@ class AuthController extends GetxController {
       login();
       isLoading = false;
     } else {
-      // login();
-      // login();
       update();
     }
   }
@@ -248,8 +246,6 @@ class AuthController extends GetxController {
       update(["Sign Up"]);
       await _loginAfterSignUp();
     } else {
-      // login();
-      // login();
       update();
     }
   }

@@ -1,4 +1,4 @@
-package com.sankhyank.cyberkingcapitals
+package com.sankhyank.demostudentapp
 
 import io.flutter.embedding.android.FlutterActivity
 

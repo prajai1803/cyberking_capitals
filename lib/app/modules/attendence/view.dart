@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'view/scanner.dart';
+import 'controller.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -12,68 +13,94 @@ class AttendanceScreen extends StatefulWidget {
 }
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
+  final _controller = Get.put(AttendanceController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(() => QRScanner()),
-        child: const Icon(Icons.qr_code_scanner),
-      ),
-      backgroundColor: const Color(0xefF5F6FB),
-      appBar: AppBar(
-        title: Text(
-          "Attendance",
-          style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16.h,
+        floatingActionButton: FloatingActionButton(
+          // onPressed: () => Get.to(() => QRScanner()),
+          onPressed: () => _controller.fetchInitialData(),
+          child: const Icon(Icons.qr_code_scanner),
+        ),
+        backgroundColor: const Color(0xefF5F6FB),
+        appBar: AppBar(
+          title: Text(
+            "Attendance",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16.h,
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          ExpansionTile(
-            backgroundColor: Colors.white,
-            collapsedBackgroundColor: Colors.white,
-            trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  size: 24.h,
-                )),
-            shape: Border.all(width: 0, color: Colors.transparent),
-            title: const Text(
-              "Class: ",
-            ),
-            subtitle: const Text(
-              "Created On: ",
-            ),
-            children: [
-              _buildAttendanceText(),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int x) {
-                  Color? backgroundColor =
-                      x % 2 == 0 ? Colors.white : Colors.grey[200];
-                  return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.w),
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    width: MediaQuery.of(context).size.width,
-                    color: backgroundColor,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("date"), Text("Present")],
+        body: GetBuilder(
+            init: _controller,
+            id: "Attendance Screen",
+            builder: (_) => _controller.isScreenLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: _controller.attendanceList.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) => ExpansionTile(
+                      backgroundColor: Colors.white,
+                      collapsedBackgroundColor: Colors.white,
+                      trailing: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.keyboard_arrow_down,
+                            size: 24.h,
+                          )),
+                      shape: Border.all(width: 0, color: Colors.transparent),
+                      title: Text(
+                        "Batch: ${_controller.attendanceList[index].batchId ?? 0}",
+                      ),
+                      subtitle: Text(
+                        "Batch Name: ${_controller.attendanceList[index].batchName ?? 0}",
+                      ),
+                      children: [
+                        _buildAttendanceText(),
+                        (_controller.attendanceList[index].attendanceRecords !=
+                                null)
+                            ? ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: _controller.attendanceList[index]
+                                    .attendanceRecords!.length,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int x) {
+                                  final attendanceRecord = _controller
+                                      .attendanceList[index].attendanceRecords;
+                                  Color? backgroundColor = x % 2 == 0
+                                      ? Colors.white
+                                      : Colors.grey[200];
+                                  return Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.w),
+                                    height: MediaQuery.of(context).size.height *
+                                        0.05,
+                                    width: MediaQuery.of(context).size.width,
+                                    color: backgroundColor,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(DateFormat('dd-MMMM-yyyy').format(
+                                            attendanceRecord![x]
+                                                .attendanceDate!)),
+                                        Text(attendanceRecord[x].status! ==
+                                                "none"
+                                            ? "No class"
+                                            : attendanceRecord[x]
+                                                .status!
+                                                .toUpperCase())
+                                      ],
+                                    ),
+                                  );
+                                },
+                              )
+                            : Text("No Data Found"),
+                        SizedBox(height: 20.h)
+                      ],
                     ),
-                  );
-                },
-              ),
-              SizedBox(height: 20.h)
-            ],
-          ),
-        ],
-      ),
-    );
+                  )));
   }
 
   Container _buildAttendanceText() {
