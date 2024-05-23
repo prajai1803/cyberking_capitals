@@ -83,6 +83,35 @@ class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
                   ),
                 ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GetBuilder(
+                init: _controller,
+                id: "Mark Done",
+                initState: (_) {},
+                builder: (_) {
+                  return Row(
+                    children: [
+                      const Text(
+                        "Mark as done",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Checkbox(
+                        value: _controller.markAsDone,
+                        onChanged: (value) {
+                          if (!_controller.markAsDone) {
+                            _controller.updateMark();
+                          }
+                        },
+                      ),
+                    ],
+                  );
+                },
+              ),
             )
           ],
         ));

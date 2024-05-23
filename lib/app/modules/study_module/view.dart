@@ -234,7 +234,9 @@ class _StudyModuleState extends State<StudyModule> {
                                       SizedBox(height: 24.h),
                                       GlowButton(
                                         onTap: () {
-                                          Get.toNamed(AppRoute.quiz);
+                                          Get.toNamed(AppRoute.quiz,
+                                              arguments:
+                                                  _controller.studyModuleModel);
                                         },
                                         text: "Attempt Quiz",
                                       )

@@ -1,39 +1,12 @@
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
-import 'package:cyberking_capitals/app/data/models/module_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
-import 'package:get/get.dart';
 
 class HomeRepository {
   final ApiProvider apiProvider;
   HomeRepository({required this.apiProvider});
-
-  Future<Response?> getFeatureVideoList() async {
-    return apiProvider.getFeatureVideoList();
-  }
-
-  Future<Response?> getModuleByRankList(int batch) async {
-    return apiProvider.getModuleByRankList(batch);
-  }
-
-  Future<List<ModuleModel>> getAllModule() async {
-    try {
-      final res = await apiProvider.getAllModule();
-      List<ModuleModel> moduleList = [];
-      if (res != null) {
-        if (res.statusCode == 200) {
-          List list = res.body["data"];
-          moduleList = list.map((e) => ModuleModel.fromJson(e)).toList();
-          return moduleList;
-        }
-      }
-      return [];
-    } catch (e) {
-      return [];
-    }
-  }
 
   Future<List<ModuleSessionModel>> getHomeQueries(int? studentId) async {
     try {
@@ -105,5 +78,26 @@ class HomeRepository {
       rethrow;
     }
     return null;
+  }
+
+  Future<List<SessionModel>> submitSession(
+      int? studentId, int? sessionId) async {
+    try {
+      final res = await apiProvider.submitSession(
+        studentId,
+        sessionId,
+      );
+      List<SessionModel> sessionList = [];
+      if (res != null) {
+        if (res.statusCode == 200) {
+          List list = res.body["data"];
+          sessionList = list.map((e) => SessionModel.fromJson(e)).toList();
+          return sessionList;
+        }
+      }
+      return [];
+    } catch (e) {
+      rethrow;
+    }
   }
 }

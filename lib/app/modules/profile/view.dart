@@ -1,5 +1,5 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
-import 'package:cyberking_capitals/app/core/values/strings.dart';
+import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:cyberking_capitals/app/modules/profile/controller.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
@@ -75,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       radius: 32,
                                     )
                                   : const CircleCachedImage(
-                                      imageUrl: LongString.avatar,
+                                      imageUrl: AppNetworkIcons.userIcon,
                                       radius: 32,
                                     )),
                           Column(
@@ -114,7 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       title: "Technical Analysis Module",
                       duration: "20 min",
                       session: 2,
-                      videoId: "VideoId",
+                      videoId: 0,
                       videoUrl: "ulr"));
             },
             title: "Membership",

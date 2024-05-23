@@ -396,8 +396,7 @@ class AuthController extends GetxController {
           verificationId: firebaseVerificationId!,
           smsCode: otpTextEditingController.text);
 
-      final cred =
-          await FirebaseAuth.instance.signInWithCredential(phoneAuthCred);
+      await FirebaseAuth.instance.signInWithCredential(phoneAuthCred);
 
       updateProfile();
       isEmailVerificationLoading = false;

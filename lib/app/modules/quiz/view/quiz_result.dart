@@ -52,7 +52,7 @@ class QuizResultScreen extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               Text(
-                "${_controller.correctAnserCount}/${_controller.dataList.length}",
+                "${_controller.correctAnserCount}/${_controller.quiz.length}",
                 style: TextStyle(
                     fontSize: 32.h,
                     color: AppColors.secondary,

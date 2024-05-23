@@ -40,6 +40,7 @@ dependencies:
   version_migration: ^2.0.3
   qr_flutter: ^4.1.0
   mobile_scanner: ^4.0.1
+  flutter_lazy_indexed_stack: ^0.0.6
   
 
 dev_dependencies:

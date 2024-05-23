@@ -6,7 +6,7 @@ VideoModel videoModelFromJson(String str) =>
 String videoModelToJson(VideoModel data) => json.encode(data.toJson());
 
 class VideoModel {
-  final String? videoId;
+  final int? videoId;
   final String? title;
   final String? description;
   final String? videoUrl;
@@ -23,7 +23,7 @@ class VideoModel {
   });
 
   VideoModel copyWith({
-    String? videoId,
+    int? videoId,
     String? title,
     String? description,
     String? videoUrl,

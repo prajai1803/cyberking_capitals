@@ -128,6 +128,52 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> submitSession(int? studentId, int? sessionId) async {
+    final token = await getAccessToken();
+    try {
+      final res = await _apiService.post(url: ApiRoutes.submitSession, body: {
+        "student_id": studentId,
+        "session_id": sessionId,
+      }, header: {
+        "Authorization": token
+      });
+      if (res.statusCode == 201) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> submitQuiz(int? studentId, int? quizScore) async {
+    final token = await getAccessToken();
+    try {
+      final res = await _apiService.post(url: ApiRoutes.submitSession, body: {
+        "student_id": studentId,
+        "quiz_score": quizScore,
+      }, header: {
+        "Authorization": token
+      });
+      if (res.statusCode == 201) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   // attendance
   Future<Response?> submitAttendance(int? batchId) async {
     final token = await getAccessToken();
@@ -224,64 +270,10 @@ class ApiProvider {
     return null;
   }
 
-  Future<Response> getModules() async {
-    return _apiService.get(url: ApiRoutes.getModules);
-  }
-
-  Future<Response> getToken() async {
-    return _apiService.get(url: ApiRoutes.getModules);
-  }
-
-  Future<Response?> getFeatureVideoList() async {
-    try {
-      final res = await _apiService.get(url: ApiRoutes.featureVideoList);
-      if (res.statusCode == 200) {
-        return res;
-      } else {
-        _checkException(res);
-      }
-    } catch (e) {
-      rethrow;
-    }
-    return null;
-  }
-
-  Future<Response?> getModuleByRankList(int batch) async {
-    try {
-      final res = await _apiService.get(url: "${ApiRoutes.getModules}/$batch");
-      if (res.statusCode == 200) {
-        return res;
-      } else {
-        _checkException(res);
-      }
-    } catch (e) {
-      rethrow;
-    }
-    return null;
-  }
-
   Future<Response?> getSessionByModuleId(int moduleId) async {
     try {
       final res = await _apiService.get(
           url: "${ApiRoutes.getSessionByModueId}/$moduleId");
-      if (res.statusCode == 200) {
-        return res;
-      } else if (res.statusCode == 400) {
-        return res;
-      } else {
-        _checkException(res);
-      }
-    } catch (e) {
-      rethrow;
-    }
-    return null;
-  }
-
-  Future<Response?> getAllModule() async {
-    try {
-      final res = await _apiService.get(
-        url: "ApiRoutes.getAllModules",
-      );
       if (res.statusCode == 200) {
         return res;
       } else if (res.statusCode == 400) {
@@ -300,6 +292,44 @@ class ApiProvider {
       final accessToken = await getAccessToken();
       final res = await _apiService.get(
           url: "${ApiRoutes.homeQuery}/$studentId",
+          header: {"Authorization": accessToken});
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getQuiz(int? moduleId) async {
+    try {
+      final accessToken = await getAccessToken();
+      final res = await _apiService.get(
+          url: "${ApiRoutes.getQuiz}/$moduleId",
+          header: {"Authorization": accessToken});
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getProgressBar(int? studentId) async {
+    try {
+      final accessToken = await getAccessToken();
+      final res = await _apiService.get(
+          url: "${ApiRoutes.progressBar}/$studentId",
           header: {"Authorization": accessToken});
       if (res.statusCode == 200) {
         return res;

@@ -1,7 +1,7 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
-import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/modules/home/repository.dart';
@@ -16,12 +16,13 @@ import 'package:speech_to_text/speech_to_text.dart';
 class HomeController extends GetxController {
   final HomeRepository _homeRepository =
       HomeRepository(apiProvider: ApiProvider());
+  UserModel? user;
+  final StorageProvider _storageProvider = StorageProvider();
   late VideoPlayerController introVPC;
   List<FeatureVideoModel> featureVideoList = [];
-  // List<ModuleModel> studyModuleList = [];
   List<Module> moduleList = [];
   List<Session> sessionList = [];
-  IntroVideoModel? introVideoModel;
+  IntroVideos? introVideoModel;
   final TextEditingController searchTextController = TextEditingController();
   List<dynamic> showModulesAndSession = [];
 
@@ -33,7 +34,8 @@ class HomeController extends GetxController {
   bool isVoiceRecording = false;
 
   @override
-  void onInit() {
+  void onInit() async {
+    user = await _storageProvider.readUserModel();
     fetchInitialData();
     super.onInit();
   }
@@ -42,10 +44,8 @@ class HomeController extends GetxController {
     try {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-      // await getAllModule();
+
       await getHomeQueries();
-      await getIntroVideo();
-      // _initIntroVideo();
 
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
@@ -61,12 +61,9 @@ class HomeController extends GetxController {
 
   void refreshInitialData() async {
     try {
-      introVPC.dispose();
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-      // await getAllModule();
-      await getIntroVideo();
-      _initIntroVideo();
+      await getHomeQueries();
 
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
@@ -80,41 +77,10 @@ class HomeController extends GetxController {
     }
   }
 
-  void _initIntroVideo() async {
-    print('introVideoModel');
-    introVPC = VideoPlayerController.networkUrl(
-      Uri.parse(introVideoModel?.link ?? ''),
-      videoPlayerOptions: VideoPlayerOptions(mixWithOthers: true),
-    );
-    await introVPC.initialize();
-    // await introVPC.play();
-    introVPC.addListener(_introVideoListner);
-    update(['introVideo']);
-  }
-
   @override
   void dispose() {
-    introVPC.removeListener(_introVideoListner);
     searchTextController.dispose();
     super.dispose();
-  }
-
-  Future<void> getFeatureVideo() async {
-    try {
-      final Response? res = await _homeRepository.getFeatureVideoList();
-      List<FeatureVideoModel> tempList = [];
-      if (res != null) {
-        if (res.statusCode == 200) {
-          final decode = res.body as List;
-          for (var element in decode) {
-            tempList.add(FeatureVideoModel.fromJson(element));
-          }
-          featureVideoList = tempList;
-        }
-      }
-    } catch (e) {
-      rethrow;
-    }
   }
 
   Future<void> getHomeQueries() async {
@@ -123,23 +89,17 @@ class HomeController extends GetxController {
       moduleSessionList = await _homeRepository.getHomeQueries(user.id);
       List<Module> modulesTemp = [];
       List<Session> sessionTemp = [];
-      var index = 0;
       for (var element in moduleSessionList) {
         modulesTemp.assignAll(element.modules!);
-        for (var session in modulesTemp[index].sessions!) {
-          sessionTemp.add(session);
+        for (var i = 0; i < (element.modules?.length ?? 0); i++) {
+          for (var session in modulesTemp[i].sessions!) {
+            sessionTemp.add(session);
+          }
         }
       }
       sessionList.assignAll(sessionTemp);
       moduleList.assignAll(modulesTemp);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> getIntroVideo() async {
-    try {
-      introVideoModel = await _homeRepository.getIntroVideo();
+      introVideoModel = moduleSessionList.first.introVideos;
     } catch (e) {
       rethrow;
     }
@@ -172,7 +132,7 @@ class HomeController extends GetxController {
       await Future.delayed(const Duration(seconds: 1));
       isVoiceRecording = false;
       update(["Mic"]);
-      // searchModule(searchTextController.text);
+      searchModule(searchTextController.text);
     } catch (e) {
       isVoiceRecording = false;
       update(["Mic"]);
@@ -186,10 +146,12 @@ class HomeController extends GetxController {
 
       showModulesAndSession = showModulesAndSession.where((element) {
         if (element.runtimeType == Session) {
+          element as Session;
           return element.sessionName!
               .toLowerCase()
               .contains(value.toLowerCase());
         } else {
+          element as Module;
           return element.moduleName!
               .toLowerCase()
               .contains(value.toLowerCase());
@@ -198,9 +160,5 @@ class HomeController extends GetxController {
     }
 
     update(["HomeSearch"]);
-  }
-
-  _introVideoListner() {
-    update(['introVideo']);
   }
 }

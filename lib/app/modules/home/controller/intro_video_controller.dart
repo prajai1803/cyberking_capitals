@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
-import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -8,6 +9,8 @@ class IntroVideoController extends GetxController {
   late final VideoPlayerController videoPlayerController;
   late final ChewieController chewieController;
 
+  final SessionDB _sessionDB = SessionDB();
+
   @override
   void onInit() {
     _initVideo();
@@ -15,10 +18,9 @@ class IntroVideoController extends GetxController {
   }
 
   void _initVideo() async {
-    final IntroVideoModel video = Get.arguments as IntroVideoModel;
-    print(video.link);
+    final IntroVideos video = Get.arguments as IntroVideos;
     videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(video.link ?? "dsk"));
+        VideoPlayerController.networkUrl(Uri.parse(video.videoLink ?? "dsk"));
     await videoPlayerController.initialize();
     chewieController = ChewieController(
         videoPlayerController: videoPlayerController,
@@ -43,6 +45,7 @@ class IntroVideoController extends GetxController {
 
   void play() async {
     await chewieController.play();
+    _sessionDB.setIntroVideoComplete(true);
   }
 
   void puase() async {

@@ -1,6 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
-import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,7 +18,7 @@ class IntroVideoPlayer extends StatefulWidget {
 class _ModuleVideoPlayerState extends State<IntroVideoPlayer> {
   final _controller = Get.put(IntroVideoController());
 
-  final IntroVideoModel video = Get.arguments as IntroVideoModel;
+  final IntroVideos video = Get.arguments as IntroVideos;
 
   @override
   void dispose() {
@@ -29,7 +29,7 @@ class _ModuleVideoPlayerState extends State<IntroVideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Video")),
+        appBar: AppBar(title: const Text("Introduction Video")),
         body: Column(
           children: [
             SizedBox(height: 32.h),
@@ -76,7 +76,7 @@ class _ModuleVideoPlayerState extends State<IntroVideoPlayer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    video.name ?? "",
+                    video.videoName ?? "",
                     style:
                         TextStyle(fontSize: 18.h, fontWeight: FontWeight.w700),
                   ),

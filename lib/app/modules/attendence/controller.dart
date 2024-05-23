@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/attendance_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
@@ -20,9 +21,9 @@ class AttendanceController extends GetxController {
   ----------------- States ---------------
   ----------------------------------------*/
 
-  bool isScreenLoading = false;
-  void setScreenLoading(value) {
-    isScreenLoading = value;
+  ScreenState screenState = ScreenState.loading;
+  void setScreenLoading(ScreenState value) {
+    screenState = value;
     update(["Attendance Screen"]);
   }
 
@@ -47,7 +48,7 @@ class AttendanceController extends GetxController {
   ----------------------------------------*/
   fetchInitialData() async {
     try {
-      setScreenLoading(true);
+      setScreenLoading(ScreenState.loading);
       // get 1st data of month and today
       DateTime now = DateTime.now();
       DateTime currntMonth = DateTime(now.year, now.month, 1);
@@ -59,13 +60,13 @@ class AttendanceController extends GetxController {
 
       attendanceList = await _repository.getAttendanceHistory(
           user.id, currntMonthFormatted, currentDayOfMonth);
-      setScreenLoading(false);
+      setScreenLoading(ScreenState.loaded);
     } on ApiStatusException catch (e) {
       CommonAlerts.showSuccessSnack(message: e.message);
-      setScreenLoading(false);
+      setScreenLoading(ScreenState.error);
     } catch (e) {
       CommonAlerts.showSuccessSnack(message: e.toString());
-      setScreenLoading(false);
+      setScreenLoading(ScreenState.error);
     }
   }
 }

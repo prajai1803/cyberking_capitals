@@ -36,9 +36,9 @@ class AllSession extends StatelessWidget {
                       description: _controller.sessionList[index].sessionDesc,
                       title: _controller.sessionList[index].sessionName,
                       duration:
-                          "${_controller.sessionList[index].videoDuration} min",
+                          "${_controller.sessionList[index].videoDuration} ",
                       session: 2,
-                      videoId: "VideoId",
+                      videoId: _controller.sessionList[index].sessionId,
                       videoUrl: _controller.sessionList[index].videoLink));
             },
             index: index + 1,

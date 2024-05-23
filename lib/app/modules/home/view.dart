@@ -1,5 +1,6 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/enums.dart';
+import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
@@ -48,9 +49,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Row(
                     children: [
-                      CircleCachedImage(
-                        imageUrl: "",
-                        radius: 16.r,
+                      GetBuilder(
+                        init: _controller,
+                        id: "Loading Screen",
+                        initState: (_) {},
+                        builder: (_) {
+                          return CircleCachedImage(
+                            imageUrl: _controller.user?.profilePhoto ??
+                                AppNetworkIcons.userIcon,
+                            radius: 16.r,
+                          );
+                        },
                       ),
                       SizedBox(width: 12.w),
                       Column(
@@ -109,231 +118,158 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(height: 16.h),
                                 _buildSearchField(),
                                 SizedBox(height: 20.h),
-                                GetBuilder(
-                                    init: _controller,
-                                    id: "HomeSearch",
-                                    builder: (_) {
-                                      return SizedBox(
-                                          child:
-                                              (_controller.searchTextController
-                                                      .text.isEmpty)
-                                                  ? Column(
-                                                      children: [
-                                                        _controller.introVideoModel ==
-                                                                null
-                                                            ? const SizedBox()
-                                                            : _buildIntroVideo(),
-                                                        // Feature video updates (dont remove)
-
-                                                        // Padding(
-                                                        //   padding:
-                                                        //       EdgeInsets.symmetric(
-                                                        //           horizontal: 20.w),
-                                                        //   child: const Divider(
-                                                        //       thickness: 1),
-                                                        // ),
-                                                        // SizedBox(height: 24.h),
-                                                        // Container(
-                                                        //   alignment:
-                                                        //       Alignment.centerLeft,
-                                                        //   padding: EdgeInsets.only(
-                                                        //       left: 16.w),
-                                                        //   child: Text(
-                                                        //     "Features Video Updates",
-                                                        //     style: TextStyle(
-                                                        //       fontSize: 18.h,
-                                                        //       fontWeight:
-                                                        //           FontWeight.w700,
-                                                        //       color:
-                                                        //           AppColors.iconRed,
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
-                                                        // SizedBox(height: 10.h),
-                                                        // _buildCommingSoon(),
-                                                        SizedBox(height: 10.h),
-                                                        _buildModules(),
-                                                        SizedBox(height: 24.h),
-                                                        Container(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 16.w),
-                                                          child: Text(
-                                                            "All Modules",
-                                                            style: TextStyle(
-                                                                fontSize: 16.h,
-                                                                color: AppColors
-                                                                    .iconRed,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        24.w),
-                                                            child: ListView
-                                                                .builder(
-                                                              itemCount:
-                                                                  _controller
-                                                                      .moduleList
-                                                                      .length,
-                                                              shrinkWrap: true,
-                                                              physics:
-                                                                  const NeverScrollableScrollPhysics(),
-                                                              itemBuilder:
-                                                                  (context,
-                                                                          index) =>
-                                                                      InkWell(
-                                                                onTap: () {
-                                                                  Get.toNamed(
-                                                                      AppRoute
-                                                                          .studyModule,
-                                                                      arguments:
-                                                                          _controller
-                                                                              .moduleList[index]);
-                                                                },
-                                                                child:
-                                                                    ModuleTile(
-                                                                  description: _controller
-                                                                      .moduleList[
-                                                                          index]
-                                                                      .moduleDesc,
-                                                                  title: _controller
-                                                                      .moduleList[
-                                                                          index]
-                                                                      .moduleName,
-                                                                  index:
-                                                                      index + 1,
-                                                                  duration: (_controller
-                                                                              .moduleList[index]
-                                                                              .completionTimeHrs ??
-                                                                          0)
-                                                                      .toHHMM(),
-                                                                  session: _controller
-                                                                          .moduleList[
-                                                                              index]
-                                                                          .sessions
-                                                                          ?.length ??
-                                                                      0,
-                                                                  thumbnail: _controller
-                                                                      .moduleList[
-                                                                          index]
-                                                                      .thumbnail,
-                                                                ),
-                                                              ),
-                                                            )),
-                                                      ],
-                                                    )
-                                                  : Padding(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                              horizontal: 10.w),
-                                                      child: _controller
-                                                              .showModulesAndSession
-                                                              .isEmpty
-                                                          ? Text(
-                                                              "Data not found",
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      14.h,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                            )
-                                                          : ListView.builder(
-                                                              shrinkWrap: true,
-                                                              itemCount: _controller
-                                                                  .showModulesAndSession
-                                                                  .length,
-                                                              itemBuilder:
-                                                                  (context,
-                                                                      index) {
-                                                                if (_controller
-                                                                        .showModulesAndSession[
-                                                                            index]
-                                                                        .runtimeType ==
-                                                                    Module) {
-                                                                  return InkWell(
-                                                                    onTap: () {
-                                                                      Get.toNamed(
-                                                                          AppRoute
-                                                                              .studyModule,
-                                                                          arguments:
-                                                                              _controller.showModulesAndSession[index]);
-                                                                    },
-                                                                    child:
-                                                                        ModuleTile(
-                                                                      description: _controller
-                                                                          .showModulesAndSession[
-                                                                              index]
-                                                                          .moduleDesc,
-                                                                      title: _controller
-                                                                          .showModulesAndSession[
-                                                                              index]
-                                                                          .moduleName,
-                                                                      index:
-                                                                          index,
-                                                                      duration: _controller
-                                                                          .showModulesAndSession[
-                                                                              index]
-                                                                          .completionTimeHrs
-                                                                          .toString(),
-                                                                      session: _controller
-                                                                          .showModulesAndSession[
-                                                                              index]
-                                                                          .sessionCount,
-                                                                      thumbnail: _controller
-                                                                          .showModulesAndSession[
-                                                                              index]
-                                                                          .thumbnail,
-                                                                    ),
-                                                                  );
-                                                                } else {
-                                                                  Session s = _controller
-                                                                              .showModulesAndSession[
-                                                                          index]
-                                                                      as Session;
-                                                                  return SessionTile(
-                                                                    onTap: () {
-                                                                      Get.toNamed(
-                                                                          AppRoute
-                                                                              .moduleVideo,
-                                                                          arguments: VideoModel(
-                                                                              description: s.sessionDesc,
-                                                                              title: s.sessionName,
-                                                                              duration: s.videoDuration!.toHHMM(),
-                                                                              videoId: s.sessionId.toString(),
-                                                                              videoUrl: s.videoLink));
-                                                                    },
-                                                                    description:
-                                                                        s.sessionDesc,
-                                                                    session: s
-                                                                        .sessionId,
-                                                                    duration: s
-                                                                        .videoDuration!
-                                                                        .toHHMM(),
-                                                                    title: s
-                                                                        .sessionName,
-                                                                    thumbnail: s
-                                                                        .thumbnail,
-                                                                    index:
-                                                                        index,
-                                                                  );
-                                                                }
-                                                              }),
-                                                    ));
-                                    }),
+                                mainBody(),
                                 SizedBox(height: 24.h),
                               ],
                             )),
             ),
           ),
         ));
+  }
+
+  GetBuilder<HomeController> mainBody() {
+    return GetBuilder(
+        init: _controller,
+        id: "HomeSearch",
+        builder: (_) {
+          return SizedBox(
+              child: (_controller.searchTextController.text.isEmpty)
+                  ? Column(
+                      children: [
+                        _controller.introVideoModel == null
+                            ? const SizedBox()
+                            : _buildIntroVideo(),
+                        // Feature video updates (dont remove)
+
+                        // Padding(
+                        //   padding:
+                        //       EdgeInsets.symmetric(
+                        //           horizontal: 20.w),
+                        //   child: const Divider(
+                        //       thickness: 1),
+                        // ),
+                        // SizedBox(height: 24.h),
+                        // Container(
+                        //   alignment:
+                        //       Alignment.centerLeft,
+                        //   padding: EdgeInsets.only(
+                        //       left: 16.w),
+                        //   child: Text(
+                        //     "Features Video Updates",
+                        //     style: TextStyle(
+                        //       fontSize: 18.h,
+                        //       fontWeight:
+                        //           FontWeight.w700,
+                        //       color:
+                        //           AppColors.iconRed,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(height: 10.h),
+                        // _buildCommingSoon(),
+                        SizedBox(height: 10.h),
+                        _buildModules(),
+                        SizedBox(height: 24.h),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.only(left: 16.w),
+                          child: Text(
+                            "All Modules",
+                            style: TextStyle(
+                                fontSize: 16.h,
+                                color: AppColors.iconRed,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: ListView.builder(
+                              itemCount: _controller.moduleList.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) => InkWell(
+                                onTap: () {
+                                  Get.toNamed(AppRoute.studyModule,
+                                      arguments: _controller.moduleList[index]);
+                                },
+                                child: ModuleTile(
+                                  description:
+                                      _controller.moduleList[index].moduleDesc,
+                                  title:
+                                      _controller.moduleList[index].moduleName,
+                                  index: index + 1,
+                                  duration: (_controller.moduleList[index]
+                                              .completionTimeHrs ??
+                                          0)
+                                      .toHHMM(),
+                                  session: _controller
+                                          .moduleList[index].sessions?.length ??
+                                      0,
+                                  thumbnail:
+                                      _controller.moduleList[index].thumbnail,
+                                ),
+                              ),
+                            )),
+                      ],
+                    )
+                  : Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: _controller.showModulesAndSession.isEmpty
+                          ? Text(
+                              "Data not found",
+                              style: TextStyle(
+                                  fontSize: 14.h, fontWeight: FontWeight.w500),
+                            )
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  _controller.showModulesAndSession.length,
+                              itemBuilder: (context, index) {
+                                if (_controller.showModulesAndSession[index]
+                                        .runtimeType ==
+                                    Module) {
+                                  Module module =
+                                      _controller.showModulesAndSession[index];
+                                  return InkWell(
+                                    onTap: () {
+                                      Get.toNamed(AppRoute.studyModule,
+                                          arguments: module);
+                                    },
+                                    child: ModuleTile(
+                                      description: module.moduleDesc,
+                                      title: module.moduleName,
+                                      index: index,
+                                      duration:
+                                          module.completionTimeHrs!.toHHMM(),
+                                      session: module.sessionCount,
+                                      thumbnail: module.thumbnail,
+                                    ),
+                                  );
+                                } else {
+                                  Session s = _controller
+                                      .showModulesAndSession[index] as Session;
+                                  return SessionTile(
+                                    onTap: () {
+                                      Get.toNamed(AppRoute.moduleVideo,
+                                          arguments: VideoModel(
+                                              description: s.sessionDesc,
+                                              title: s.sessionName,
+                                              duration:
+                                                  s.videoDuration!.toHHMM(),
+                                              videoId: s.sessionId,
+                                              videoUrl: s.videoLink));
+                                    },
+                                    description: s.sessionDesc,
+                                    session: s.sessionId,
+                                    duration: s.videoDuration!.toHHMM(),
+                                    title: s.sessionName,
+                                    thumbnail: s.thumbnail,
+                                    index: index,
+                                  );
+                                }
+                              }),
+                    ));
+        });
   }
 
   Column _buildIntroVideo() {

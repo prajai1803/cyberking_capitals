@@ -17,8 +17,16 @@ class ApiRoutes {
   static const updateStudentProfile = 'api/profile/update/student-profile';
   static const getIntroVideo = 'api/videos/get-video';
 
+  // quiz
+  static const getQuiz = 'api/quizV2/get-mobile-quiz';
+
   // home api
   static const homeQuery = 'api/mobile/home/get';
+  static const progressBar = 'api/mobile/record/get-record';
+
+  // tracking apis
+  static const submitSession = 'api/mobile/record/submit-session';
+  static const submitQuiz = 'api/mobile/record/submit-quiz';
 
   static const featureVideoList = 'feature-video-list';
   static const getModules = 'api/Modules/get-modules';

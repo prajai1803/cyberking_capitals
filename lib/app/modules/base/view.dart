@@ -8,6 +8,7 @@ import 'package:cyberking_capitals/app/modules/home/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
 import 'package:cyberking_capitals/app/widgets/no_internet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lazy_indexed_stack/flutter_lazy_indexed_stack.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -69,7 +70,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
     ];
 
     return Scaffold(
-      body: Obx(() => IndexedStack(
+      body: Obx(() => LazyIndexedStack(
           index: _controller.currentIndex.value, children: screens)),
       bottomNavigationBar: SizedBox(
         width: double.infinity,
