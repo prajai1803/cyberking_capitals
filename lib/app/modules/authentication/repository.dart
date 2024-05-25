@@ -97,7 +97,7 @@ class AuthRepositry {
 
   Future<bool> updateProfile() async {
     try {
-      final res = await apiProvider.updateProfile();
+      final res = await apiProvider.updatePhoneNumberVerify();
       if (res != null) {
         final resBody = res.body;
 

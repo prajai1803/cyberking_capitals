@@ -27,6 +27,8 @@ class ApiRoutes {
   // tracking apis
   static const submitSession = 'api/mobile/record/submit-session';
   static const submitQuiz = 'api/mobile/record/submit-quiz';
+  static const getProgressBar = 'api/mobile/record/get-record';
+  static const getModuleRecord = 'api/mobile/record/get-sessions-record';
 
   static const featureVideoList = 'feature-video-list';
   static const getModules = 'api/Modules/get-modules';

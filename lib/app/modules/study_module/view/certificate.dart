@@ -222,7 +222,7 @@ class CertificateScreen extends StatelessWidget {
             )),
         SizedBox(height: 12.h),
         Text(
-            "You have successfully completed the mandatory requirements prescribed by Cyberking Capitals and passed the certification program in",
+            "You have successfully completed the mandatory requirements prescribed by Student App and passed the certification program in",
             style: TextStyle(
               fontSize: 14.h,
               color: AppColors.textBlack3,

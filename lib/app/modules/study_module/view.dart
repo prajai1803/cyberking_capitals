@@ -1,4 +1,5 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/modules/study_module/view/certificate.dart';
 import 'package:cyberking_capitals/app/modules/study_module/widgets/glow_button.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
@@ -26,7 +27,14 @@ class _StudyModuleState extends State<StudyModule> {
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _buildHeader(),
         SizedBox(height: 32.h),
-        _buildLearingRoad()
+        GetBuilder(
+            init: _controller,
+            id: "Below Screen",
+            builder: (_) => _controller.screenState == ScreenState.loading
+                ? const Center(child: CircularProgressIndicator())
+                : _controller.screenState == ScreenState.error
+                    ? const Center(child: Text("No Record Founds"))
+                    : _buildLearingRoad())
       ]),
     );
   }
@@ -105,7 +113,7 @@ class _StudyModuleState extends State<StudyModule> {
                                           ),
                                           SizedBox(width: 8.w),
                                           Text(
-                                            "00%",
+                                            "${_controller.moduleRecord?.completionPercentage ?? 0}%",
                                             style: TextStyle(
                                                 fontSize: 16.h,
                                                 fontFamily: "Rakkas",
@@ -117,7 +125,9 @@ class _StudyModuleState extends State<StudyModule> {
                                       SizedBox(height: 24.h),
                                       GlowButton(
                                         onTap: () {
-                                          Get.toNamed(AppRoute.allSession);
+                                          Get.toNamed(
+                                            AppRoute.allSession,
+                                          );
                                         },
                                         text: "Explore",
                                         color: AppColors.secondary,
@@ -153,7 +163,10 @@ class _StudyModuleState extends State<StudyModule> {
                   children: [
                     InkWell(
                       onTap: () {
-                        _controller.toogleQuiz();
+                        if (_controller.moduleRecord?.completionPercentage ==
+                            "100") {
+                          _controller.toogleQuiz();
+                        }
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -271,7 +284,9 @@ class _StudyModuleState extends State<StudyModule> {
                   children: [
                     InkWell(
                       onTap: () {
-                        _controller.toogleCertificate();
+                        if ((_controller.moduleRecord?.quizScore == null)) {
+                          _controller.toogleCertificate();
+                        }
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

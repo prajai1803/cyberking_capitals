@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
+import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/modules/profile/repository.dart';
+import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +13,7 @@ import 'package:intl/intl.dart';
 
 class EditProfileController extends GetxController {
   final profileFormKey = GlobalKey<FormState>();
+  final _repository = ProfileRepository(apiProvider: ApiProvider());
 
   late final TextEditingController nameController;
   late final TextEditingController contactController;
@@ -23,6 +27,12 @@ class EditProfileController extends GetxController {
   final ImagePicker _imagePicker = ImagePicker();
 
   final UserModel? currentUser = Get.arguments as UserModel?;
+
+  bool isUpdating = false;
+  void setIsUpdating(value) {
+    isUpdating = value;
+    update(["Update Button"]);
+  }
 
   @override
   void onInit() {
@@ -83,6 +93,27 @@ class EditProfileController extends GetxController {
       whatappController.text = contactController.text;
     }
     update(["Whatsapp Field"]);
+  }
+
+  void updateProfile() async {
+    try {
+      setIsUpdating(true);
+      final user = currentUser!.copyWith(
+        dateOfBirth: dobController.text,
+        name: nameController.text,
+        mobileNumber: contactController.text,
+        whatsappNumber: whatappController.text,
+        location: locationController.text,
+      );
+      await _repository.updateProfile(user);
+      setIsUpdating(false);
+    } on ApiStatusException catch (e) {
+      setIsUpdating(false);
+      CommonAlerts.showErrorSnack(message: e.message);
+    } catch (e) {
+      setIsUpdating(false);
+      CommonAlerts.showErrorSnack(message: e.toString());
+    }
   }
 
   void selectProfilePictureViaCamera() async {

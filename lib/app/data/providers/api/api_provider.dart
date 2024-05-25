@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_routes.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/data/services/api/api_service.dart';
@@ -225,13 +226,14 @@ class ApiProvider {
     return null;
   }
 
-  // profile
   Future<Response?> getProfile() async {
     try {
       final accessToken = await getAccessToken();
 
       final res = await _apiService.get(
-          url: ApiRoutes.getProfile, header: {"Authorization": accessToken});
+        url: ApiRoutes.getProfile,
+        header: {"Authorization": accessToken},
+      );
 
       if (res.statusCode == 200) {
         return res;
@@ -247,7 +249,53 @@ class ApiProvider {
     return null;
   }
 
-  Future<Response?> updateProfile() async {
+  // profile
+  Future<Response?> getModuleRecord(
+      int? studentId, int? batchId, int? moduleId) async {
+    try {
+      final accessToken = await getAccessToken();
+      final res = await _apiService.post(
+          url: "${ApiRoutes.getModuleRecord}/$studentId",
+          header: {"Authorization": accessToken},
+          body: {"module_id": moduleId, "batch_id": batchId});
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> updateProfile(UserModel user) async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.post(
+          url: ApiRoutes.updateStudentProfile,
+          header: {"Authorization": accessToken},
+          body: user.toJson());
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> updatePhoneNumberVerify() async {
     try {
       final accessToken = await getAccessToken();
 

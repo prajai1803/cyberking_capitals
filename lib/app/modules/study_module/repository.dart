@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/data/models/module_record.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 
@@ -17,6 +18,26 @@ class StudyRepository {
         }
       }
       return [];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ModuleRecordModel?> getModuleRecord(
+      int? studentId, int? batchId, int? moduleId) async {
+    try {
+      final res =
+          await apiProvider.getModuleRecord(studentId, batchId, moduleId);
+
+      if (res != null) {
+        if (res.statusCode == 200) {
+          final jsonDecoded = res.body["data"] as Map<String, dynamic>;
+          ModuleRecordModel moduleRecordModel =
+              ModuleRecordModel.fromJson(jsonDecoded);
+          return moduleRecordModel;
+        }
+      }
+      return null;
     } catch (e) {
       rethrow;
     }

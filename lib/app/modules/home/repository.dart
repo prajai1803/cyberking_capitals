@@ -1,12 +1,16 @@
 import 'package:cyberking_capitals/app/data/models/intro_video_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
+import 'package:cyberking_capitals/app/data/models/progressbar_model.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 
 class HomeRepository {
   final ApiProvider apiProvider;
   HomeRepository({required this.apiProvider});
+
+  final StorageProvider _storageProvider = StorageProvider();
 
   Future<List<ModuleSessionModel>> getHomeQueries(int? studentId) async {
     try {
@@ -16,6 +20,7 @@ class HomeRepository {
         if (res.statusCode == 200) {
           List list = res.body["data"];
           moduleList = list.map((e) => ModuleSessionModel.fromJson(e)).toList();
+          _storageProvider.writeHomeQueries(moduleList);
           return moduleList;
         }
       }
@@ -53,6 +58,24 @@ class HomeRepository {
         }
       }
       return [];
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ProgressBarModel?> getProgressBar(int id) async {
+    try {
+      final res = await apiProvider.getProgressBar(id);
+
+      if (res != null) {
+        if (res.statusCode == 200) {
+          final jsonBody = res.body["data"];
+          ProgressBarModel progressBarModel =
+              ProgressBarModel.fromJson(jsonBody);
+          return progressBarModel;
+        }
+      }
+      return null;
     } catch (e) {
       rethrow;
     }

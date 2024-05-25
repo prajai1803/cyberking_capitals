@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/modules/profile/controller/edit_profile_controller.dart';
 import 'package:cyberking_capitals/app/modules/profile/widgets/text_field.dart';
@@ -62,7 +63,8 @@ class EditProfileScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 62.r,
                   child: CircleCachedImage(
-                    imageUrl: null,
+                    imageUrl: _controller.currentUser?.profilePhoto ??
+                        AppNetworkIcons.userIcon,
                     radius: 50.r,
                   ),
                 )
@@ -219,9 +221,18 @@ class EditProfileScreen extends StatelessWidget {
                       controller: _controller.locationController),
                   SizedBox(height: 24.h),
                   const Spacer(),
-                  AppElevatedButton(
-                    text: "UPDATE PROFILE",
-                    onPressed: () {},
+                  GetBuilder(
+                    init: _controller,
+                    id: "Update Button",
+                    initState: (_) {},
+                    builder: (_) {
+                      return _controller.isUpdating
+                          ? const CircularProgressIndicator()
+                          : AppElevatedButton(
+                              text: "UPDATE PROFILE",
+                              onPressed: () => _controller.updateProfile(),
+                            );
+                    },
                   ),
                   SizedBox(height: 24.h),
                 ],
