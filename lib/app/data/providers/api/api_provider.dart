@@ -35,6 +35,7 @@ class ApiProvider {
         "password": password,
         "mobile": phone,
         "role": "student",
+        "is_self_created": 1,
         "name": name
       });
       if (res.statusCode == 201) {
@@ -138,7 +139,7 @@ class ApiProvider {
       }, header: {
         "Authorization": token
       });
-      if (res.statusCode == 201) {
+      if (res.statusCode == 200) {
         return res;
       }
       if (res.statusCode == 400) {
@@ -152,16 +153,18 @@ class ApiProvider {
     return null;
   }
 
-  Future<Response?> submitQuiz(int? studentId, int? quizScore) async {
+  Future<Response?> submitQuiz(
+      int? studentId, int? quizScore, int? moduleId) async {
     final token = await getAccessToken();
     try {
-      final res = await _apiService.post(url: ApiRoutes.submitSession, body: {
+      final res = await _apiService.post(url: ApiRoutes.submitQuiz, body: {
         "student_id": studentId,
         "quiz_score": quizScore,
+        "module_id": moduleId
       }, header: {
         "Authorization": token
       });
-      if (res.statusCode == 201) {
+      if (res.statusCode == 200) {
         return res;
       }
       if (res.statusCode == 400) {
@@ -186,7 +189,7 @@ class ApiProvider {
       }, header: {
         "Authorization": token
       });
-      if (res.statusCode == 201) {
+      if (res.statusCode == 200) {
         return res;
       }
       if (res.statusCode == 400) {
@@ -250,14 +253,17 @@ class ApiProvider {
   }
 
   // profile
-  Future<Response?> getModuleRecord(
-      int? studentId, int? batchId, int? moduleId) async {
+  Future<Response?> getModuleRecord(int? studentId, int? moduleId) async {
     try {
       final accessToken = await getAccessToken();
-      final res = await _apiService.post(
-          url: "${ApiRoutes.getModuleRecord}/$studentId",
-          header: {"Authorization": accessToken},
-          body: {"module_id": moduleId, "batch_id": batchId});
+      final res = await _apiService
+          .post(url: "${ApiRoutes.getModuleRecord}/$studentId", header: {
+        "Authorization": accessToken
+      }, body: {
+        "module_id": moduleId,
+        // "batch_id": batchId,
+        "student_id": studentId,
+      });
       if (res.statusCode == 200) {
         return res;
       }

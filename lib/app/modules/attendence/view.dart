@@ -27,6 +27,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () => Get.to(() => QRScanner()),
           child: const Icon(Icons.qr_code_scanner),
@@ -40,6 +42,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               fontSize: 16.h,
             ),
           ),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  _controller.fetchInitialData();
+                },
+                icon: const Icon(
+                  Icons.refresh_outlined,
+                ))
+          ],
         ),
         body: GetBuilder(
             init: _controller,

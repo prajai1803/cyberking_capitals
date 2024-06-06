@@ -251,13 +251,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return SessionTile(
                                     onTap: () {
                                       Get.toNamed(AppRoute.moduleVideo,
-                                          arguments: VideoModel(
-                                              description: s.sessionDesc,
-                                              title: s.sessionName,
-                                              duration:
-                                                  s.videoDuration!.toHHMM(),
-                                              videoId: s.sessionId,
-                                              videoUrl: s.videoLink));
+                                          arguments: {
+                                            "videoModel": VideoModel(
+                                                description: s.sessionDesc,
+                                                title: s.sessionName,
+                                                duration:
+                                                    s.videoDuration!.toHHMM(),
+                                                session: 2,
+                                                videoId: s.sessionId,
+                                                videoUrl: s.videoLink),
+                                            "sessionCompletedList": []
+                                          });
                                     },
                                     description: s.sessionDesc,
                                     session: s.sessionId,
@@ -303,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
           colorCode: 0xeFE09C32,
           imageIcon: AppImages.progressIcon,
           onTap: () {
-            Get.to(() => ProgressBarScreen());
+            Get.to(() => const ProgressBarScreen());
           },
         ),
         SizedBox(height: 10.h),
@@ -407,6 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // ignore: unused_element
   ListView _buildCommingSoon() {
     return ListView.builder(
       shrinkWrap: true,

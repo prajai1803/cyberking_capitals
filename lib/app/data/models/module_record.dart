@@ -11,14 +11,16 @@ String moduleRecordModelToJson(ModuleRecordModel data) =>
     json.encode(data.toJson());
 
 class ModuleRecordModel {
+  final int? studentId;
   final int? moduleId;
   final int? totalSessions;
   final int? completedSessions;
   final String? completionPercentage;
-  final List<dynamic>? completedSessionIds;
-  final List<dynamic>? quizScore;
+  final List<int>? completedSessionIds;
+  final int? quizScore;
 
   ModuleRecordModel({
+    this.studentId,
     this.moduleId,
     this.totalSessions,
     this.completedSessions,
@@ -28,14 +30,16 @@ class ModuleRecordModel {
   });
 
   ModuleRecordModel copyWith({
+    int? studentId,
     int? moduleId,
     int? totalSessions,
     int? completedSessions,
     String? completionPercentage,
-    List<dynamic>? completedSessionIds,
-    List<dynamic>? quizScore,
+    List<int>? completedSessionIds,
+    int? quizScore,
   }) =>
       ModuleRecordModel(
+        studentId: studentId ?? this.studentId,
         moduleId: moduleId ?? this.moduleId,
         totalSessions: totalSessions ?? this.totalSessions,
         completedSessions: completedSessions ?? this.completedSessions,
@@ -46,19 +50,19 @@ class ModuleRecordModel {
 
   factory ModuleRecordModel.fromJson(Map<String, dynamic> json) =>
       ModuleRecordModel(
+        studentId: json["student_id"],
         moduleId: json["module_id"],
         totalSessions: json["totalSessions"],
         completedSessions: json["completedSessions"],
         completionPercentage: json["completionPercentage"],
         completedSessionIds: json["completedSessionIds"] == null
             ? []
-            : List<dynamic>.from(json["completedSessionIds"]!.map((x) => x)),
-        quizScore: json["quiz_score"] == null
-            ? []
-            : List<dynamic>.from(json["quiz_score"]!.map((x) => x)),
+            : List<int>.from(json["completedSessionIds"]!.map((x) => x)),
+        quizScore: json["quiz_score"],
       );
 
   Map<String, dynamic> toJson() => {
+        "student_id": studentId,
         "module_id": moduleId,
         "totalSessions": totalSessions,
         "completedSessions": completedSessions,
@@ -66,8 +70,6 @@ class ModuleRecordModel {
         "completedSessionIds": completedSessionIds == null
             ? []
             : List<dynamic>.from(completedSessionIds!.map((x) => x)),
-        "quiz_score": quizScore == null
-            ? []
-            : List<dynamic>.from(quizScore!.map((x) => x)),
+        "quiz_score": quizScore,
       };
 }

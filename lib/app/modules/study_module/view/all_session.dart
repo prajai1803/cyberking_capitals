@@ -13,6 +13,8 @@ class AllSession extends StatelessWidget {
 
   final _controller = Get.find<StudyModuleController>();
 
+  final List completedSession = Get.arguments as List;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,15 +33,17 @@ class AllSession extends StatelessWidget {
                 (_controller.sessionList[index].videoDuration ?? 0).toHHMM(),
             thumbnail: _controller.sessionList[index].thumbnail,
             onTap: () {
-              Get.toNamed(AppRoute.moduleVideo,
-                  arguments: VideoModel(
-                      description: _controller.sessionList[index].sessionDesc,
-                      title: _controller.sessionList[index].sessionName,
-                      duration:
-                          "${_controller.sessionList[index].videoDuration} ",
-                      session: 2,
-                      videoId: _controller.sessionList[index].sessionId,
-                      videoUrl: _controller.sessionList[index].videoLink));
+              Get.toNamed(AppRoute.moduleVideo, arguments: {
+                "videoModel": VideoModel(
+                    description: _controller.sessionList[index].sessionDesc,
+                    title: _controller.sessionList[index].sessionName,
+                    duration:
+                        "${_controller.sessionList[index].videoDuration} ",
+                    session: 2,
+                    videoId: _controller.sessionList[index].sessionId,
+                    videoUrl: _controller.sessionList[index].videoLink),
+                "sessionCompletedList": completedSession
+              });
             },
             index: index + 1,
           ),

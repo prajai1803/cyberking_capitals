@@ -126,13 +126,23 @@ class OnBoaringScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            size: 24.r,
-            color: Colors.black,
-          ),
-          onPressed: () {},
+        leading: GetBuilder(
+          init: _controller,
+          initState: (_) {},
+          builder: (_) {
+            return _controller.pageController.page != 0
+                ? IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      size: 24.r,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      _controller.previousPage();
+                    },
+                  )
+                : const SizedBox();
+          },
         ),
       ),
       body: Center(

@@ -32,4 +32,14 @@ class OnBoardingController extends GetxController {
     currentPage = pageController.page!.toInt();
     update();
   }
+
+  void previousPage() async {
+    if (pageController.page == 0) {
+      return;
+    }
+    await pageController.previousPage(
+        duration: const Duration(milliseconds: 500), curve: Curves.linear);
+    currentPage = pageController.page!.toInt();
+    update();
+  }
 }

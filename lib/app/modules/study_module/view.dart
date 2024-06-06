@@ -125,9 +125,11 @@ class _StudyModuleState extends State<StudyModule> {
                                       SizedBox(height: 24.h),
                                       GlowButton(
                                         onTap: () {
-                                          Get.toNamed(
-                                            AppRoute.allSession,
-                                          );
+                                          Get.toNamed(AppRoute.allSession,
+                                              arguments: _controller
+                                                      .moduleRecord
+                                                      ?.completedSessionIds ??
+                                                  []);
                                         },
                                         text: "Explore",
                                         color: AppColors.secondary,
@@ -164,7 +166,7 @@ class _StudyModuleState extends State<StudyModule> {
                     InkWell(
                       onTap: () {
                         if (_controller.moduleRecord?.completionPercentage ==
-                            "100") {
+                            "100.00") {
                           _controller.toogleQuiz();
                         }
                       },
@@ -179,18 +181,20 @@ class _StudyModuleState extends State<StudyModule> {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.w),
-                            child: CircleAvatar(
-                              radius: 7.r,
-                              backgroundColor: Colors.green[100],
-                              child: Icon(
-                                Icons.lock_outline_rounded,
-                                size: 10.h,
-                                color: Colors.black,
+                          if (_controller.moduleRecord?.completionPercentage !=
+                              "100.00")
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.w),
+                              child: CircleAvatar(
+                                radius: 7.r,
+                                backgroundColor: Colors.green[100],
+                                child: Icon(
+                                  Icons.lock_outline_rounded,
+                                  size: 10.h,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 8.w, right: 4.w),
                             child: Text(
@@ -235,7 +239,10 @@ class _StudyModuleState extends State<StudyModule> {
                                           ),
                                           SizedBox(width: 8.w),
                                           Text(
-                                            "00/100",
+                                            (_controller.moduleRecord
+                                                        ?.quizScore ??
+                                                    0)
+                                                .toString(),
                                             style: TextStyle(
                                                 fontSize: 16.h,
                                                 fontFamily: "Rakkas",
@@ -247,11 +254,20 @@ class _StudyModuleState extends State<StudyModule> {
                                       SizedBox(height: 24.h),
                                       GlowButton(
                                         onTap: () {
-                                          Get.toNamed(AppRoute.quiz,
-                                              arguments:
-                                                  _controller.studyModuleModel);
+                                          if (_controller
+                                                  .moduleRecord?.quizScore ==
+                                              null) {
+                                            Get.toNamed(AppRoute.quiz,
+                                                arguments: _controller
+                                                    .studyModuleModel);
+                                          }
                                         },
                                         text: "Attempt Quiz",
+                                        color: (_controller
+                                                    .moduleRecord?.quizScore !=
+                                                null)
+                                            ? Colors.grey
+                                            : Colors.blue,
                                       )
                                     ],
                                   ),
@@ -284,7 +300,7 @@ class _StudyModuleState extends State<StudyModule> {
                   children: [
                     InkWell(
                       onTap: () {
-                        if ((_controller.moduleRecord?.quizScore == null)) {
+                        if ((_controller.moduleRecord?.quizScore != null)) {
                           _controller.toogleCertificate();
                         }
                       },
@@ -299,18 +315,19 @@ class _StudyModuleState extends State<StudyModule> {
                               shape: BoxShape.circle,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.w),
-                            child: CircleAvatar(
-                              radius: 7.r,
-                              backgroundColor: Colors.green[100],
-                              child: Icon(
-                                Icons.lock_outline_rounded,
-                                size: 10.h,
-                                color: Colors.black,
+                          if (_controller.moduleRecord?.quizScore == null)
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.w),
+                              child: CircleAvatar(
+                                radius: 7.r,
+                                backgroundColor: Colors.green[100],
+                                child: Icon(
+                                  Icons.lock_outline_rounded,
+                                  size: 10.h,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
                           Padding(
                             padding: EdgeInsets.only(left: 8.w, right: 4.w),
                             child: Text(
@@ -349,7 +366,11 @@ class _StudyModuleState extends State<StudyModule> {
                                               () => const CertificateScreen());
                                         },
                                         text: "Download",
-                                        color: Colors.grey,
+                                        color: (_controller
+                                                    .moduleRecord?.quizScore ==
+                                                null)
+                                            ? Colors.grey
+                                            : Colors.blue,
                                       )
                                     ],
                                   ),

@@ -177,6 +177,7 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
+  // ignore: unused_element
   Row _buildDevider() {
     return Row(
       children: [
@@ -208,6 +209,7 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
+  // ignore: unused_element
   Widget _buildLoginWithGoogle() {
     return InkWell(
       onTap: () {},

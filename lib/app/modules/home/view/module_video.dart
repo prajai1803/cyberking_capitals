@@ -17,10 +17,18 @@ class ModuleVideoPlayer extends StatefulWidget {
 class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
   final _controller = Get.put(ModuleVideoController());
 
-  final VideoModel video = Get.arguments as VideoModel;
+  final VideoModel video =
+      (Get.arguments as Map<String, dynamic>)["videoModel"];
+
+  @override
+  void dispose() {
+    Get.delete<ModuleVideoController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // print(completedSession);
     return Scaffold(
         appBar: AppBar(title: const Text("Video")),
         body: Column(
@@ -70,12 +78,14 @@ class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
                 children: [
                   Text(
                     video.title ?? "",
+                    // "",
                     style:
                         TextStyle(fontSize: 18.h, fontWeight: FontWeight.w700),
                   ),
                   SizedBox(height: 8.h),
                   Text(
                     video.description ?? "",
+                    // "",
                     style: TextStyle(
                         fontSize: 12.h,
                         fontWeight: FontWeight.w700,
@@ -108,6 +118,9 @@ class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
                           }
                         },
                       ),
+                      _controller.markloading == true
+                          ? const CircularProgressIndicator()
+                          : Container(),
                     ],
                   );
                 },

@@ -24,10 +24,9 @@ class StudyRepository {
   }
 
   Future<ModuleRecordModel?> getModuleRecord(
-      int? studentId, int? batchId, int? moduleId) async {
+      int? studentId, int? moduleId) async {
     try {
-      final res =
-          await apiProvider.getModuleRecord(studentId, batchId, moduleId);
+      final res = await apiProvider.getModuleRecord(studentId, moduleId);
 
       if (res != null) {
         if (res.statusCode == 200) {

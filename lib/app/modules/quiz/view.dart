@@ -60,8 +60,6 @@ class _QuizState extends State<QuizScreen> {
                                 builder: (_) {
                                   final options = _controller
                                       .quiz[questionIndex].options as List;
-                                  print(
-                                      _controller.quiz[questionIndex].options);
                                   return ListView.builder(
                                       itemCount: options.length,
                                       shrinkWrap: true,

@@ -103,22 +103,20 @@ class HomeRepository {
     return null;
   }
 
-  Future<List<SessionModel>> submitSession(
-      int? studentId, int? sessionId) async {
+  Future<bool> submitSession(int? studentId, int? sessionId) async {
     try {
       final res = await apiProvider.submitSession(
         studentId,
         sessionId,
       );
-      List<SessionModel> sessionList = [];
       if (res != null) {
         if (res.statusCode == 200) {
-          List list = res.body["data"];
-          sessionList = list.map((e) => SessionModel.fromJson(e)).toList();
-          return sessionList;
+          return true;
+        } else {
+          return false;
         }
       }
-      return [];
+      return false;
     } catch (e) {
       rethrow;
     }

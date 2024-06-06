@@ -21,4 +21,24 @@ class QuizRepository {
       rethrow;
     }
   }
+
+  Future<bool> submitQuiz(int? studentId, int? moduleId, int? quiz) async {
+    try {
+      final res = await apiProvider.submitQuiz(
+        studentId,
+        quiz,
+        moduleId,
+      );
+      if (res != null) {
+        if (res.statusCode == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      return false;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

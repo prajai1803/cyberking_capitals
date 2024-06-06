@@ -1,10 +1,26 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/modules/study_module/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class CertificateScreen extends StatelessWidget {
+class CertificateScreen extends StatefulWidget {
   const CertificateScreen({super.key});
+
+  @override
+  State<CertificateScreen> createState() => _CertificateScreenState();
+}
+
+class _CertificateScreenState extends State<CertificateScreen> {
+  late final StudyModuleController _controller;
+
+  @override
+  void initState() {
+    _controller = Get.find<StudyModuleController>();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +165,7 @@ class CertificateScreen extends StatelessWidget {
         Column(
           children: [
             Text(
-              "88/100",
+              "${_controller.moduleRecord?.quizScore ?? 0}",
               style: TextStyle(
                 fontSize: 16.h,
                 fontFamily: "Rakkas",
@@ -168,7 +184,7 @@ class CertificateScreen extends StatelessWidget {
         Column(
           children: [
             Text(
-              "01/01/2024",
+              "25/05/2024",
               style: TextStyle(
                 fontSize: 16.h,
                 fontFamily: "Rakkas",
@@ -192,7 +208,7 @@ class CertificateScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Technical Analysis",
+        Text(_controller.studyModuleModel.moduleName!.split("|").first,
             style: TextStyle(
               fontFamily: "Playball",
               fontSize: 20.h,
@@ -214,7 +230,7 @@ class CertificateScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Congratulations, Krutika !",
+        Text("Congratulations, ${_controller.userModel.name} !",
             style: TextStyle(
               fontFamily: "Playball",
               fontSize: 16.h,
