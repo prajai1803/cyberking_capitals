@@ -363,7 +363,9 @@ class _StudyModuleState extends State<StudyModule> {
                                       GlowButton(
                                         onTap: () {
                                           Get.to(
-                                              () => const CertificateScreen());
+                                              () => const CertificateScreen(),
+                                              arguments: _controller
+                                                  .studyModuleModel.moduleId);
                                         },
                                         text: "Download",
                                         color: (_controller

@@ -1,6 +1,8 @@
+import 'package:cyberking_capitals/app/data/models/certificate_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_record.dart';
 import 'package:cyberking_capitals/app/data/models/session_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 
 class StudyRepository {
   final ApiProvider apiProvider;
@@ -21,6 +23,27 @@ class StudyRepository {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<CertificateModel?> getCertificate(
+      int? studentId, int? moduleId) async {
+    try {
+      final res = await apiProvider.getCerficate(studentId, moduleId);
+      if (res != null) {
+        final resBody = res.body;
+
+        if (resBody["success"] == true) {
+          final decodedBody = resBody["data"];
+
+          return CertificateModel.fromJson(decodedBody);
+        } else {
+          throw ApiStatusException(message: resBody["message"]);
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
   }
 
   Future<ModuleRecordModel?> getModuleRecord(

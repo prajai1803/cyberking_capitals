@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/data/models/certificate_model.dart';
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
   UserModel? currentUser;
+  List<CertificateModel> certificatesList = List.empty(growable: true);
 
   final StorageProvider _sessionDB = StorageProvider();
   final ProfileRepository _repository =

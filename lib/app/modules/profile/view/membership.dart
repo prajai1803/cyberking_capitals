@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
+import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:cyberking_capitals/app/modules/home/controller/module_video.dart';
 import 'package:cyberking_capitals/app/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ class MembershipScreen extends StatefulWidget {
 class _ModuleVideoPlayerState extends State<MembershipScreen> {
   final _controller = Get.put(ModuleVideoController());
 
-  // final VideoModel video = Get.arguments as VideoModel;
+  final VideoModel video =
+      (Get.arguments as Map<String, dynamic>)["videoModel"];
+  final List completedSession =
+      (Get.arguments as Map<String, dynamic>)["sessionCompletedList"];
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +73,7 @@ class _ModuleVideoPlayerState extends State<MembershipScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "How to get CKC Membership Video",
+                    "How To Get Membership",
                     style:
                         TextStyle(fontSize: 18.h, fontWeight: FontWeight.w700),
                   ),

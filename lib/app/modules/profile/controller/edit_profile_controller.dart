@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
+import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/modules/profile/repository.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
@@ -15,6 +16,8 @@ class EditProfileController extends GetxController {
   final profileFormKey = GlobalKey<FormState>();
   final _repository = ProfileRepository(apiProvider: ApiProvider());
 
+  final StorageProvider _storageProvider = StorageProvider();
+
   late final TextEditingController nameController;
   late final TextEditingController contactController;
   late final TextEditingController whatappController;
@@ -26,7 +29,7 @@ class EditProfileController extends GetxController {
 
   final ImagePicker _imagePicker = ImagePicker();
 
-  final UserModel? currentUser = Get.arguments as UserModel?;
+  UserModel? currentUser;
 
   bool isUpdating = false;
   void setIsUpdating(value) {
@@ -35,9 +38,11 @@ class EditProfileController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     _initTextEditingControler();
+
     _checkWhatsappCheckBox();
+    update(["Main Screen"]);
 
     super.onInit();
   }
@@ -48,14 +53,17 @@ class EditProfileController extends GetxController {
     super.dispose();
   }
 
-  void _intilizerControllerData() {
+  void _intilizerControllerData() async {
+    currentUser = await _storageProvider.readUserModel();
     if (currentUser != null) {
       nameController.text = currentUser?.name ?? "";
       contactController.text = currentUser?.mobileNumber ?? "";
-      whatappController.text = currentUser?.mobileNumber ?? "";
+      whatappController.text = currentUser?.whatsappNumber ?? "";
       emailController.text = currentUser?.email ?? "";
-      dobController.text = currentUser?.profilePhoto ?? "";
-      locationController.text = currentUser?.profilePhoto ?? "";
+      dobController.text = currentUser?.dateOfBirth == null
+          ? ""
+          : DateFormat("dd MMM yyyy").format(currentUser!.dateOfBirth!);
+      locationController.text = currentUser?.location ?? "";
     }
   }
 
@@ -98,15 +106,20 @@ class EditProfileController extends GetxController {
   void updateProfile() async {
     try {
       setIsUpdating(true);
-      final user = currentUser!.copyWith(
-        dateOfBirth: dobController.text,
+      UserModel? user = currentUser!.copyWith(
+        dateOfBirth: DateFormat('dd MMM yyyy').tryParse(dobController.text),
         name: nameController.text,
         mobileNumber: contactController.text,
         whatsappNumber: whatappController.text,
         location: locationController.text,
       );
-      await _repository.updateProfile(user);
-      setIsUpdating(false);
+      user = await _repository.updateProfileData(user);
+      if (user != null) {
+        _storageProvider.writeUserModel(user);
+        Get.back();
+        CommonAlerts.showSuccessSnack(message: "Profile Update Successfully");
+      }
+      if (true) setIsUpdating(false);
     } on ApiStatusException catch (e) {
       setIsUpdating(false);
       CommonAlerts.showErrorSnack(message: e.message);
@@ -143,6 +156,7 @@ class EditProfileController extends GetxController {
       }
     } on PlatformException catch (e) {
       selectedProfileImageFile = null;
+
       update(["Profile Picture"]);
       CommonAlerts.showErrorSnack(message: e.toString());
     }
@@ -153,7 +167,7 @@ class EditProfileController extends GetxController {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime(2200),
+      lastDate: DateTime.now(),
     );
 
     if (picked != null) {

@@ -16,13 +16,15 @@ class QuizController extends GetxController {
   final _storageProvider = StorageProvider();
   int curentPage = 0;
   late final PageController pageController;
+  late final PageController answerPageController;
   late List<int?> selectedAnswerList;
+  List<int?> correctAnswerList = [];
 
   int correctAnserCount = 0;
 
   bool isLoading = false;
 
-  late List<QuestionModel> quiz;
+  List<QuestionModel> quiz = [];
   late Module module;
 
   ScreenState screenState = ScreenState.loading;
@@ -46,8 +48,9 @@ class QuizController extends GetxController {
   void fetchQuiz() async {
     try {
       setScreenState(ScreenState.loading);
-      quiz = await _repository.getQuizByModuleId(module.moduleId!);
       pageController = PageController(initialPage: 0);
+      answerPageController = PageController(initialPage: 0);
+      quiz = await _repository.getQuizByModuleId(module.moduleId!);
       selectedAnswerList = List.generate(quiz.length, (index) => null);
       setScreenState(ScreenState.loaded);
     } catch (e) {
@@ -63,6 +66,22 @@ class QuizController extends GetxController {
 
   int getCurrentPage() {
     return (pageController.page ?? 0).toInt();
+  }
+
+  void answerNextPage() {
+    answerPageController
+        .nextPage(
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.linearToEaseOut)
+        .then((value) => update(["Page Number"]));
+  }
+
+  void answerPreviousPage() {
+    answerPageController
+        .previousPage(
+            duration: const Duration(milliseconds: 800),
+            curve: Curves.linearToEaseOut)
+        .then((value) => update(["Page Number"]));
   }
 
   void nextPage() {
@@ -84,7 +103,7 @@ class QuizController extends GetxController {
 
   void submit() async {
     try {
-      final correctAnswerList = quiz.map((e) => e.answer).toList();
+      correctAnswerList = quiz.map((e) => e.answer).toList();
       int matchCount = 0;
 
       for (int i = 0; i < correctAnswerList.length; i++) {
@@ -93,8 +112,9 @@ class QuizController extends GetxController {
         }
       }
       correctAnserCount = matchCount;
+      double percentage = ((correctAnserCount / quiz.length) * 100).toDouble();
       UserModel user = await _storageProvider.readUserModel();
-      await _repository.submitQuiz(user.id, module.moduleId, correctAnserCount);
+      await _repository.submitQuiz(user.id, module.moduleId, percentage.ceil());
       Get.find<StudyModuleController>().getModuleRecord();
 
       Get.toNamed(AppRoute.quizResult);

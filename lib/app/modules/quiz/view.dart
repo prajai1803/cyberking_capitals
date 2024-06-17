@@ -34,6 +34,7 @@ class _QuizState extends State<QuizScreen> {
                     children: [
                       Expanded(
                         child: PageView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           controller: _controller.pageController,
                           itemCount: _controller.quiz.length,
                           itemBuilder: (context, questionIndex) => Column(
@@ -77,12 +78,14 @@ class _QuizState extends State<QuizScreen> {
                                                     _controller.selectAnswer(
                                                         questionIndex, v);
                                                   }),
-                                              Text(
-                                                options[index],
-                                                style: TextStyle(
-                                                    fontSize: 12.h,
-                                                    color:
-                                                        AppColors.textBlack2),
+                                              Expanded(
+                                                child: Text(
+                                                  options[index],
+                                                  style: TextStyle(
+                                                      fontSize: 12.h,
+                                                      color:
+                                                          AppColors.textBlack2),
+                                                ),
                                               )
                                             ],
                                           ));

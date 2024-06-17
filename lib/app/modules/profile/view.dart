@@ -107,15 +107,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 16.h),
           ProfileButton(
             onTap: () {
-              Get.toNamed(AppRoute.membership,
-                  arguments: VideoModel(
-                      description:
-                          "This meta-description generator uses machine learning",
-                      title: "Technical Analysis Module",
-                      duration: "20 min",
-                      session: 2,
-                      videoId: 0,
-                      videoUrl: "ulr"));
+              Get.toNamed(AppRoute.membership, arguments: {
+                "videoModel": VideoModel(
+                  description:
+                      "This meta-description generator uses machine learning",
+                  title: "Technical Analysis Module",
+                  duration: "20 min",
+                  session: 2,
+                  videoId: 0,
+                  videoUrl: "ulr",
+                ),
+                "sessionCompletedList": [],
+              });
             },
             title: "Membership",
             iconData: Icons.wallet_membership_outlined,

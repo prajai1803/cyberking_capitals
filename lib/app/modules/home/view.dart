@@ -14,12 +14,17 @@ import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart
 import 'package:cyberking_capitals/app/modules/study_module/widgets/session_tile.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/extension.dart';
+import 'package:cyberking_capitals/app/utils/network_manager.dart';
+import 'package:cyberking_capitals/app/widgets/app_update.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
 import 'package:cyberking_capitals/app/widgets/try_again.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:version/version.dart';
 
 import 'widgets/module_tile.dart';
 import 'widgets/promo_widget.dart';
@@ -33,9 +38,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.find<HomeController>();
+  PackageInfo? _packageInfo;
+  final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   @override
   Widget build(BuildContext context) {
+    checkUpdate(context);
     return Scaffold(
+        floatingActionButton: FloatingActionButton(onPressed: () {
+          checkUpdate(context);
+        }),
         appBar: AppBar(
           leadingWidth: double.infinity,
           leading: Padding(
@@ -337,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 31.w, vertical: 12.h),
                     child: Text(
-                      "${_controller.moduleSessionList[0].sessionCount}",
+                      "${_controller.sessionList.length}",
                       style: TextStyle(
                           fontSize: 24.h,
                           fontFamily: "Rakkas",
@@ -361,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
                     child: Text(
-                      "0 Hr",
+                      _controller.completionsHr.toHH(),
                       style: TextStyle(
                           fontSize: 24.h,
                           fontFamily: "Rakkas",
@@ -492,5 +503,47 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
       ),
     );
+  }
+
+  void checkUpdate(context) async {
+    _packageInfo ??= await PackageInfo.fromPlatform();
+
+    if (_packageInfo == null) {
+      return;
+    }
+
+    final appVersion = Version.parse(_packageInfo!.version);
+
+    final lastNormalUpdateVersionString =
+        _remoteConfig.getString("last_normal_update_version");
+
+    final lastForceUpdateVersionString =
+        _remoteConfig.getString("last_force_update_version");
+
+    final downloadLink = _remoteConfig.getString("app_download_link");
+    final updateContent = _remoteConfig.getString("update_content");
+
+    final lastForceUpdateVersion = Version.parse(lastForceUpdateVersionString);
+
+    final lastNormalUpdateVersion =
+        Version.parse(lastNormalUpdateVersionString);
+
+    if (lastForceUpdateVersion > appVersion) {
+      await Future.delayed(const Duration(seconds: 2));
+      AppUpdates.showAppUpdateForce(
+        context,
+        version: lastNormalUpdateVersion.toString(),
+        link: downloadLink,
+        updateContent: updateContent,
+      );
+    } else if (lastNormalUpdateVersion > appVersion) {
+      await Future.delayed(const Duration(seconds: 2));
+      AppUpdates.showAppUpdate(
+        context,
+        version: lastNormalUpdateVersionString,
+        link: downloadLink,
+        updateContent: updateContent,
+      );
+    }
   }
 }

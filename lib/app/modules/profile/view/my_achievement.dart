@@ -1,11 +1,28 @@
+import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/modules/profile/controller/my_achievement.dart';
 import 'package:cyberking_capitals/app/modules/profile/widgets/achievement_card.dart';
+import 'package:cyberking_capitals/app/modules/study_module/view/certificate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
-class MyAchievementScreen extends StatelessWidget {
+class MyAchievementScreen extends StatefulWidget {
   const MyAchievementScreen({super.key});
+
+  @override
+  State<MyAchievementScreen> createState() => _MyAchievementScreenState();
+}
+
+class _MyAchievementScreenState extends State<MyAchievementScreen> {
+  final _controller = Get.find<MyAchievementController>();
+
+  @override
+  void initState() {
+    _controller.fetchAllCertificates();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +45,30 @@ class MyAchievementScreen extends StatelessWidget {
         children: [
           _buildTopBanner(),
           SizedBox(height: 24.h),
-          Expanded(
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 10,
-                shrinkWrap: true,
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => const AchievementCard(
-                      title: "Stock Market Services Stock Market Services",
-                      percentage: 20,
-                      image: "",
-                    )),
+          GetBuilder(
+            init: _controller,
+            id: "Main Screen",
+            initState: (_) {},
+            builder: (_) {
+              return Expanded(
+                child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: _controller.certificatesList.length,
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) => AchievementCard(
+                          onTap: () {
+                            Get.to(() => const CertificateScreen(),
+                                arguments: _controller
+                                    .certificatesList[index].moduleId);
+                          },
+                          title: _controller.certificatesList[index].moduleName,
+                          percentage:
+                              _controller.certificatesList[index].quizScore,
+                          image: "df",
+                        )),
+              );
+            },
           )
         ],
       ),
@@ -74,29 +104,38 @@ class MyAchievementScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 7.h, horizontal: 16.w),
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(50.r)),
-                  child: Row(
-                    children: [
-                      Image.asset(
-                        AppImages.star,
-                        height: 18.h,
-                      ),
-                      SizedBox(width: 8.w),
-                      Text(
-                        "Issued Certificates - 18",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.h,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
+                GetBuilder(
+                  init: _controller,
+                  id: "Main Screen",
+                  initState: (_) {},
+                  builder: (_) {
+                    return _controller.screenState == ScreenState.loaded
+                        ? Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 7.h, horizontal: 16.w),
+                            decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(50.r)),
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  AppImages.star,
+                                  height: 18.h,
+                                ),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  "Issued Certificates - ${_controller.certificatesList.length}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.h,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : _buildCerificateCountLoading();
+                  },
                 ),
               ],
             ),
@@ -109,6 +148,35 @@ class MyAchievementScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Shimmer _buildCerificateCountLoading() {
+    return Shimmer.fromColors(
+      baseColor: Colors.yellow[100]!,
+      highlightColor: Colors.yellow,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 7.h, horizontal: 16.w),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(50.r)),
+        child: Row(
+          children: [
+            Image.asset(
+              AppImages.star,
+              height: 18.h,
+            ),
+            SizedBox(width: 8.w),
+            Text(
+              "Issued Certificates - 18",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.h,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

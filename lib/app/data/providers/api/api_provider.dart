@@ -252,6 +252,52 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> getCerficates(int? studentId) async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.get(
+        url: "${ApiRoutes.getCertificates}/$studentId",
+        header: {"Authorization": accessToken},
+      );
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  Future<Response?> getCerficate(int? studentId, int? moduleId) async {
+    try {
+      final accessToken = await getAccessToken();
+
+      final res = await _apiService.get(
+        url: "${ApiRoutes.getCertificate}/$studentId/$moduleId",
+        header: {"Authorization": accessToken},
+      );
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   // profile
   Future<Response?> getModuleRecord(int? studentId, int? moduleId) async {
     try {
@@ -430,7 +476,9 @@ class ApiProvider {
       } else {
         _checkException(res);
       }
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
     return null;
   }
 

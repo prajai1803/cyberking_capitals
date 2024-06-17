@@ -1,9 +1,12 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/modules/quiz/controller.dart';
+import 'package:cyberking_capitals/app/widgets/elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import 'view_answers.dart';
 
 class QuizResultScreen extends StatelessWidget {
   QuizResultScreen({super.key});
@@ -63,6 +66,28 @@ class QuizResultScreen extends StatelessWidget {
                 "You did a great job, Learn more by taking\nanother quiz.",
                 style: TextStyle(fontSize: 12.h, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 50),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: AppElevatedButton(
+                      text: "View Answer",
+                      onPressed: () => Get.to(() => ViewAnswer()),
+                    )),
+                    SizedBox(width: 16.w),
+                    Expanded(
+                        child: AppElevatedButton(
+                      text: "Back to Home",
+                      onPressed: () {
+                        Get.back();
+                        Get.back();
+                      },
+                    )),
+                  ],
+                ),
               ),
             ],
           ),

@@ -18,7 +18,7 @@ class UserModel {
   final String? mobileNumber;
   final String? whatsappNumber;
   final String? profilePhoto;
-  final String? dateOfBirth;
+  final DateTime? dateOfBirth;
   final String? location;
   final String? password;
 
@@ -46,7 +46,7 @@ class UserModel {
     int? phoneNumberVerified,
     String? mobileNumber,
     String? whatsappNumber,
-    String? dateOfBirth,
+    DateTime? dateOfBirth,
     String? location,
     String? profilePhoto,
     String? password,
@@ -78,7 +78,9 @@ class UserModel {
         mobileNumber: json["mobile_number"],
         whatsappNumber: json["whatsapp_number"],
         profilePhoto: json["profile_photo"],
-        dateOfBirth: json["date_of_birth"],
+        dateOfBirth: json["date_of_birth"] == null
+            ? null
+            : DateTime.parse(json["date_of_birth"]),
         location: json["location"],
         password: json["password"],
       );
@@ -93,7 +95,7 @@ class UserModel {
         "mobile_number": mobileNumber,
         "whatsapp_number": whatsappNumber,
         "profile_photo": profilePhoto,
-        "date_of_birth": dateOfBirth,
+        "date_of_birth": dateOfBirth?.toIso8601String(),
         "location": location,
         "password": password,
       };

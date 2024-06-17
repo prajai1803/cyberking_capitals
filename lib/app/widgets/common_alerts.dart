@@ -24,7 +24,7 @@ class CommonAlerts {
     return Get.showSnackbar(GetSnackBar(
       message: message ?? "Something went wrong",
       isDismissible: true,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 3),
       dismissDirection: DismissDirection.horizontal,
       leftBarIndicatorColor: Colors.red,
       shouldIconPulse: true,
@@ -40,7 +40,7 @@ class CommonAlerts {
     return Get.showSnackbar(GetSnackBar(
       message: message ?? "Something went wrong",
       isDismissible: true,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 2),
       dismissDirection: DismissDirection.horizontal,
       leftBarIndicatorColor: Colors.green,
       shouldIconPulse: true,

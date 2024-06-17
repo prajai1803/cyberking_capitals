@@ -20,33 +20,40 @@ class EditProfileScreen extends StatelessWidget {
         backgroundColor: const Color(0xeFF5F6FB),
         appBar: AppBar(title: const Text("Your Profile")),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: screenHeight * .91,
-                width: double.infinity,
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    _buildForm(screenHeight, context),
-                    _buildProfilePicture(),
-                    Positioned(
-                      top: 90.h,
-                      left: 200.w,
-                      child: InkWell(
-                        onTap: () {
-                          _buildBottomSheet(context);
-                        },
-                        child: Image.asset(
-                          AppImages.camera,
-                          height: 30.h,
+          child: GetBuilder(
+            init: _controller,
+            id: "Main Screen",
+            initState: (_) {},
+            builder: (_) {
+              return Column(
+                children: [
+                  SizedBox(
+                    height: screenHeight * .91,
+                    width: double.infinity,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        _buildForm(screenHeight, context),
+                        _buildProfilePicture(),
+                        Positioned(
+                          top: 90.h,
+                          left: 200.w,
+                          child: InkWell(
+                            onTap: () {
+                              _buildBottomSheet(context);
+                            },
+                            child: Image.asset(
+                              AppImages.camera,
+                              height: 30.h,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
+                  )
+                ],
+              );
+            },
           ),
         ));
   }
@@ -210,7 +217,7 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   ProfileTextFormField(
                       labeltext: "DOB",
-                      readOnly: false,
+                      readOnly: true,
                       onTap: () {
                         _controller.selectDate(context);
                       },

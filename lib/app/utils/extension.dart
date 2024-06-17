@@ -13,4 +13,9 @@ extension SecondsToHHMMExtension on int {
     int minutes = (this % 3600) ~/ 60;
     return '$hours hr :${minutes.toString().padLeft(2, '0')} min';
   }
+
+  String toHH() {
+    int hours = this ~/ 3600;
+    return '$hours Hr';
+  }
 }

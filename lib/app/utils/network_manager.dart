@@ -1,14 +1,13 @@
-// import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:cyberking_capitals/app/widgets/app_update.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-// import 'package:package_info_plus/package_info_plus.dart';
-// import 'package:version/version.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:version/version.dart';
 
 class NetworkManagerController extends GetxController {
   int connectionType = 0;
   final _connectivity = Connectivity();
-  // late final PackageInfo _packageInfo;
-  // final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
   @override
   void onInit() {
@@ -47,13 +46,4 @@ class NetworkManagerController extends GetxController {
         Get.snackbar("Failed", "stat");
     }
   }
-
-  // void _checkUpdate() async {
-  //   _packageInfo = await PackageInfo.fromPlatform();
-  //   // final appVersion = Version.parse(_packageInfo.version);
-
-  //   final lastNormalUpdateVersion =
-  //       _remoteConfig.getString("last_normal_update_version");
-  //   print("this is $lastNormalUpdateVersion");
-  // }
 }

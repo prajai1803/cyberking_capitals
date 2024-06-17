@@ -3,6 +3,8 @@ class ApiRoutes {
   static const login = 'api/students/login';
   static const signUp = 'api/register/register';
   static const getRefreshToken = 'api/students/refreshToken-verify';
+  static const getCertificates = 'api/students/certificates';
+  static const getCertificate = 'api/students/certificate';
 
   // otp
   static const generateOtp = 'api/verify/email/generate';

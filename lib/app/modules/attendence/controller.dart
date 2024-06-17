@@ -37,12 +37,6 @@ class AttendanceController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
   /* --------------------------------------
   ----------------- Methods ---------------
   ----------------------------------------*/

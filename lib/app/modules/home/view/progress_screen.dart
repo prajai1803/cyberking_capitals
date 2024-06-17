@@ -29,13 +29,6 @@ class _ProgressBarScreenState extends State<ProgressBarScreen> {
     super.dispose();
   }
 
-  final List<ChartData> chartData = [
-    ChartData('David', 10, AppColors.chartPurpal),
-    ChartData('Steve', 10, AppColors.chartOrange),
-    ChartData('Jack', 10, AppColors.chartGreen),
-    ChartData('Others', 10, AppColors.chartPink)
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +85,7 @@ class _ProgressBarScreenState extends State<ProgressBarScreen> {
                             Expanded(
                               child: SfCircularChart(series: <CircularSeries>[
                                 DoughnutSeries<ChartData, String>(
-                                  dataSource: chartData,
+                                  dataSource: _controller.chartData,
                                   xValueMapper: (ChartData data, _) => data.x,
                                   yValueMapper: (ChartData data, _) => data.y,
                                   pointColorMapper: (ChartData data, _) =>

@@ -11,7 +11,7 @@ class FirebaseRemoteConfiguarion extends GetxService {
     try {
       await _remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(minutes: 1),
-        minimumFetchInterval: const Duration(hours: 1),
+        minimumFetchInterval: const Duration(minutes: 1),
       ));
       await _remoteConfig.fetchAndActivate();
     } on FirebaseException catch (e) {

@@ -22,6 +22,7 @@ class HomeController extends GetxController {
   List<FeatureVideoModel> featureVideoList = [];
   List<Module> moduleList = [];
   List<Session> sessionList = [];
+  int completionsHr = 0;
   IntroVideos? introVideoModel;
   final TextEditingController searchTextController = TextEditingController();
   List<dynamic> showModulesAndSession = [];
@@ -30,7 +31,6 @@ class HomeController extends GetxController {
   final SpeechToText _speechToText = SpeechToText();
 
   List<ModuleSessionModel> moduleSessionList = [];
-
   bool isVoiceRecording = false;
 
   @override
@@ -44,9 +44,7 @@ class HomeController extends GetxController {
     try {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
-
       await getHomeQueries();
-
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
     } on ApiStatusException catch (_) {
@@ -89,14 +87,20 @@ class HomeController extends GetxController {
       moduleSessionList = await _homeRepository.getHomeQueries(user.id);
       List<Module> modulesTemp = [];
       List<Session> sessionTemp = [];
+      int durationTemp = 0;
+
       for (var element in moduleSessionList) {
-        modulesTemp.assignAll(element.modules!);
-        for (var i = 0; i < (element.modules?.length ?? 0); i++) {
-          for (var session in modulesTemp[i].sessions!) {
-            sessionTemp.add(session);
+        modulesTemp.addAll(element.modules!);
+        durationTemp += (element.duration ?? 0);
+        if (element.modules != null) {
+          List<Module> modules = element.modules as List<Module>;
+          for (var module in modules) {
+            sessionTemp.addAll(module.sessions ?? []);
           }
         }
       }
+
+      completionsHr = durationTemp;
       sessionList.assignAll(sessionTemp);
       moduleList.assignAll(modulesTemp);
       introVideoModel = moduleSessionList.first.introVideos;
