@@ -41,6 +41,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
             fontWeight: FontWeight.w600,
           ),
         ),
+        actions: [
+          GetBuilder(
+            init: _controller,
+            initState: (_) {},
+            id: "Version",
+            builder: (_) {
+              return TextButton(
+                  onPressed: null,
+                  child: Text(_controller.currentVersion == null
+                      ? ""
+                      : "v${(_controller.currentVersion ?? "")}"));
+            },
+          )
+        ],
       ),
       body: Center(
           child: Column(

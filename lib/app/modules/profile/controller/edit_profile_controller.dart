@@ -103,7 +103,7 @@ class EditProfileController extends GetxController {
     update(["Whatsapp Field"]);
   }
 
-  void updateProfile() async {
+  Future<void> updateProfile() async {
     try {
       setIsUpdating(true);
       UserModel? user = currentUser!.copyWith(
@@ -113,7 +113,8 @@ class EditProfileController extends GetxController {
         whatsappNumber: whatappController.text,
         location: locationController.text,
       );
-      user = await _repository.updateProfileData(user);
+      user =
+          await _repository.updateProfileData(user, selectedProfileImageFile);
       if (user != null) {
         _storageProvider.writeUserModel(user);
         Get.back();

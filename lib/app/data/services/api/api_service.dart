@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class ApiService extends GetxService {
   final GetConnect _getConnect = GetConnect(
-    timeout: const Duration(seconds: 30),
+    timeout: const Duration(seconds: 10),
   );
 
   final String baseUrl = 'http://192.168.29.217:4011'; // local
@@ -19,7 +19,7 @@ class ApiService extends GetxService {
 
   Future<Response> post(
       {required String url,
-      Map<String, dynamic>? body,
+      dynamic body,
       Map<String, String>? header,
       String? contentType,
       Map<String, dynamic>? query}) {

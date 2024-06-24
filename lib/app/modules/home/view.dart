@@ -4,6 +4,7 @@ import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/modules/attendence/view/scanner.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/view/intro_video.dart';
@@ -14,7 +15,6 @@ import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart
 import 'package:cyberking_capitals/app/modules/study_module/widgets/session_tile.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/extension.dart';
-import 'package:cyberking_capitals/app/utils/network_manager.dart';
 import 'package:cyberking_capitals/app/widgets/app_update.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
 import 'package:cyberking_capitals/app/widgets/try_again.dart';
@@ -44,9 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     checkUpdate(context);
     return Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          checkUpdate(context);
-        }),
+        // floatingActionButton: FloatingActionButton(onPressed: () {
+        //   checkUpdate(context);
+        // }),
         appBar: AppBar(
           leadingWidth: double.infinity,
           leading: Padding(
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       GetBuilder(
                         init: _controller,
-                        id: "Loading Screen",
+                        id: "Profile Image",
                         initState: (_) {},
                         builder: (_) {
                           return CircleCachedImage(
@@ -537,6 +537,11 @@ class _HomeScreenState extends State<HomeScreen> {
         updateContent: updateContent,
       );
     } else if (lastNormalUpdateVersion > appVersion) {
+      SessionDB sessionDB = SessionDB();
+      final isSkipUpdate = await sessionDB.getSkipUpdate();
+      if (isSkipUpdate ?? false) {
+        return;
+      }
       await Future.delayed(const Duration(seconds: 2));
       AppUpdates.showAppUpdate(
         context,

@@ -1,5 +1,6 @@
 import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppUpdates {
+  static final SessionDB _sessionDB = SessionDB();
   static Future<void> showAppUpdateForce(context,
       {String? updateContent,
       required String version,
@@ -150,7 +152,10 @@ class AppUpdates {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextButton(
-                        onPressed: () => Get.back(),
+                        onPressed: () {
+                          _sessionDB.setSkipUpdate(true);
+                          Get.back();
+                        },
                         child: Text(
                           "Skip",
                           style: TextStyle(

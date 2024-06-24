@@ -21,6 +21,7 @@ class UserModel {
   final DateTime? dateOfBirth;
   final String? location;
   final String? password;
+  final String? notificationToken;
 
   UserModel({
     this.id,
@@ -35,6 +36,7 @@ class UserModel {
     this.location,
     this.profilePhoto,
     this.password,
+    this.notificationToken,
   });
 
   UserModel copyWith({
@@ -50,21 +52,22 @@ class UserModel {
     String? location,
     String? profilePhoto,
     String? password,
+    String? notificationToken,
   }) =>
       UserModel(
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        name: name ?? this.name,
-        email: email ?? this.email,
-        emailVerified: emailVerified ?? this.emailVerified,
-        phoneNumberVerified: phoneNumberVerified ?? this.phoneNumberVerified,
-        mobileNumber: mobileNumber ?? this.mobileNumber,
-        whatsappNumber: whatsappNumber ?? this.whatsappNumber,
-        profilePhoto: profilePhoto ?? this.profilePhoto,
-        dateOfBirth: dateOfBirth ?? this.dateOfBirth,
-        location: location ?? this.location,
-        password: password ?? this.password,
-      );
+          id: id ?? this.id,
+          createdAt: createdAt ?? this.createdAt,
+          name: name ?? this.name,
+          email: email ?? this.email,
+          emailVerified: emailVerified ?? this.emailVerified,
+          phoneNumberVerified: phoneNumberVerified ?? this.phoneNumberVerified,
+          mobileNumber: mobileNumber ?? this.mobileNumber,
+          whatsappNumber: whatsappNumber ?? this.whatsappNumber,
+          profilePhoto: profilePhoto ?? this.profilePhoto,
+          dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+          location: location ?? this.location,
+          password: password ?? this.password,
+          notificationToken: notificationToken ?? this.notificationToken);
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -83,6 +86,7 @@ class UserModel {
             : DateTime.parse(json["date_of_birth"]),
         location: json["location"],
         password: json["password"],
+        notificationToken: json["notificationToken"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,5 +102,6 @@ class UserModel {
         "date_of_birth": dateOfBirth?.toIso8601String(),
         "location": location,
         "password": password,
+        "notification_token": notificationToken,
       };
 }

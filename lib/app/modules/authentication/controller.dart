@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/firebase_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
@@ -9,6 +10,7 @@ import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -340,6 +342,7 @@ class AuthController extends GetxController {
     final user = await _authRepositry.getProfile();
 
     if (user != null) {
+      await _updateNotificationToken(user);
       StorageProvider().writeUserModel(user);
       isLoading = false;
       if (emailTextEditingController.text.isEmail) {
@@ -348,6 +351,7 @@ class AuthController extends GetxController {
           Get.toNamed(AppRoute.emailVerify);
         } else {
           final onBoardingStatus = await _sessionDB.getOnBoardingComplete();
+
           if (onBoardingStatus ?? false) {
             Get.offAllNamed(AppRoute.appBase);
           }
@@ -372,6 +376,17 @@ class AuthController extends GetxController {
       isLoading = false;
       update(["Login Button"]);
       CommonAlerts.showErrorSnack();
+    }
+  }
+
+  Future<void> _updateNotificationToken(UserModel user) async {
+    try {
+      final firebaseMessaging = FirebaseMessaging.instance;
+      final notificationToken = await firebaseMessaging.getToken();
+      await _authRepositry.updateProfileData(
+          user.copyWith(notificationToken: notificationToken));
+    } catch (e) {
+      rethrow;
     }
   }
 

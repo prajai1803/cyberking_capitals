@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cyberking_capitals/app/data/models/certificate_model.dart';
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
@@ -50,9 +52,9 @@ class ProfileRepository {
     return [];
   }
 
-  Future<UserModel?> updateProfileData(UserModel user) async {
+  Future<UserModel?> updateProfileData(UserModel user, File? file) async {
     try {
-      final res = await apiProvider.updateProfile(user);
+      final res = await apiProvider.updateProfile(user, file);
       if (res != null) {
         final resBody = res.body;
 
@@ -68,9 +70,9 @@ class ProfileRepository {
     return null;
   }
 
-  Future<bool> updateProfile(UserModel user) async {
+  Future<bool> updateProfile(UserModel user, File? file) async {
     try {
-      final res = await apiProvider.updateProfile(user);
+      final res = await apiProvider.updateProfile(user, file);
       if (res != null) {
         final resBody = res.body;
 

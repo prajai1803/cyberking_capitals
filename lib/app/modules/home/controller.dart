@@ -36,8 +36,20 @@ class HomeController extends GetxController {
   @override
   void onInit() async {
     user = await _storageProvider.readUserModel();
+    update(["Profile Image"]);
     fetchInitialData();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
+  }
+
+  void refreshProfileImage() async {
+    user = await _storageProvider.readUserModel();
+    update(["Profile Image"]);
   }
 
   void fetchInitialData() async {
@@ -73,12 +85,6 @@ class HomeController extends GetxController {
       screenState = ScreenState.error;
       update(["Loading Screen"]);
     }
-  }
-
-  @override
-  void dispose() {
-    searchTextController.dispose();
-    super.dispose();
   }
 
   Future<void> getHomeQueries() async {

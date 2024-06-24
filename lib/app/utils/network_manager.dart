@@ -1,9 +1,5 @@
-import 'package:cyberking_capitals/app/widgets/app_update.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:version/version.dart';
 
 class NetworkManagerController extends GetxController {
   int connectionType = 0;
@@ -12,7 +8,6 @@ class NetworkManagerController extends GetxController {
   @override
   void onInit() {
     _connectivity.onConnectivityChanged.listen(_updatState);
-    // _checkUpdate();
     super.onInit();
   }
 

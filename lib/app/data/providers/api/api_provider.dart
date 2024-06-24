@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_routes.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
@@ -324,14 +326,22 @@ class ApiProvider {
     return null;
   }
 
-  Future<Response?> updateProfile(UserModel user) async {
+  Future<Response?> updateProfile(UserModel user, File? file) async {
     try {
       final accessToken = await getAccessToken();
+
+      var body = user.toJson();
+      if (file != null) {
+        body["profile_photo"] =
+            MultipartFile(await file.readAsBytes(), filename: "avatar.png");
+      }
+
+      final formData = FormData(body);
 
       final res = await _apiService.post(
           url: ApiRoutes.updateStudentProfile,
           header: {"Authorization": accessToken},
-          body: user.toJson());
+          body: formData);
 
       if (res.statusCode == 200) {
         return res;

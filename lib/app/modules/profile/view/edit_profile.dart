@@ -1,5 +1,7 @@
 import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/core/values/images.dart';
+import 'package:cyberking_capitals/app/modules/home/controller.dart';
+import 'package:cyberking_capitals/app/modules/profile/controller.dart';
 import 'package:cyberking_capitals/app/modules/profile/controller/edit_profile_controller.dart';
 import 'package:cyberking_capitals/app/modules/profile/widgets/text_field.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
@@ -12,6 +14,8 @@ class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
 
   final _controller = Get.find<EditProfileController>();
+  final _profileController = Get.find<ProfileController>();
+  final _homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +74,7 @@ class EditProfileScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: 62.r,
                   child: CircleCachedImage(
-                    imageUrl: _controller.currentUser?.profilePhoto ??
+                    imageUrl: _profileController.currentUser?.profilePhoto ??
                         AppNetworkIcons.userIcon,
                     radius: 50.r,
                   ),
@@ -201,7 +205,8 @@ class EditProfileScreen extends StatelessWidget {
                               Text(
                                 "Same as a contact number",
                                 style: TextStyle(
-                                    fontSize: 8.h, fontWeight: FontWeight.w300),
+                                    fontSize: 12.h,
+                                    fontWeight: FontWeight.w300),
                               )
                             ],
                           ),
@@ -237,7 +242,7 @@ class EditProfileScreen extends StatelessWidget {
                           ? const CircularProgressIndicator()
                           : AppElevatedButton(
                               text: "UPDATE PROFILE",
-                              onPressed: () => _controller.updateProfile(),
+                              onPressed: _updateProfile,
                             );
                     },
                   ),
@@ -249,5 +254,11 @@ class EditProfileScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _updateProfile() async {
+    await _controller.updateProfile();
+    await _profileController.fetchUserProfile();
+    _homeController.refreshProfileImage();
   }
 }

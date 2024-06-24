@@ -113,6 +113,26 @@ class AuthRepositry {
     return false;
   }
 
+  Future<UserModel?> updateProfileData(UserModel user) async {
+    try {
+      final res = await apiProvider.updateProfile(user, null);
+      if (res != null) {
+        final resBody = res.body;
+
+        if (resBody["success"] == true) {
+          final userModel =
+              UserModel.fromJson(resBody["data"] as Map<String, dynamic>);
+          return userModel;
+        } else {
+          throw ApiStatusException(message: resBody["message"]);
+        }
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   Future<bool> forgetPasswordGenerateOTP(
     String email,
   ) async {
