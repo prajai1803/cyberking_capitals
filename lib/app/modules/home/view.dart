@@ -44,9 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     checkUpdate(context);
     return Scaffold(
-        // floatingActionButton: FloatingActionButton(onPressed: () {
-        //   checkUpdate(context);
-        // }),
         appBar: AppBar(
           leadingWidth: double.infinity,
           leading: Padding(

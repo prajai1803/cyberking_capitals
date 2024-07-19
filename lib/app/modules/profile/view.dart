@@ -118,25 +118,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
           ),
-          SizedBox(height: 16.h),
-          ProfileButton(
-            onTap: () {
-              Get.toNamed(AppRoute.membership, arguments: {
-                "videoModel": VideoModel(
-                  description:
-                      "This meta-description generator uses machine learning",
-                  title: "Technical Analysis Module",
-                  duration: "20 min",
-                  session: 2,
-                  videoId: 0,
-                  videoUrl: "ulr",
-                ),
-                "sessionCompletedList": [],
-              });
-            },
-            title: "Membership",
-            iconData: Icons.wallet_membership_outlined,
-          ),
+          // For Futher use
+          // SizedBox(height: 16.h),
+          // ProfileButton(
+          //   onTap: _navigateToMembership,
+          //   title: "Membership",
+          //   iconData: Icons.wallet_membership_outlined,
+          // ),
           SizedBox(height: 16.h),
           ProfileButton(
             onTap: () {
@@ -145,14 +133,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: "Certificate",
             iconData: Icons.celebration,
           ),
-          SizedBox(height: 16.h),
-          ProfileButton(
-            onTap: () {
-              Get.toNamed(AppRoute.refer);
-            },
-            title: "Invite Friends",
-            iconData: Icons.group,
-          ),
+          // For Futher use
+          // SizedBox(height: 16.h),
+          // ProfileButton(
+          //   onTap: () {
+          //     Get.toNamed(AppRoute.refer);
+          //   },
+          //   title: "Invite Friends",
+          //   iconData: Icons.group,
+          // ),
           SizedBox(height: 16.h),
           ProfileButton(
             onTap: () {
@@ -170,5 +159,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       )),
     );
+  }
+
+  // ignore: unused_element
+  void _navigateToMembership() {
+    Get.toNamed(AppRoute.membership, arguments: {
+      "videoModel": VideoModel(
+        description: "This meta-description generator uses machine learning",
+        title: "Technical Analysis Module",
+        duration: "20 min",
+        session: 2,
+        videoId: 0,
+        videoUrl: "ulr",
+      ),
+      "sessionCompletedList": [],
+    });
   }
 }

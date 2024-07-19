@@ -180,6 +180,7 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(height: 24.h),
                   ProfileTextFormField(
                       labeltext: "Contact Number",
+                      readOnly: true,
                       keyboardType: TextInputType.number,
                       controller: _controller.contactController),
                   SizedBox(height: 24.h),
