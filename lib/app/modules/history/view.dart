@@ -1,3 +1,4 @@
+import 'package:cyberking_capitals/app/widgets/comming_soon.dart';
 import 'package:flutter/material.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -11,7 +12,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("History")),
+      body: CommingSoon(),
     );
   }
 }
