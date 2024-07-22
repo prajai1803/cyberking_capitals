@@ -5,8 +5,8 @@ class ApiService extends GetxService {
     timeout: const Duration(seconds: 10),
   );
 
-  // final String baseUrl = 'http://192.168.29.217:4011'; // local
-  final String baseUrl = "https://demo-studentapi.sankhyank.com";
+  // final String baseUrl = 'http://192.168.29.217:4014'; // local
+  final String baseUrl = "https://cdstudentapi.sankhyank.com";
 
   Future<Response> get(
       {required String url,

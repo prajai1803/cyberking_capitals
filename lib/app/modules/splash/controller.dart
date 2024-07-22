@@ -3,6 +3,8 @@ import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
+import 'package:cyberking_capitals/app/widgets/under_maintenance.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
@@ -11,6 +13,7 @@ class SplashController extends GetxController {
   late final Timer _timer;
 
   final SessionDB sessionDB = SessionDB();
+  final FirebaseRemoteConfig _config = FirebaseRemoteConfig.instance;
 
   @override
   void onReady() {
@@ -24,9 +27,15 @@ class SplashController extends GetxController {
     super.dispose();
   }
 
-  void _checkAuth() async {
+  void _checkAuthAndMaintenance() async {
     final bool? isOnBoardingComplete = await sessionDB.getOnBoardingComplete();
     final String? isAuth = await sessionDB.getRefreshToken();
+    final isUnderMaintenance = _config.getBool("isUnderMaintenance");
+    final isUnderMaintenanceMsg = _config.getString("isUnderMaintenanceMsg");
+    if (isUnderMaintenance) {
+      Get.to(() => AppUnderMaintenance(msg: isUnderMaintenanceMsg));
+      return;
+    }
     UserModel userModel = await StorageProvider().readUserModel();
     if (isAuth == null || JwtDecoder.isExpired(isAuth)) {
       Get.offAndToNamed(AppRoute.loginScreen);
@@ -47,6 +56,7 @@ class SplashController extends GetxController {
   void _startAnimation() {
     logoOpacity = 1;
     update();
-    _timer = Timer(const Duration(seconds: 2), () => _checkAuth());
+    _timer =
+        Timer(const Duration(seconds: 2), () => _checkAuthAndMaintenance());
   }
 }

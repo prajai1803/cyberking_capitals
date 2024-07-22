@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppUnderMaintenance extends StatelessWidget {
-  const AppUnderMaintenance({super.key});
+  final String msg;
+  const AppUnderMaintenance({super.key, this.msg = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,20 @@ class AppUnderMaintenance extends StatelessWidget {
             ),
             SizedBox(height: 32.h),
             Text(
-              "Comming Soon\n We are working hard...!",
+              "App Is Under Maintenance !",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.h,
+                height: 1.5,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              " $msg",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14.h,
                 height: 1.5,
                 color: AppColors.textBlack2,
                 fontWeight: FontWeight.w600,
