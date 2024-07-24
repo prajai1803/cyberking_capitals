@@ -58,7 +58,7 @@ class _CertificateScreenState extends State<CertificateScreen> {
                                 top: 120.h,
                                 right: 5.w,
                                 child: Image.asset(
-                                  AppImages.redLogo,
+                                  AppImages.logo,
                                   height: 70.h,
                                 ),
                               ),
