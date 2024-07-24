@@ -31,6 +31,7 @@ class HomeController extends GetxController {
   final SpeechToText _speechToText = SpeechToText();
 
   List<ModuleSessionModel> moduleSessionList = [];
+  bool isBatchAssigned = true;
   bool isVoiceRecording = false;
 
   @override
@@ -59,7 +60,13 @@ class HomeController extends GetxController {
       await getHomeQueries();
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
-    } on ApiStatusException catch (_) {
+    } on ApiStatusException catch (e) {
+      if (e.message == "No-Batch") {
+        isBatchAssigned = false;
+        screenState = ScreenState.loaded;
+        update(["Loading Screen"]);
+        return;
+      }
       screenState = ScreenState.error;
       update(["Loading Screen"]);
     } catch (e) {
@@ -77,7 +84,13 @@ class HomeController extends GetxController {
 
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
-    } on ApiStatusException catch (_) {
+    } on ApiStatusException catch (e) {
+      if (e.message == "No-Batch") {
+        isBatchAssigned = false;
+        screenState = ScreenState.loaded;
+        update(["Loading Screen"]);
+        return;
+      }
       screenState = ScreenState.error;
       update(["Loading Screen"]);
     } catch (e) {

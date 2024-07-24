@@ -121,18 +121,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _controller.fetchInitialData();
                               },
                             )
-                          : Column(
-                              children: [
-                                SizedBox(height: 16.h),
-                                _buildSearchField(),
-                                SizedBox(height: 20.h),
-                                mainBody(),
-                                SizedBox(height: 24.h),
-                              ],
-                            )),
+                          : (_controller.screenState == ScreenState.loaded &&
+                                  !(_controller.isBatchAssigned))
+                              ? _buildNoBatch()
+                              : Column(
+                                  children: [
+                                    SizedBox(height: 16.h),
+                                    _buildSearchField(),
+                                    SizedBox(height: 20.h),
+                                    mainBody(),
+                                    SizedBox(height: 24.h),
+                                  ],
+                                )),
             ),
           ),
         ));
+  }
+
+  Column _buildNoBatch() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 300.h),
+        Text(
+          "Haven't assign any batch yet",
+          style: context.textTheme.titleLarge,
+        ),
+        Text(
+          "For assign any batch connect with us",
+          style: context.textTheme.bodyMedium,
+        ),
+      ],
+    );
   }
 
   GetBuilder<HomeController> mainBody() {

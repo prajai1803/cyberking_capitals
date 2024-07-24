@@ -17,6 +17,11 @@ class HomeRepository {
       final res = await apiProvider.getHomeQueries(studentId);
       List<ModuleSessionModel> moduleList = [];
       if (res != null) {
+        if (res.statusCode == 400) {
+          if (res.body["message"] == "No-Batch") {
+            throw ApiStatusException(message: res.body["message"]);
+          }
+        }
         if (res.statusCode == 200) {
           List list = res.body["data"];
           moduleList = list.map((e) => ModuleSessionModel.fromJson(e)).toList();
@@ -26,7 +31,7 @@ class HomeRepository {
       }
       return [];
     } catch (e) {
-      return [];
+      rethrow;
     }
   }
 
