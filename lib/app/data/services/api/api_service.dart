@@ -6,7 +6,7 @@ class ApiService extends GetxService {
   );
 
   // final String baseUrl = 'http://192.168.29.217:4014'; // local
-  final String baseUrl = "https://cdstudentapi.sankhyank.com";
+  final String baseUrl = "https://cadb-studentapi.sankhyank.com";
 
   Future<Response> get(
       {required String url,
