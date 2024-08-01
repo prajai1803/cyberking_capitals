@@ -1,5 +1,5 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
-import 'package:cyberking_capitals/app/data/models/feature_video_model.dart';
+import 'package:cyberking_capitals/app/data/models/feature_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
@@ -8,8 +8,10 @@ import 'package:cyberking_capitals/app/modules/home/repository.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -19,7 +21,7 @@ class HomeController extends GetxController {
   UserModel? user;
   final StorageProvider _storageProvider = StorageProvider();
   late VideoPlayerController introVPC;
-  List<FeatureVideoModel> featureVideoList = [];
+  List<FeatureModel> featureList = [];
   List<Module> moduleList = [];
   List<Session> sessionList = [];
   int completionsHr = 0;
@@ -106,8 +108,10 @@ class HomeController extends GetxController {
       moduleSessionList = await _homeRepository.getHomeQueries(user.id);
       List<Module> modulesTemp = [];
       List<Session> sessionTemp = [];
+      List<FeatureModel> featureTemp = [];
       int durationTemp = 0;
 
+      // module and session from multiple batches
       for (var element in moduleSessionList) {
         modulesTemp.addAll(element.modules!);
         durationTemp += (element.duration ?? 0);
@@ -119,7 +123,13 @@ class HomeController extends GetxController {
         }
       }
 
+      // feature from multiple batches
+      for (var element in moduleSessionList) {
+        featureTemp.addAll(element.features ?? []);
+      }
+
       completionsHr = durationTemp;
+      featureList.assignAll(featureTemp);
       sessionList.assignAll(sessionTemp);
       moduleList.assignAll(modulesTemp);
       introVideoModel = moduleSessionList.first.introVideos;
@@ -183,5 +193,24 @@ class HomeController extends GetxController {
     }
 
     update(["HomeSearch"]);
+  }
+
+  void openInWeb(String? webUrl) async {
+    try {
+      final url = Uri.parse(webUrl ?? "");
+      if (!(url.isAbsolute)) {
+        throw ApiStatusException(message: 'URL is not valid');
+      }
+
+      if (!await launchUrl(url)) {
+        throw ApiStatusException(message: 'Could not luanch');
+      }
+    } on ApiStatusException catch (e) {
+      CommonAlerts.showErrorSnack(message: e.message);
+    } on PlatformException catch (e) {
+      CommonAlerts.showErrorSnack(message: e.code);
+    } catch (e) {
+      CommonAlerts.showErrorSnack(message: e.toString());
+    }
   }
 }

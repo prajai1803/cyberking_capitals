@@ -23,6 +23,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
 
@@ -168,34 +169,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? const SizedBox()
                             : _buildIntroVideo(),
                         // Feature video updates (dont remove)
-
-                        // Padding(
-                        //   padding:
-                        //       EdgeInsets.symmetric(
-                        //           horizontal: 20.w),
-                        //   child: const Divider(
-                        //       thickness: 1),
-                        // ),
-                        // SizedBox(height: 24.h),
-                        // Container(
-                        //   alignment:
-                        //       Alignment.centerLeft,
-                        //   padding: EdgeInsets.only(
-                        //       left: 16.w),
-                        //   child: Text(
-                        //     "Features Video Updates",
-                        //     style: TextStyle(
-                        //       fontSize: 18.h,
-                        //       fontWeight:
-                        //           FontWeight.w700,
-                        //       color:
-                        //           AppColors.iconRed,
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(height: 10.h),
-                        // _buildCommingSoon(),
-                        SizedBox(height: 10.h),
+                        if (_controller.featureList.isNotEmpty)
+                          Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: const Divider(thickness: 1),
+                              ),
+                              SizedBox(height: 24.h),
+                            ],
+                          ),
+                        if (_controller.featureList.isNotEmpty)
+                          Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 16.w),
+                                child: Text(
+                                  "Features Video Updates",
+                                  style: TextStyle(
+                                    fontSize: 18.h,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.iconRed,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              _buildCommingSoon(),
+                              SizedBox(height: 10.h),
+                            ],
+                          ),
                         _buildModules(),
                         SizedBox(height: 24.h),
                         Container(
@@ -444,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
+      itemCount: _controller.featureList.length,
       itemBuilder: (context, index) => Container(
           height: 290.h,
           margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.w),
@@ -454,13 +457,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.15))
               ],
               borderRadius: BorderRadius.circular(15.r)),
-          child: const PromoWidget(
-            title: "Stock Market Live Streaming",
-            subtitle:
-                "Write a little info about your video here as a description.",
-            lowerText: "Start 10th Oct 2023, 12:00 PM",
-            label: "Comming soon",
-          )),
+          child: PromoWidget(
+              title: _controller.featureList[index].title,
+              subtitle: _controller.featureList[index].description,
+              lowerText:
+                  "Start ${DateFormat("dd MMM yyyy, hh:mm a").format(_controller.featureList[index].scheduleTime!)}",
+              label: _controller.featureList[index].tag,
+              thumbnail: _controller.featureList[index].thumbnail,
+              onTap: () => Get.toNamed(AppRoute.liveScreen,
+                  arguments: _controller.featureList[index]))),
     );
   }
 

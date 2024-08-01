@@ -7,6 +7,7 @@ import 'package:cyberking_capitals/app/modules/authentication/views/password_ver
 import 'package:cyberking_capitals/app/modules/authentication/views/sign_up.dart';
 import 'package:cyberking_capitals/app/modules/base/bindings.dart';
 import 'package:cyberking_capitals/app/modules/base/view.dart';
+import 'package:cyberking_capitals/app/modules/home/view/live_video_screen.dart';
 import 'package:cyberking_capitals/app/modules/home/view/module_video.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/bindings.dart';
 import 'package:cyberking_capitals/app/modules/on_boarding/view.dart';
@@ -159,6 +160,12 @@ class AppPages {
       page: () => ReferScreen(),
       binding: ReferBinding(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      title: "Live Screen",
+      name: AppRoute.liveScreen,
+      page: () => const LiveVideoScreen(),
+      transition: Transition.fadeIn,
     ),
   ];
 }

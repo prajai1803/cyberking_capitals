@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'feature_model.dart';
+
 ModuleSessionModel moduleSessionModelFromJson(String str) =>
     ModuleSessionModel.fromJson(json.decode(str));
 
@@ -17,6 +19,7 @@ class ModuleSessionModel {
   final int? duration;
   final IntroVideos? introVideos;
   final List<Module>? modules;
+  final List<FeatureModel>? features;
 
   ModuleSessionModel({
     this.batchId,
@@ -25,6 +28,7 @@ class ModuleSessionModel {
     this.duration,
     this.introVideos,
     this.modules,
+    this.features,
   });
 
   ModuleSessionModel copyWith({
@@ -34,6 +38,7 @@ class ModuleSessionModel {
     int? duration,
     IntroVideos? introVideos,
     List<Module>? modules,
+    List<FeatureModel>? features,
   }) =>
       ModuleSessionModel(
         batchId: batchId ?? this.batchId,
@@ -42,6 +47,7 @@ class ModuleSessionModel {
         duration: duration ?? this.duration,
         introVideos: introVideos ?? this.introVideos,
         modules: modules ?? this.modules,
+        features: features ?? this.features,
       );
 
   factory ModuleSessionModel.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +63,10 @@ class ModuleSessionModel {
             ? []
             : List<Module>.from(
                 json["modules"]!.map((x) => Module.fromJson(x))),
+        features: json["modules"] == null
+            ? []
+            : List<FeatureModel>.from(
+                json["features"]!.map((x) => FeatureModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,6 +78,9 @@ class ModuleSessionModel {
         "modules": modules == null
             ? []
             : List<dynamic>.from(modules!.map((x) => x.toJson())),
+        "features": features == null
+            ? []
+            : List<dynamic>.from(features!.map((x) => x.toJson())),
       };
 }
 
