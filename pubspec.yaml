@@ -2,7 +2,7 @@ name: cyberking_capitals
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 0.0.2+4
+version: 0.0.2+6
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -22,7 +22,7 @@ dependencies:
   chewie: ^1.7.5
   shimmer: ^3.0.0
   dotted_border: ^2.1.0
-  flutter_local_notifications: ^15.1.1
+  flutter_local_notifications: ^17.2.1+2
   firebase_messaging: ^14.7.19
   syncfusion_flutter_charts: ^24.2.9
   cached_network_image: ^3.3.1
@@ -55,7 +55,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
   uses-material-design: true
