@@ -220,8 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => InkWell(
                                 onTap: () {
-                                  Get.toNamed(AppRoute.studyModule,
-                                      arguments: _controller.moduleList[index]);
+                                  Get.toNamed(AppRoute.studyModule, arguments: {
+                                    "module": _controller.moduleList[index]
+                                  });
                                 },
                                 child: ModuleTile(
                                   description:
@@ -264,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return InkWell(
                                     onTap: () {
                                       Get.toNamed(AppRoute.studyModule,
-                                          arguments: module);
+                                          arguments: {"module": module});
                                     },
                                     child: ModuleTile(
                                       description: module.moduleDesc,

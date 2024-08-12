@@ -132,6 +132,22 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> getStore(int? userId) async {
+    try {
+      final res = await _apiService.get(url: "${ApiRoutes.getStore}/$userId");
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   Future<Response?> submitSession(int? studentId, int? sessionId) async {
     final token = await getAccessToken();
     try {

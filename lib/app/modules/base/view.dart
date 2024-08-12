@@ -5,6 +5,7 @@ import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
 // import 'package:cyberking_capitals/app/modules/community/view.dart';
 import 'package:cyberking_capitals/app/modules/history/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
+import 'package:cyberking_capitals/app/modules/store/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
 import 'package:cyberking_capitals/app/widgets/no_internet.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,8 @@ class _AppBaseScreenState extends State<AppBaseScreen>
       // const CommunityScreen(),
       const BookMarkScreen(),
       const AttendanceScreen(),
-      const BookMarkScreen(),
+      // const BookMarkScreen(),
+      const StoreScreen(),
       // const BookMarkScreen(),
 
       // const BookMarkScreen(),
