@@ -3,6 +3,7 @@ import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'widgets/payment_ui.dart';
 import 'widgets/store_module_card.dart';
 
 class StoreScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _StoreScreenState extends State<StoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Trading Store"),
+        title: const Text("Store"),
       ),
       body: GetBuilder(
         init: _controller,
@@ -60,7 +61,9 @@ class _StoreScreenState extends State<StoreScreen> {
                                   "isLocked": true
                                 });
                               },
-                              onBuy: () {},
+                              onBuy: () {
+                                Get.to(() => PaymentUI());
+                              },
                             ),
                           ),
                         ),

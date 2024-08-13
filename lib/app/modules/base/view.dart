@@ -128,11 +128,11 @@ class _AppBaseScreenState extends State<AppBaseScreen>
           ),
           Tab(
             icon: Icon(
-              Icons.bookmark_outline,
+              Icons.shop_outlined,
               size: 24.h,
             ),
             iconMargin: const EdgeInsets.symmetric(vertical: 6),
-            text: "Bookmark",
+            text: "Store",
           ),
           Tab(
             icon: ImageIcon(const AssetImage(AppIcons.histroy), size: 24.h),
