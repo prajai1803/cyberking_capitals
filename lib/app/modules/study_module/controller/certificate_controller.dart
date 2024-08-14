@@ -99,15 +99,15 @@ class CertificateController extends GetxController {
   }
 
   Future<void> _requestPermissions() async {
-    if (await Permission.storage.request().isGranted) {
-      // The old storage permission is granted
-      return;
-    }
+    // if (await Permission.storage.request().isGranted) {
+    //   // The old storage permission is granted
+    //   return;
+    // }
 
-    if (await Permission.manageExternalStorage.request().isGranted) {
-      // Manage External Storage permission is granted
-      return;
-    }
+    // if (await Permission.manageExternalStorage.request().isGranted) {
+    //   // Manage External Storage permission is granted
+    //   return;
+    // }
 
     Map<Permission, PermissionStatus> statuses;
     if (await Permission.photos.status.isGranted ||
