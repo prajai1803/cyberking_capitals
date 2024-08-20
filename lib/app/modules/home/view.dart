@@ -6,6 +6,7 @@ import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/modules/attendence/view/scanner.dart';
+import 'package:cyberking_capitals/app/modules/base/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/view/intro_video.dart';
 import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
@@ -39,6 +40,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.find<HomeController>();
+  final _appBaseController = Get.find<AppBaseController>();
   PackageInfo? _packageInfo;
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   @override
@@ -152,6 +154,16 @@ class _HomeScreenState extends State<HomeScreen> {
           "For assign any batch connect with us",
           style: context.textTheme.bodyMedium,
         ),
+        SizedBox(height: 18.h),
+        Text(
+          "OR",
+          style: context.textTheme.bodyMedium,
+        ),
+        TextButton(
+            onPressed: () {
+              _appBaseController.chnageTab(1);
+            },
+            child: const Text("I want to buy some module"))
       ],
     );
   }
@@ -220,8 +232,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => InkWell(
                                 onTap: () {
+                                  // print(_controller.moduleList[index]);
+                                  // return;
                                   Get.toNamed(AppRoute.studyModule, arguments: {
-                                    "module": _controller.moduleList[index]
+                                    "module": _controller.moduleList[index],
+                                    "isLocked": false
                                   });
                                 },
                                 child: ModuleTile(

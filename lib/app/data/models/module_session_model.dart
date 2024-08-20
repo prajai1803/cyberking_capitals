@@ -140,7 +140,8 @@ class Module {
   final int? completionTimeHrs;
   final int? sessionCount;
   final String? productCategory;
-  final String? discountPercentage;
+  final String? productId;
+  final dynamic discountPercentage;
   final int? discountAmount;
   final int? moduleFees;
 
@@ -156,6 +157,7 @@ class Module {
     this.discountPercentage,
     this.discountAmount,
     this.moduleFees,
+    this.productId,
   });
 
   Module copyWith({
@@ -170,6 +172,7 @@ class Module {
     String? discountPercentage,
     int? discountAmount,
     int? moduleFees,
+    String? productId,
   }) =>
       Module(
         moduleId: moduleId ?? this.moduleId,
@@ -182,7 +185,7 @@ class Module {
         productCategory: productCategory ?? this.productCategory,
         discountPercentage: discountPercentage ?? this.discountPercentage,
         discountAmount: discountAmount ?? this.discountAmount,
-        moduleFees: moduleFees,
+        moduleFees: moduleFees ?? this.moduleFees,
       );
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
@@ -200,6 +203,7 @@ class Module {
         discountPercentage: json["discount_percentage"],
         discountAmount: json["discount_amount"],
         moduleFees: json["module_fees"],
+        productId: json["product_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -216,6 +220,7 @@ class Module {
         "discount_percentage": discountPercentage,
         "discount_amount": discountAmount,
         "module_fees": moduleFees,
+        "product_id": productId,
       };
 }
 

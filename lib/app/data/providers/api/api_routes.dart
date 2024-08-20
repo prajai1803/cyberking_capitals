@@ -45,4 +45,7 @@ class ApiRoutes {
       'api/attendance/manage-attendance/v1/submit-attendance';
   static const getAttendanceHistory =
       'api/attendance/manage-attendance/v1/student/attendance-history';
+
+  // payment
+  static const payment = 'api/payment/buy-module';
 }

@@ -2,7 +2,7 @@ name: cyberking_capitals
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 0.0.2+6
+version: 0.0.2+7
 
 environment:
   sdk: '>=3.2.3 <4.0.0'
@@ -51,6 +51,7 @@ dependencies:
   timezone: ^0.9.3
   overlay_support: ^2.1.0
   checkout_screen_ui: ^1.0.1
+  firebase_dynamic_links: ^5.4.17
   
 
 dev_dependencies:

@@ -36,6 +36,7 @@ class StoreModuleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final finalPrice = (moduleFees ?? 0) - (discount ?? 0);
+
     return Column(
       children: [
         SizedBox(height: 24.h),
