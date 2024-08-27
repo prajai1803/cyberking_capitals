@@ -384,7 +384,7 @@ class _StudyModuleState extends State<StudyModule> {
                   ],
                 );
               },
-            )
+            ),
           ],
         ),
       ),

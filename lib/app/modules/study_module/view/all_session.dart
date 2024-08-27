@@ -32,19 +32,22 @@ class AllSession extends StatelessWidget {
             duration:
                 (_controller.sessionList[index].videoDuration ?? 0).toHHMM(),
             thumbnail: _controller.sessionList[index].thumbnail,
-            onTap: () {
-              Get.toNamed(AppRoute.moduleVideo, arguments: {
-                "videoModel": VideoModel(
-                    description: _controller.sessionList[index].sessionDesc,
-                    title: _controller.sessionList[index].sessionName,
-                    duration:
-                        "${_controller.sessionList[index].videoDuration} ",
-                    session: 2,
-                    videoId: _controller.sessionList[index].sessionId,
-                    videoUrl: _controller.sessionList[index].videoLink),
-                "sessionCompletedList": completedSession
-              });
-            },
+            onTap: _controller.isModuleLocked
+                ? null
+                : () {
+                    Get.toNamed(AppRoute.moduleVideo, arguments: {
+                      "videoModel": VideoModel(
+                          description:
+                              _controller.sessionList[index].sessionDesc,
+                          title: _controller.sessionList[index].sessionName,
+                          duration:
+                              "${_controller.sessionList[index].videoDuration} ",
+                          session: 2,
+                          videoId: _controller.sessionList[index].sessionId,
+                          videoUrl: _controller.sessionList[index].videoLink),
+                      "sessionCompletedList": completedSession
+                    });
+                  },
             index: index + 1,
           ),
         ),

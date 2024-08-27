@@ -139,6 +139,11 @@ class Module {
   final List<Session>? sessions;
   final int? completionTimeHrs;
   final int? sessionCount;
+  final String? productCategory;
+  final String? productId;
+  final dynamic discountPercentage;
+  final int? discountAmount;
+  final int? moduleFees;
 
   Module({
     this.moduleId,
@@ -148,6 +153,11 @@ class Module {
     this.sessions,
     this.completionTimeHrs,
     this.sessionCount,
+    this.productCategory,
+    this.discountPercentage,
+    this.discountAmount,
+    this.moduleFees,
+    this.productId,
   });
 
   Module copyWith({
@@ -158,6 +168,11 @@ class Module {
     List<Session>? sessions,
     int? completionTimeHrs,
     int? sessionCount,
+    String? productCategory,
+    String? discountPercentage,
+    int? discountAmount,
+    int? moduleFees,
+    String? productId,
   }) =>
       Module(
         moduleId: moduleId ?? this.moduleId,
@@ -167,6 +182,10 @@ class Module {
         sessions: sessions ?? this.sessions,
         completionTimeHrs: completionTimeHrs ?? this.completionTimeHrs,
         sessionCount: sessionCount ?? this.sessionCount,
+        productCategory: productCategory ?? this.productCategory,
+        discountPercentage: discountPercentage ?? this.discountPercentage,
+        discountAmount: discountAmount ?? this.discountAmount,
+        moduleFees: moduleFees ?? this.moduleFees,
       );
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
@@ -180,6 +199,11 @@ class Module {
                 json["sessions"]!.map((x) => Session.fromJson(x))),
         completionTimeHrs: json["completion_time_hrs"],
         sessionCount: json["session_count"],
+        productCategory: json["product_category"],
+        discountPercentage: json["discount_percentage"],
+        discountAmount: json["discount_amount"],
+        moduleFees: json["module_fees"],
+        productId: json["product_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -192,6 +216,11 @@ class Module {
             : List<dynamic>.from(sessions!.map((x) => x.toJson())),
         "completion_time_hrs": completionTimeHrs,
         "session_count": sessionCount,
+        "product_category": productCategory,
+        "discount_percentage": discountPercentage,
+        "discount_amount": discountAmount,
+        "module_fees": moduleFees,
+        "product_id": productId,
       };
 }
 

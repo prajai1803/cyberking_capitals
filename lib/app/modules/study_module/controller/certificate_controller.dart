@@ -45,20 +45,6 @@ class CertificateController extends GetxController {
     if (imageBytes != null) {
       final directory = await getExternalStorageDirectory();
       if (directory != null) {
-        // String newPath = "";
-        // List<String> folders = directory.path.split("/");
-        // for (int x = 1; x < folders.length; x++) {
-        //   String folder = folders[x];
-        //   if (folder != "Android") {
-        //     newPath += "/$folder";
-        //   } else {
-        //     break;
-        //   }
-        // }
-        // newPath = newPath + "/StudentApp";
-        // final d = Directory(newPath);
-        // print(d);
-
         final pathOfImage =
             await File('${directory.path}/certifcate-${DateTime.now()}.jpg')
                 .create();
@@ -99,6 +85,7 @@ class CertificateController extends GetxController {
   }
 
   Future<void> _requestPermissions() async {
+    //  playstore does't allow
     // if (await Permission.storage.request().isGranted) {
     //   // The old storage permission is granted
     //   return;

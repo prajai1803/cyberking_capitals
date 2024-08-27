@@ -28,7 +28,6 @@ class _ModuleVideoPlayerState extends State<ModuleVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    // print(completedSession);
     return Scaffold(
         appBar: AppBar(title: const Text("Video")),
         body: Column(

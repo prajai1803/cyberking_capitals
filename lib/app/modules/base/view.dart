@@ -2,7 +2,6 @@ import 'package:cyberking_capitals/app/core/colors/app_color.dart';
 import 'package:cyberking_capitals/app/core/values/icons.dart';
 import 'package:cyberking_capitals/app/modules/attendence/view.dart';
 import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
-// import 'package:cyberking_capitals/app/modules/community/view.dart';
 import 'package:cyberking_capitals/app/modules/history/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
@@ -26,24 +25,23 @@ class AppBaseScreen extends StatefulWidget {
 class _AppBaseScreenState extends State<AppBaseScreen>
     with TickerProviderStateMixin {
   final _controller = Get.find<AppBaseController>();
-  late final TabController _tabController;
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
-    _tabController.addListener(_tabListener);
+    _controller.tabController = TabController(length: 5, vsync: this);
+    _controller.tabController.addListener(_tabListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    _tabController.removeListener(_tabListener);
-    _tabController.dispose();
+    _controller.tabController.removeListener(_tabListener);
+    _controller.tabController.dispose();
     super.dispose();
   }
 
   void _tabListener() {
-    _controller.currentIndex.value = _tabController.index;
+    _controller.currentIndex.value = _controller.tabController.index;
   }
 
   @override
@@ -58,14 +56,9 @@ class _AppBaseScreenState extends State<AppBaseScreen>
               return const NoInternetScreen();
             }
           }),
-      // const CommunityScreen(),
       const BookMarkScreen(),
       const AttendanceScreen(),
       const BookMarkScreen(),
-      // const BookMarkScreen(),
-
-      // const BookMarkScreen(),
-      // const ProfileScreen(),
       const HistoryScreen(),
     ];
 
@@ -89,7 +82,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
           color: Colors.white,
           border: Border(top: BorderSide(color: Colors.black, width: .5))),
       child: TabBar(
-        controller: _tabController,
+        controller: _controller.tabController,
         padding: EdgeInsets.zero,
         labelPadding: EdgeInsets.zero,
         overlayColor: MaterialStateProperty.all(AppColors.secondary),
