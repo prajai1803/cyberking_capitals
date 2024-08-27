@@ -18,7 +18,6 @@ class StoreRepository {
       if (res != null) {
         if (res.statusCode == 200) {
           List list = res.body["data"];
-          print(list);
           moduleList = list.map((e) => Module.fromJson(e)).toList();
           return moduleList;
         }

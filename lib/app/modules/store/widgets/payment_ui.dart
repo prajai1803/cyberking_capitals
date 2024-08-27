@@ -21,7 +21,7 @@ class PaymentUI extends StatelessWidget {
         taxRate: 0,
         payToName: 'Sankhyank Demo',
         displayNativePay: false,
-        onNativePay: (checkoutResults) => print('Native Pay Clicked'),
+        onNativePay: (checkoutResults) {},
         isApple: Platform.isAndroid,
         onCardPay: (paymentInfo, checkoutResults) {},
         onBack: () => Navigator.of(context).pop(),

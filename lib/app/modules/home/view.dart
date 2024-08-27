@@ -6,18 +6,19 @@ import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
 import 'package:cyberking_capitals/app/data/models/video_model.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
 import 'package:cyberking_capitals/app/modules/attendence/view/scanner.dart';
-import 'package:cyberking_capitals/app/modules/base/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/controller.dart';
 import 'package:cyberking_capitals/app/modules/home/view/intro_video.dart';
 import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/intro_video_card.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart';
+import 'package:cyberking_capitals/app/modules/store/widgets/store_module_card.dart';
 import 'package:cyberking_capitals/app/modules/study_module/widgets/session_tile.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/extension.dart';
 import 'package:cyberking_capitals/app/widgets/app_update.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
+import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:cyberking_capitals/app/widgets/try_again.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,7 +41,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.find<HomeController>();
-  final _appBaseController = Get.find<AppBaseController>();
+  // final _appBaseController = Get.find<AppBaseController>();
   PackageInfo? _packageInfo;
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   @override
@@ -154,16 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
           "For assign any batch connect with us",
           style: context.textTheme.bodyMedium,
         ),
-        SizedBox(height: 18.h),
-        Text(
-          "OR",
-          style: context.textTheme.bodyMedium,
-        ),
-        TextButton(
-            onPressed: () {
-              _appBaseController.chnageTab(1);
-            },
-            child: const Text("I want to buy some module"))
       ],
     );
   }
@@ -232,8 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => InkWell(
                                 onTap: () {
-                                  // print(_controller.moduleList[index]);
-                                  // return;
                                   Get.toNamed(AppRoute.studyModule, arguments: {
                                     "module": _controller.moduleList[index],
                                     "isLocked": false
@@ -257,6 +246,49 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: _controller.payableModuleList.length,
+                            itemBuilder: (context, index) => StoreModuleCard(
+                              index: index,
+                              description: _controller
+                                  .payableModuleList[index].moduleDesc,
+                              title: _controller
+                                  .payableModuleList[index].moduleName,
+                              thumbnail: _controller
+                                  .payableModuleList[index].thumbnail,
+                              moduleFees: _controller
+                                  .payableModuleList[index].moduleFees,
+                              discount: _controller
+                                  .payableModuleList[index].discountAmount,
+                              session: _controller
+                                  .payableModuleList[index].sessions?.length,
+                              productCategory: _controller
+                                  .payableModuleList[index].productCategory,
+                              onTap: () {
+                                Get.toNamed(AppRoute.studyModule, arguments: {
+                                  "module":
+                                      _controller.payableModuleList[index],
+                                  "isLocked": true
+                                });
+                              },
+                              onBuy: () {
+                                final productCategory = _controller
+                                    .payableModuleList[index].productCategory;
+                                if (productCategory == "Free") {
+                                  _controller.claimFreeModule(_controller
+                                      .payableModuleList[index].productId);
+                                } else {
+                                  CommonAlerts.showWarning(
+                                      message: "Cooming Soon");
+                                }
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     )
                   : Padding(
@@ -480,8 +512,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   "Start ${DateFormat("dd MMM yyyy, hh:mm a").format(_controller.featureList[index].scheduleTime!)}",
               label: _controller.featureList[index].tag,
               thumbnail: _controller.featureList[index].thumbnail,
-              onTap: () => Get.toNamed(AppRoute.liveScreen,
-                  arguments: _controller.featureList[index]))),
+              onTap: () {
+                final tag = _controller.featureList[index].tag;
+                if (tag == "LIVE" || tag == "Coming Soon") {
+                  Get.toNamed(AppRoute.liveScreen,
+                      arguments: _controller.featureList[index]);
+                }
+              })),
     );
   }
 

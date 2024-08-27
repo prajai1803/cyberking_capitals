@@ -4,7 +4,6 @@ import 'package:cyberking_capitals/app/modules/attendence/view.dart';
 import 'package:cyberking_capitals/app/modules/bookmark/view.dart';
 import 'package:cyberking_capitals/app/modules/history/view.dart';
 import 'package:cyberking_capitals/app/modules/home/view.dart';
-import 'package:cyberking_capitals/app/modules/store/view.dart';
 import 'package:cyberking_capitals/app/utils/network_manager.dart';
 import 'package:cyberking_capitals/app/widgets/no_internet.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +56,7 @@ class _AppBaseScreenState extends State<AppBaseScreen>
               return const NoInternetScreen();
             }
           }),
-      const StoreScreen(),
+      const BookMarkScreen(),
       const AttendanceScreen(),
       const BookMarkScreen(),
       const HistoryScreen(),
@@ -109,12 +108,9 @@ class _AppBaseScreenState extends State<AppBaseScreen>
             text: "Home",
           ),
           Tab(
-            icon: Icon(
-              Icons.shop_outlined,
-              size: 24.h,
-            ),
+            icon: ImageIcon(const AssetImage(AppIcons.community), size: 24.h),
             iconMargin: const EdgeInsets.symmetric(vertical: 6),
-            text: "Store",
+            text: "Community",
           ),
           Tab(
             icon: ImageIcon(const AssetImage(AppIcons.attendance), size: 24.h),
@@ -122,9 +118,12 @@ class _AppBaseScreenState extends State<AppBaseScreen>
             text: "Attendance",
           ),
           Tab(
-            icon: ImageIcon(const AssetImage(AppIcons.community), size: 24.h),
+            icon: Icon(
+              Icons.bookmark_outline,
+              size: 24.h,
+            ),
             iconMargin: const EdgeInsets.symmetric(vertical: 6),
-            text: "Community",
+            text: "Bookmark",
           ),
           Tab(
             icon: ImageIcon(const AssetImage(AppIcons.histroy), size: 24.h),

@@ -53,6 +53,7 @@ class PromoWidget extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 18.h,
                           color: Colors.black,
+                          overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.w700),
                     ),
                     SizedBox(height: 8.h),
@@ -61,6 +62,7 @@ class PromoWidget extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 12.h,
                           color: AppColors.textBlack3,
+                          overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.w500),
                     ),
                     SizedBox(height: 8.h),

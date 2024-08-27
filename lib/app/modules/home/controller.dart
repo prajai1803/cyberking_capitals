@@ -1,10 +1,12 @@
 import 'package:cyberking_capitals/app/core/values/enums.dart';
 import 'package:cyberking_capitals/app/data/models/feature_model.dart';
 import 'package:cyberking_capitals/app/data/models/module_session_model.dart';
+import 'package:cyberking_capitals/app/data/models/payment_post_model.dart';
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_provider.dart';
 import 'package:cyberking_capitals/app/data/providers/storage_provider.dart';
 import 'package:cyberking_capitals/app/modules/home/repository.dart';
+import 'package:cyberking_capitals/app/modules/store/repository.dart';
 import 'package:cyberking_capitals/app/utils/custom_exception.dart';
 import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,14 @@ import 'package:speech_to_text/speech_to_text.dart';
 class HomeController extends GetxController {
   final HomeRepository _homeRepository =
       HomeRepository(apiProvider: ApiProvider());
+  final _storeRepository = StoreRepository(apiProvider: ApiProvider());
+
   UserModel? user;
   final StorageProvider _storageProvider = StorageProvider();
   late VideoPlayerController introVPC;
   List<FeatureModel> featureList = [];
   List<Module> moduleList = [];
+  List<Module> payableModuleList = [];
   List<Session> sessionList = [];
   int completionsHr = 0;
   IntroVideos? introVideoModel;
@@ -55,11 +60,21 @@ class HomeController extends GetxController {
     update(["Profile Image"]);
   }
 
+  Future<void> fetchStore() async {
+    try {
+      payableModuleList = await _storeRepository.getStore();
+
+      payableModuleList.removeWhere((payableModule) => moduleList
+          .any((module) => module.moduleId == payableModule.moduleId));
+    } catch (_) {}
+  }
+
   void fetchInitialData() async {
     try {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
       await getHomeQueries();
+      await fetchStore();
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
     } on ApiStatusException catch (e) {
@@ -83,7 +98,7 @@ class HomeController extends GetxController {
       screenState = ScreenState.loading;
       update(["Loading Screen"]);
       await getHomeQueries();
-
+      await fetchStore();
       screenState = ScreenState.loaded;
       update(["Loading Screen"]);
     } on ApiStatusException catch (e) {
@@ -135,6 +150,30 @@ class HomeController extends GetxController {
       introVideoModel = moduleSessionList.first.introVideos;
     } catch (e) {
       rethrow;
+    }
+  }
+
+  void claimFreeModule(String? productId) async {
+    try {
+      CommonAlerts.showLoadingDialog();
+      final user = await _storageProvider.readUserModel();
+      final paymentDetails = PaymentPostModel(
+        studentId: user.id,
+        balanceAmount: 0,
+        categoryId: 11,
+        paidAmount: 0,
+        productId: productId,
+      );
+      final success = await _storeRepository.makePayment(paymentDetails);
+      if (success) {
+        Get.back();
+        CommonAlerts.showSuccessSnack(message: "Successfully claim the module");
+
+        fetchInitialData();
+      }
+    } catch (e) {
+      Get.back();
+      CommonAlerts.showErrorSnack(message: e.toString());
     }
   }
 

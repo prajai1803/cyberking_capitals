@@ -334,6 +334,11 @@ class AuthController extends GetxController {
         CommonAlerts.showErrorSnack(message: e.message);
         isLoading = false;
         update(["Login Button"]);
+      } catch (e) {
+        
+        CommonAlerts.showErrorSnack(message: e.toString());
+        isLoading = false;
+        update(["Login Button"]);
       }
     }
   }
