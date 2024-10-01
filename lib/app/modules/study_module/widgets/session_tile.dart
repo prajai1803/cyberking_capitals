@@ -32,7 +32,7 @@ class SessionTile extends StatelessWidget {
         children: [
           SizedBox(height: 24.h),
           SizedBox(
-            height: 120.h,
+            // height: 120.h,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
