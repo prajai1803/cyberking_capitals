@@ -37,9 +37,15 @@ class ApiRoutes {
   static const getAllModules = 'api/Modules/get-all';
   static const getSessionByModueId = 'api/sessions/get-sessions';
 
+  // store
+  static const getStore = 'api/mobile/store/get-modules';
+
   // attendance
   static const submitAttendance =
       'api/attendance/manage-attendance/v1/submit-attendance';
   static const getAttendanceHistory =
       'api/attendance/manage-attendance/v1/student/attendance-history';
+
+  // payment
+  static const payment = 'api/payment/buy-module';
 }

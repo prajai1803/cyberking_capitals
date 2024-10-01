@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'feature_model.dart';
+
 ModuleSessionModel moduleSessionModelFromJson(String str) =>
     ModuleSessionModel.fromJson(json.decode(str));
 
@@ -17,6 +19,7 @@ class ModuleSessionModel {
   final int? duration;
   final IntroVideos? introVideos;
   final List<Module>? modules;
+  final List<FeatureModel>? features;
 
   ModuleSessionModel({
     this.batchId,
@@ -25,6 +28,7 @@ class ModuleSessionModel {
     this.duration,
     this.introVideos,
     this.modules,
+    this.features,
   });
 
   ModuleSessionModel copyWith({
@@ -34,6 +38,7 @@ class ModuleSessionModel {
     int? duration,
     IntroVideos? introVideos,
     List<Module>? modules,
+    List<FeatureModel>? features,
   }) =>
       ModuleSessionModel(
         batchId: batchId ?? this.batchId,
@@ -42,6 +47,7 @@ class ModuleSessionModel {
         duration: duration ?? this.duration,
         introVideos: introVideos ?? this.introVideos,
         modules: modules ?? this.modules,
+        features: features ?? this.features,
       );
 
   factory ModuleSessionModel.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +63,10 @@ class ModuleSessionModel {
             ? []
             : List<Module>.from(
                 json["modules"]!.map((x) => Module.fromJson(x))),
+        features: json["modules"] == null
+            ? []
+            : List<FeatureModel>.from(
+                json["features"]!.map((x) => FeatureModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -68,6 +78,9 @@ class ModuleSessionModel {
         "modules": modules == null
             ? []
             : List<dynamic>.from(modules!.map((x) => x.toJson())),
+        "features": features == null
+            ? []
+            : List<dynamic>.from(features!.map((x) => x.toJson())),
       };
 }
 
@@ -126,6 +139,11 @@ class Module {
   final List<Session>? sessions;
   final int? completionTimeHrs;
   final int? sessionCount;
+  final String? productCategory;
+  final String? productId;
+  final dynamic discountPercentage;
+  final int? discountAmount;
+  final int? moduleFees;
 
   Module({
     this.moduleId,
@@ -135,6 +153,11 @@ class Module {
     this.sessions,
     this.completionTimeHrs,
     this.sessionCount,
+    this.productCategory,
+    this.discountPercentage,
+    this.discountAmount,
+    this.moduleFees,
+    this.productId,
   });
 
   Module copyWith({
@@ -145,6 +168,11 @@ class Module {
     List<Session>? sessions,
     int? completionTimeHrs,
     int? sessionCount,
+    String? productCategory,
+    String? discountPercentage,
+    int? discountAmount,
+    int? moduleFees,
+    String? productId,
   }) =>
       Module(
         moduleId: moduleId ?? this.moduleId,
@@ -154,6 +182,10 @@ class Module {
         sessions: sessions ?? this.sessions,
         completionTimeHrs: completionTimeHrs ?? this.completionTimeHrs,
         sessionCount: sessionCount ?? this.sessionCount,
+        productCategory: productCategory ?? this.productCategory,
+        discountPercentage: discountPercentage ?? this.discountPercentage,
+        discountAmount: discountAmount ?? this.discountAmount,
+        moduleFees: moduleFees ?? this.moduleFees,
       );
 
   factory Module.fromJson(Map<String, dynamic> json) => Module(
@@ -167,6 +199,11 @@ class Module {
                 json["sessions"]!.map((x) => Session.fromJson(x))),
         completionTimeHrs: json["completion_time_hrs"],
         sessionCount: json["session_count"],
+        productCategory: json["product_category"],
+        discountPercentage: json["discount_percentage"],
+        discountAmount: json["discount_amount"],
+        moduleFees: json["module_fees"],
+        productId: json["product_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -179,6 +216,11 @@ class Module {
             : List<dynamic>.from(sessions!.map((x) => x.toJson())),
         "completion_time_hrs": completionTimeHrs,
         "session_count": sessionCount,
+        "product_category": productCategory,
+        "discount_percentage": discountPercentage,
+        "discount_amount": discountAmount,
+        "module_fees": moduleFees,
+        "product_id": productId,
       };
 }
 

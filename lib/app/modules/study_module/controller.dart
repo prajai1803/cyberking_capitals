@@ -19,6 +19,7 @@ class StudyModuleController extends GetxController {
   bool allSessionOpend = false;
   bool quizOpend = false;
   bool certificateOpend = false;
+  bool isModuleLocked = false;
 
   late Module studyModuleModel;
 
@@ -34,7 +35,11 @@ class StudyModuleController extends GetxController {
 
   @override
   void onInit() async {
-    studyModuleModel = Get.arguments as Module;
+    final argData = Get.arguments as Map<String, dynamic>;
+
+    studyModuleModel = argData["module"] as Module;
+    isModuleLocked = argData["isLocked"] as bool;
+
     userModel = await _storageProvider.readUserModel();
     getModuleRecord();
     getSesion();

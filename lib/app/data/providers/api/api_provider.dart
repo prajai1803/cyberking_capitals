@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cyberking_capitals/app/data/models/payment_post_model.dart';
 import 'package:cyberking_capitals/app/data/models/user_model.dart';
 import 'package:cyberking_capitals/app/data/providers/api/api_routes.dart';
 import 'package:cyberking_capitals/app/data/providers/session_db.dart';
@@ -132,6 +133,22 @@ class ApiProvider {
     return null;
   }
 
+  Future<Response?> getStore(int? userId) async {
+    try {
+      final res = await _apiService.get(url: "${ApiRoutes.getStore}/$userId");
+      if (res.statusCode == 200) {
+        return res;
+      } else if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
   Future<Response?> submitSession(int? studentId, int? sessionId) async {
     final token = await getAccessToken();
     try {
@@ -166,6 +183,29 @@ class ApiProvider {
       }, header: {
         "Authorization": token
       });
+      if (res.statusCode == 200) {
+        return res;
+      }
+      if (res.statusCode == 400) {
+        return res;
+      } else {
+        _checkException(res);
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  // payment
+  Future<Response?> createPayment(PaymentPostModel paymentDetails) async {
+    final token = await getAccessToken();
+    try {
+      final res = await _apiService.post(
+        url: ApiRoutes.payment,
+        body: paymentDetails.toJson(),
+        header: {"Authorization": token},
+      );
       if (res.statusCode == 200) {
         return res;
       }

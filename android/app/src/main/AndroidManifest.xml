@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/> -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -34,7 +34,10 @@
         
                 <data
                   android:scheme="https"
-                  android:host="demo.test.com" />
+                  android:host="cd-studentadmin.sankhyank.com" />
+                <data
+                  android:scheme="http"
+                  android:host="cd-studentadmin.sankhyank.com" />
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
@@ -43,7 +46,10 @@
         
                 <data
                   android:scheme="https"
-                  android:host="demo.test.com" />
+                  android:host="cd-studentadmin.sankhyank.com" />
+                <data
+                  android:scheme="http"
+                  android:host="cd-studentadmin.sankhyank.com" />
             </intent-filter>
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user

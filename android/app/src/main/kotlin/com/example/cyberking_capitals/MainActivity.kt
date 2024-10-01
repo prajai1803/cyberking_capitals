@@ -1,4 +1,4 @@
-package com.sankhyank.demostudentapp
+package com.sankhyank.cdstudentapp
 
 import io.flutter.embedding.android.FlutterActivity
 

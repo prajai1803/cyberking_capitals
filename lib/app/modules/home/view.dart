@@ -12,17 +12,20 @@ import 'package:cyberking_capitals/app/modules/home/view/progress_screen.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/intro_video_card.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/list_tile.dart';
 import 'package:cyberking_capitals/app/modules/home/widgets/loading_shimmer.dart';
+import 'package:cyberking_capitals/app/modules/store/widgets/store_module_card.dart';
 import 'package:cyberking_capitals/app/modules/study_module/widgets/session_tile.dart';
 import 'package:cyberking_capitals/app/routes/routes.dart';
 import 'package:cyberking_capitals/app/utils/extension.dart';
 import 'package:cyberking_capitals/app/widgets/app_update.dart';
 import 'package:cyberking_capitals/app/widgets/cached_network_image.dart';
+import 'package:cyberking_capitals/app/widgets/common_alerts.dart';
 import 'package:cyberking_capitals/app/widgets/try_again.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:version/version.dart';
 
@@ -38,6 +41,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.find<HomeController>();
+  // final _appBaseController = Get.find<AppBaseController>();
   PackageInfo? _packageInfo;
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
   @override
@@ -121,18 +125,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _controller.fetchInitialData();
                               },
                             )
-                          : Column(
-                              children: [
-                                SizedBox(height: 16.h),
-                                _buildSearchField(),
-                                SizedBox(height: 20.h),
-                                mainBody(),
-                                SizedBox(height: 24.h),
-                              ],
-                            )),
+                          : (_controller.screenState == ScreenState.loaded &&
+                                  !(_controller.isBatchAssigned))
+                              ? _buildNoBatch()
+                              : Column(
+                                  children: [
+                                    SizedBox(height: 16.h),
+                                    _buildSearchField(),
+                                    SizedBox(height: 20.h),
+                                    mainBody(),
+                                    SizedBox(height: 24.h),
+                                  ],
+                                )),
             ),
           ),
         ));
+  }
+
+  Column _buildNoBatch() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 300.h),
+        Text(
+          "Haven't assign any batch yet",
+          style: context.textTheme.titleLarge,
+        ),
+        Text(
+          "For assign any batch connect with us",
+          style: context.textTheme.bodyMedium,
+        ),
+      ],
+    );
   }
 
   GetBuilder<HomeController> mainBody() {
@@ -148,34 +172,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? const SizedBox()
                             : _buildIntroVideo(),
                         // Feature video updates (dont remove)
-
-                        // Padding(
-                        //   padding:
-                        //       EdgeInsets.symmetric(
-                        //           horizontal: 20.w),
-                        //   child: const Divider(
-                        //       thickness: 1),
-                        // ),
-                        // SizedBox(height: 24.h),
-                        // Container(
-                        //   alignment:
-                        //       Alignment.centerLeft,
-                        //   padding: EdgeInsets.only(
-                        //       left: 16.w),
-                        //   child: Text(
-                        //     "Features Video Updates",
-                        //     style: TextStyle(
-                        //       fontSize: 18.h,
-                        //       fontWeight:
-                        //           FontWeight.w700,
-                        //       color:
-                        //           AppColors.iconRed,
-                        //     ),
-                        //   ),
-                        // ),
-                        // SizedBox(height: 10.h),
-                        // _buildCommingSoon(),
-                        SizedBox(height: 10.h),
+                        if (_controller.featureList.isNotEmpty)
+                          Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: const Divider(thickness: 1),
+                              ),
+                              SizedBox(height: 24.h),
+                            ],
+                          ),
+                        if (_controller.featureList.isNotEmpty)
+                          Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 16.w),
+                                child: Text(
+                                  "Features Video Updates",
+                                  style: TextStyle(
+                                    fontSize: 18.h,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.iconRed,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              _buildCommingSoon(),
+                              SizedBox(height: 10.h),
+                            ],
+                          ),
                         _buildModules(),
                         SizedBox(height: 24.h),
                         Container(
@@ -197,8 +223,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) => InkWell(
                                 onTap: () {
-                                  Get.toNamed(AppRoute.studyModule,
-                                      arguments: _controller.moduleList[index]);
+                                  Get.toNamed(AppRoute.studyModule, arguments: {
+                                    "module": _controller.moduleList[index],
+                                    "isLocked": false
+                                  });
                                 },
                                 child: ModuleTile(
                                   description:
@@ -218,6 +246,49 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                             )),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: _controller.payableModuleList.length,
+                            itemBuilder: (context, index) => StoreModuleCard(
+                              index: index,
+                              description: _controller
+                                  .payableModuleList[index].moduleDesc,
+                              title: _controller
+                                  .payableModuleList[index].moduleName,
+                              thumbnail: _controller
+                                  .payableModuleList[index].thumbnail,
+                              moduleFees: _controller
+                                  .payableModuleList[index].moduleFees,
+                              discount: _controller
+                                  .payableModuleList[index].discountAmount,
+                              session: _controller
+                                  .payableModuleList[index].sessions?.length,
+                              productCategory: _controller
+                                  .payableModuleList[index].productCategory,
+                              onTap: () {
+                                Get.toNamed(AppRoute.studyModule, arguments: {
+                                  "module":
+                                      _controller.payableModuleList[index],
+                                  "isLocked": true
+                                });
+                              },
+                              onBuy: () {
+                                final productCategory = _controller
+                                    .payableModuleList[index].productCategory;
+                                if (productCategory == "Free") {
+                                  _controller.claimFreeModule(_controller
+                                      .payableModuleList[index].productId);
+                                } else {
+                                  CommonAlerts.showWarning(
+                                      message: "Cooming Soon");
+                                }
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     )
                   : Padding(
@@ -241,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return InkWell(
                                     onTap: () {
                                       Get.toNamed(AppRoute.studyModule,
-                                          arguments: module);
+                                          arguments: {"module": module});
                                     },
                                     child: ModuleTile(
                                       description: module.moduleDesc,
@@ -424,7 +495,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 3,
+      itemCount: _controller.featureList.length,
       itemBuilder: (context, index) => Container(
           height: 290.h,
           margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 12.w),
@@ -434,13 +505,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 BoxShadow(blurRadius: 10, color: Colors.black.withOpacity(.15))
               ],
               borderRadius: BorderRadius.circular(15.r)),
-          child: const PromoWidget(
-            title: "Stock Market Live Streaming",
-            subtitle:
-                "Write a little info about your video here as a description.",
-            lowerText: "Start 10th Oct 2023, 12:00 PM",
-            label: "Comming soon",
-          )),
+          child: PromoWidget(
+              title: _controller.featureList[index].title,
+              subtitle: _controller.featureList[index].description,
+              lowerText:
+                  "Start ${DateFormat("dd MMM yyyy, hh:mm a").format(_controller.featureList[index].scheduleTime!)}",
+              label: _controller.featureList[index].tag,
+              thumbnail: _controller.featureList[index].thumbnail,
+              onTap: () {
+                final tag = _controller.featureList[index].tag;
+                if (tag == "LIVE" || tag == "Coming Soon") {
+                  Get.toNamed(AppRoute.liveScreen,
+                      arguments: _controller.featureList[index]);
+                }
+              })),
     );
   }
 
