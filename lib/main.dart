@@ -1,5 +1,4 @@
 import 'package:cyberking_capitals/app/data/services/remote_config/remote_config.dart';
-import 'package:cyberking_capitals/app/data/services/unilink/uni_service.dart';
 import 'package:cyberking_capitals/app/routes/pages.dart';
 import 'package:cyberking_capitals/app/utils/initial_binding.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,7 +14,7 @@ void main() async {
   await Firebase.initializeApp();
   await GetStorage.init();
   await FirebaseRemoteConfiguarion.init();
-  await UniService.init();
+  // await UniService.init();
   runApp(const CyberKingCapitals());
 }
 

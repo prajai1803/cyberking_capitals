@@ -1,22 +1,21 @@
 {
   "project_info": {
-    "project_number": "87688634197",
-    "firebase_url": "https://sankhyank-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "sankhyank",
-    "storage_bucket": "sankhyank.appspot.com"
+    "project_number": "383886800521",
+    "project_id": "sankhyank-demo",
+    "storage_bucket": "sankhyank-demo.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:87688634197:android:f0fc5bf0f071c4406bd9dc",
+        "mobilesdk_app_id": "1:383886800521:android:ce8debee3188fc2abaf858",
         "android_client_info": {
-          "package_name": "com.chartdekho.lms"
+          "package_name": "com.Sankhyank.lms"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC5h9eHf55XWAKAK30hYammD_c1wz-HPZc"
+          "current_key": "AIzaSyBpwemDcRk6sZsK8VHxG8_sTUFybiQycXc"
         }
       ],
       "services": {
@@ -27,53 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:87688634197:android:99edaec85e2cb1226bd9dc",
+        "mobilesdk_app_id": "1:383886800521:android:2bf02980fb0c1810baf858",
         "android_client_info": {
-          "package_name": "com.mdms.lms"
+          "package_name": "com.sankhyank.studentapp"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC5h9eHf55XWAKAK30hYammD_c1wz-HPZc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:87688634197:android:3554e66c614e65506bd9dc",
-        "android_client_info": {
-          "package_name": "com.sankhyank.cdstudentapp"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC5h9eHf55XWAKAK30hYammD_c1wz-HPZc"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:87688634197:android:f122feffd232eea66bd9dc",
-        "android_client_info": {
-          "package_name": "com.sankhyank.lms"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC5h9eHf55XWAKAK30hYammD_c1wz-HPZc"
+          "current_key": "AIzaSyBpwemDcRk6sZsK8VHxG8_sTUFybiQycXc"
         }
       ],
       "services": {
